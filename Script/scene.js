@@ -6,7 +6,12 @@ let scene, camera, renderer;
 const aspectRatio = (window.innerWidth / window.innerHeight);
 console.log(aspectRatio);
 
+const hexValue = "ffffff";
+const colorOfCube = "#" + hexValue;
+
 export function TinitialiseScene(anAvatar) {
+    //const gui = new dat.GUI();
+
     scene = new THREE.Scene();
 
     /* const gridHelper = new THREE.GridHelper(10, 10); // Size of the grid, divisions
@@ -31,7 +36,7 @@ export function TinitialiseScene(anAvatar) {
 
 
     const geometry = new THREE.BoxGeometry(1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+    const material = new THREE.MeshBasicMaterial({ color: colorOfCube });
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
     cube.position.set(0, 0, 0);
