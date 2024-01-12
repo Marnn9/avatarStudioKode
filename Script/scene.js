@@ -1,18 +1,16 @@
 "use strict";
 import * as THREE from '../three.js-master/src/Three.js';
+import * as dat from "../three.js-master/build/dat.gui.module.js";
+import { GLTFLoader } from "../three.js-master/build/GLTFLoader.js";
 
 let scene, camera, renderer;
 
-const aspectRatio = (window.innerWidth / window.innerHeight);
-console.log(aspectRatio);
-
-const hexValue = "ffffff";
-const colorOfCube = "#" + hexValue;
-
 export function TinitialiseScene(anAvatar) {
-    //const gui = new dat.GUI();
 
     scene = new THREE.Scene();
+    let cubeMaterial;
+    const hexValue = "ffffff";
+    const colorOfCube = "#" + hexValue;
 
     /* const gridHelper = new THREE.GridHelper(10, 10); // Size of the grid, divisions
     gridHelper.position.set(0, -2.5, 0); // Position the grid appropriately
@@ -33,18 +31,36 @@ export function TinitialiseScene(anAvatar) {
 
     window.addEventListener('resize', windowResized);
 
-
-
     const geometry = new THREE.BoxGeometry(1, 1);
-    const material = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    const cube = new THREE.Mesh(geometry, material);
+    cubeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    const cube = new THREE.Mesh(geometry, cubeMaterial);
     scene.add(cube);
     cube.position.set(0, 0, 0);
+    addControls();
 
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
     scene.add(ambientLight);
 
+    function addControls() {
+        const gui = new dat.GUI();
+        const colorChanger = { color: colorOfCube };
+
+        gui.addColor(colorChanger, 'color').onChange(function (color) {
+            cubeMaterial.color.set(color);
+        });
+    }
+
+    function load3Dmodel() {
+        const loader = new GLTFLoader();
+        loader.load("../media/eye_test.gltf");
+        scene.remove(cube);
+
+        // Position and add the loaded model to the scene
+        gltf.scene.position.set(0, 0, 0);
+        scene.add(gltf.scene);
+    }
+    load3Dmodel();
 
     function render() {
         requestAnimationFrame(render);

@@ -8,7 +8,7 @@ export function loadScene() {
 }
 
 
-const assets = {
+/* const assets = {
     head: null,
     body: null,
     hairBtn: null,
@@ -18,5 +18,5 @@ const assets = {
 
 function displayAvatar() {
     assets.head = new Tavatar.head(); // for when the time comes
-}
+} */
 
