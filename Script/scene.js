@@ -3,9 +3,9 @@ import * as THREE from '../three.js-master/src/Three.js';
 import * as dat from "../three.js-master/build/dat.gui.module.js";
 import { GLTFLoader } from "../three.js-master/build/GLTFLoader.js";
 
-let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial;
 
 export function TinitialiseScene() {
+    let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial;
 
     scene = new THREE.Scene();
     const hexValue = "ffffff";
