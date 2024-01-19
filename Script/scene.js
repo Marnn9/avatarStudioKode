@@ -3,18 +3,13 @@ import * as THREE from '../three.js-master/src/Three.js';
 import * as dat from "../three.js-master/build/dat.gui.module.js";
 import { GLTFLoader } from "../three.js-master/build/GLTFLoader.js";
 
-let scene, camera, renderer;
+let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial;
 
-export function TinitialiseScene(anAvatar) {
+export function TinitialiseScene() {
 
     scene = new THREE.Scene();
-    let cubeMaterial;
     const hexValue = "ffffff";
     const colorOfCube = "#" + hexValue;
-
-    /* const gridHelper = new THREE.GridHelper(10, 10); // Size of the grid, divisions
-    gridHelper.position.set(0, -2.5, 0); // Position the grid appropriately
-    scene.add(gridHelper);  */
 
     const topColor = new THREE.Color(0xA8D1DF);
     const bottomColor = new THREE.Color(0x294A5E);
@@ -31,34 +26,47 @@ export function TinitialiseScene(anAvatar) {
 
     window.addEventListener('resize', windowResized);
 
-    const geometry = new THREE.BoxGeometry(1, 1);
     cubeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    const cube = new THREE.Mesh(geometry, cubeMaterial);
+    cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1), cubeMaterial);
     scene.add(cube);
     cube.position.set(0, 0, 0);
+
     addControls();
 
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
 
     function addControls() {
         const gui = new dat.GUI();
-        const colorChanger = { color: colorOfCube };
-
+        const colorChanger = { color: cubeMaterial.color.getHex() };
+    
         gui.addColor(colorChanger, 'color').onChange(function (color) {
             cubeMaterial.color.set(color);
+            // Set the color of the loaded model's material to the same color
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
         });
     }
 
+    //for the test eye : ../media/eye_test.gltf
     function load3Dmodel() {
         const loader = new GLTFLoader();
-        loader.load("../media/eye_test.gltf");
-        scene.remove(cube);
+        loader.load("../media/blueEyes.gltf", function (gltfModel) {
+            // Remove the default cube from the scene
+            scene.remove(cube);
 
-        // Position and add the loaded model to the scene
-        gltf.scene.position.set(0, 0, 0);
-        scene.add(gltf.scene);
+            // Access the material of a specific part of the model 
+            modelMaterial = gltfModel.scene.children[0].material;
+
+            // Position and add the loaded model to the scene
+            gltfModel.scene.position.set(0, 0, 0);
+            gltfModel.scene.rotation.y = - Math.PI / 2;
+            scene.add(gltfModel.scene);
+
+            // Render the scene after loading the model
+            render();
+        });
     }
     load3Dmodel();
 
@@ -67,7 +75,6 @@ export function TinitialiseScene(anAvatar) {
 
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
-        anAvatar
 
         renderer.render(scene, camera);
     }
@@ -95,7 +102,3 @@ export function TinitialiseScene(anAvatar) {
     }
     render();
 }
-
-
-
-
