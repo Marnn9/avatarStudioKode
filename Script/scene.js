@@ -8,7 +8,7 @@ import { TCharacter } from './Character.js';
 export function TinitialiseScene(anAvatar) {
 
     let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial;
-    
+
     scene = new THREE.Scene();
 
 
@@ -24,15 +24,14 @@ export function TinitialiseScene(anAvatar) {
 
     //----------------scene objects----------------------
 
-    //anAvatar = new TCharacter();
 
-
-    camera = new THREE.Camera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.z = 10;
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
 
-    cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1), cubeMaterial);
     cubeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1), cubeMaterial);
     cube.position.set(0, 0, 0);
     scene.add(cube);
 
@@ -42,6 +41,11 @@ export function TinitialiseScene(anAvatar) {
     document.body.appendChild(renderer.domElement);
     window.addEventListener('resize', windowResized);
 
+    //-----------------character-------------------------
+    const character = new TCharacter(scene);    
+    scene.add(character);
+
+    //-------------functions-------------------------------
 
     function addControls() {
         const gui = new dat.GUI();
@@ -49,6 +53,7 @@ export function TinitialiseScene(anAvatar) {
 
         gui.addColor(colorChanger, 'color').onChange(function (color) {
             cubeMaterial.color.set(color);
+            character.setIrisColor(color);
             // Set the color of the loaded model's material to the same color
             if (modelMaterial) {
                 modelMaterial.color.set(color);
@@ -57,27 +62,6 @@ export function TinitialiseScene(anAvatar) {
     }
 
     addControls();
-
-    //for the test eye : ../media/eye_test.gltf
-    /* function load3Dmodel() {
-        const loader = new GLTFLoader();
-        loader.load("../media/blueEyes.gltf", function (gltfModel) {
-            // Remove the default cube from the scene
-            scene.remove(cube);
-
-            // Access the material of a specific part of the model 
-            modelMaterial = gltfModel.scene.children[0].material;
-
-            // Position and add the loaded model to the scene
-            gltfModel.scene.position.set(0, 0, 0);
-            gltfModel.scene.rotation.y = - Math.PI / 2;
-            scene.add(gltfModel.scene);
-
-            // Render the scene after loading the model
-            render();
-        });
-    }
-    load3Dmodel(); */
 
     function render() {
         requestAnimationFrame(render);
