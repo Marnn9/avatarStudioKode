@@ -55,7 +55,7 @@ export function TinitialiseScene(anAvatar) {
         const gui = new dat.GUI();
         const colorChanger = { color: eyeMaterial.color.getHex() };
 
-        gui.addColor(colorChanger, 'color').onChange(function (color) {
+        gui.addColor(colorChanger, 'color').name("Eye color").onChange(function (color) {
             eyeMaterial.color.set(color);
             character.setIrisColor(color);
             // Set the color of the loaded model's material to the same color
@@ -63,14 +63,9 @@ export function TinitialiseScene(anAvatar) {
                 modelMaterial.color.set(color);
             }
         });
-    }
+        const HairColorChanger = { color: hairMaterial.color.getHex() };
 
-    addControls();
-    function makeHairColorPicker() {
-        const gui = new dat.GUI();
-        const colorChanger = { color: hairMaterial.color.getHex() };
-
-        gui.addColor(colorChanger, 'color').onChange(function (color) {
+        gui.addColor(HairColorChanger, 'color').name("Hair color").onChange(function (color) {
             hairMaterial.color.set(color);
             character.setHairColor(color);
             // Set the color of the loaded model's material to the same color
@@ -78,14 +73,9 @@ export function TinitialiseScene(anAvatar) {
                 modelMaterial.color.set(color);
             }
         });
-    }
-    makeHairColorPicker()
+        const SkinColorChanger = { color: skinMaterial.color.getHex() };
 
-    function makeSkinColorPicker() {
-        const gui = new dat.GUI();
-        const colorChanger = { color: skinMaterial.color.getHex() };
-
-        gui.addColor(colorChanger, 'color').onChange(function (color) {
+        gui.addColor(SkinColorChanger, 'color').name("Skin color").onChange(function (color) {
             skinMaterial.color.set(color);
             character.setSkinColor(color);
             // Set the color of the loaded model's material to the same color
@@ -94,7 +84,12 @@ export function TinitialiseScene(anAvatar) {
             }
         });
     }
-    makeSkinColorPicker()
+    
+
+    addControls();
+ 
+
+ 
 
 
     function render() {
