@@ -3,12 +3,13 @@ import { TinitialiseScene } from './scene.js';
 
 
 export function loadScene() {
-    TinitialiseScene(); //in the parameters the avatar thats animated should be placed like this TinitailiseScene(anAvatar)
-    
-
-
+    TinitialiseScene();
 }
 
+
+export function addBrows() {
+    console.log("browsAdded");
+}
 /* const assets = {
     head: null,
     body: null,

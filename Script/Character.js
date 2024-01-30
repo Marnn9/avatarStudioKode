@@ -18,6 +18,8 @@ export class TCharacter extends THREE.Object3D {
 
         const loader = new GLTFLoader();
         
+        const iris = 'eye_left'; 
+        const hair = 'hair_joined';
 
         loader.load("../media/Boy-smaller-file.gltf", (gltfModel) => {
             //this.irisOfEye = gltfModel.scene.children[2].material;
@@ -37,17 +39,17 @@ export class TCharacter extends THREE.Object3D {
                
                 light.intensity = 1;
             });
-            const eyeMaterial = gltfModel.scene.children[8].children[2].material
+            const eyeMaterial = gltfModel.scene.children.find(child => child.name === iris);
             console.log(eyeMaterial)
 
             // Define setIrisColor as a method of the class
             this.setIrisColor = function (aColor) {
-                eyeMaterial.color.set(aColor);  // Set a default color for testing
+                eyeMaterial.children[2].material.color.set(aColor); 
             };
-            const hairMaterial = gltfModel.scene.children[11].material
+            const hairMaterial = gltfModel.scene.children.find(child => child.name === hair);
             console.log(hairMaterial)
             this.setHairColor = function (aColor) {
-                hairMaterial.color.set(aColor);  // Set a default color for testing
+                hairMaterial.material.color.set(aColor);   // Set a default color for testing
             };
         });
     }

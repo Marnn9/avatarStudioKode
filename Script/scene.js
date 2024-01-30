@@ -45,11 +45,11 @@ export function TinitialiseScene(anAvatar) {
 
     //-------------functions-------------------------------
 
-    function addControls() {
+    function guiControls() {
         const gui = new dat.GUI();
         const colorChanger = { color: eyeMaterial.color.getHex() };
 
-        gui.addColor(colorChanger, 'color').onChange(function (color) {
+        gui.addColor(colorChanger, 'color').name('Eye Color').onChange(function (color) {
             eyeMaterial.color.set(color);
             character.setIrisColor(color);
             // Set the color of the loaded model's material to the same color
@@ -60,7 +60,7 @@ export function TinitialiseScene(anAvatar) {
 
         const hairChanger = { color: hairMaterial.color.getHex() };
 
-        gui.addColor(hairChanger, 'color').onChange(function (color) {
+        gui.addColor(hairChanger, 'color').name('Hair Color').onChange(function (color) {
             hairMaterial.color.set(color);
             character.setHairColor(color);
             // Set the color of the loaded model's material to the same color
@@ -70,16 +70,12 @@ export function TinitialiseScene(anAvatar) {
         });
     }
 
-    addControls();
-    function makeHairColorPicker() {
-        const gui = new dat.GUI();
-        
-    }
-    makeHairColorPicker()
+    guiControls();
+    
 
     function render() {
         requestAnimationFrame(render);
-        
+
         renderer.render(scene, camera);
     }
 

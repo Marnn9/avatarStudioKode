@@ -16,20 +16,23 @@
     <button id="checkBtn" class="globalBtn">&#10004</button>
 
     <div id="choiceMenu">
-        <img class="thumbnail" src="./Media/head.png">
-        <img class="thumbnail" src="./Media/head.png"> 
-        <img class="thumbnail" src="./Media/head.png">
-        <img class="thumbnail" src="./Media/head.png">
-        <img class="thumbnail" src="./Media/head.png">
-        <img class="thumbnail" src="./Media/head.png">
-        <img class="thumbnail" src="./Media/head.png">
-        
+        <img id="option1" class="thumbnail" src="./Media/head.png">
+        <img id="option2" class="thumbnail" src="./Media/head.png"> 
+        <img id="option3" class="thumbnail" src="./Media/head.png">
+        <img id="option4" class="thumbnail" src="./Media/head.png">
+        <img id="option5" class="thumbnail" src="./Media/head.png">
+        <img id="option6" class="thumbnail" src="./Media/head.png">
+        <img id="option7" class="thumbnail" src="./Media/head.png">
     </div>
 
     <script type="module" src="../Script/main.js"></script>
     <script type="module">
-        import { loadScene } from "../Script/main.js";
-        loadScene()
+        import * as main from "../Script/main.js";
+        main.loadScene()
+
+        const option1 = document.getElementById("option1");
+        option1.addEventListener('click', main.addBrows);
+
     </script>
 
 </body>
