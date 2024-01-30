@@ -2,46 +2,58 @@
 import * as THREE from '../three.js-master/src/Three.js';
 import * as dat from "../three.js-master/build/dat.gui.module.js";
 import { GLTFLoader } from "../three.js-master/build/GLTFLoader.js";
+import { TCharacter } from './Character.js';
 
-let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial;
 
-export function TinitialiseScene() {
+export function TinitialiseScene(anAvatar) {
+
+    let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial;
 
     scene = new THREE.Scene();
+
+
+    //---------------gradient Background & color -----------------------
+
     const hexValue = "ffffff";
     const colorOfCube = "#" + hexValue;
 
     const topColor = new THREE.Color(0xA8D1DF);
     const bottomColor = new THREE.Color(0x294A5E);
-    const gradientTexture = new THREE.CanvasTexture(createGradientTexture(topColor, bottomColor));
+    const gradientTexture = new THREE.CanvasTexture(createGradientBackground(topColor, bottomColor));
     scene.background = gradientTexture;
 
+    //----------------scene objects----------------------
+
+
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
-    camera.position.z = 5;
+    camera.position.z = 10;
+    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
+    scene.add(ambientLight);
+
+    cubeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1), cubeMaterial);
+    cube.position.set(0, 0, 0);
+    scene.add(cube);
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     document.body.appendChild(renderer.domElement);
-
     window.addEventListener('resize', windowResized);
 
-    cubeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1), cubeMaterial);
-    scene.add(cube);
-    cube.position.set(0, 0, 0);
+    //-----------------character-------------------------
+    const character = new TCharacter(scene);    
+    scene.add(character);
 
-    addControls();
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-    scene.add(ambientLight);
+    //-------------functions-------------------------------
 
     function addControls() {
         const gui = new dat.GUI();
         const colorChanger = { color: cubeMaterial.color.getHex() };
-    
+
         gui.addColor(colorChanger, 'color').onChange(function (color) {
             cubeMaterial.color.set(color);
+            character.setIrisColor(color);
             // Set the color of the loaded model's material to the same color
             if (modelMaterial) {
                 modelMaterial.color.set(color);
@@ -49,26 +61,7 @@ export function TinitialiseScene() {
         });
     }
 
-    //for the test eye : ../media/eye_test.gltf
-    function load3Dmodel() {
-        const loader = new GLTFLoader();
-        loader.load("../media/blueEyes.gltf", function (gltfModel) {
-            // Remove the default cube from the scene
-            scene.remove(cube);
-
-            // Access the material of a specific part of the model 
-            modelMaterial = gltfModel.scene.children[0].material;
-
-            // Position and add the loaded model to the scene
-            gltfModel.scene.position.set(0, 0, 0);
-            gltfModel.scene.rotation.y = - Math.PI / 2;
-            scene.add(gltfModel.scene);
-
-            // Render the scene after loading the model
-            render();
-        });
-    }
-    load3Dmodel();
+    addControls();
 
     function render() {
         requestAnimationFrame(render);
@@ -85,7 +78,7 @@ export function TinitialiseScene() {
         renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
-    function createGradientTexture(topColor, bottomColor) {
+    function createGradientBackground(topColor, bottomColor) {
         const canvas = document.createElement('canvas');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;

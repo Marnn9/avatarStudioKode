@@ -1,12 +1,13 @@
 "use strict";
-import { TinitialiseScene } from "./scene.js";
+import { TinitialiseScene } from './scene.js';
 
 
 export function loadScene() {
     TinitialiseScene(); //in the parameters the avatar thats animated should be placed like this TinitailiseScene(anAvatar)
     
-}
 
+
+}
 
 /* const assets = {
     head: null,

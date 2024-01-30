@@ -1,6 +1,7 @@
-:root{
+:root {
     --mainBtnColor: #EBAC78;
 }
+
 body {
     margin: 0;
     overflow: hidden;
@@ -97,7 +98,8 @@ canvas {
     justify-items: center;
     align-content: center;
 
-    /*pointer-events: none; /* Allows click events to pass through the choice menu */ /*might need to be able to click the images*/
+    /*pointer-events: none; /* Allows click events to pass through the choice menu */
+    /*might need to be able to click the images*/
 
 }
 
