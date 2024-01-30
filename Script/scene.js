@@ -7,7 +7,7 @@ import { TCharacter } from './Character.js';
 
 export function TinitialiseScene(anAvatar) {
 
-    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial;
+    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial;
 
     scene = new THREE.Scene();
 
@@ -32,6 +32,8 @@ export function TinitialiseScene(anAvatar) {
 
     eyeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
     hairMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    skinMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -63,6 +65,17 @@ export function TinitialiseScene(anAvatar) {
         gui.addColor(hairChanger, 'color').name('Hair Color').onChange(function (color) {
             hairMaterial.color.set(color);
             character.setHairColor(color);
+            // Set the color of the loaded model's material to the same color
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
+        });
+
+        const skinChanger = { color: skinMaterial.color.getHex() };
+
+        gui.addColor(skinChanger, 'color').name('Skin Color').onChange(function (color) {
+            skinMaterial.color.set(color);
+            character.setSkinColor(color);
             // Set the color of the loaded model's material to the same color
             if (modelMaterial) {
                 modelMaterial.color.set(color);
