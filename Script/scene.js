@@ -3,6 +3,7 @@ import * as THREE from '../three.js-master/src/Three.js';
 import * as dat from "../three.js-master/build/dat.gui.module.js";
 import { GLTFLoader } from "../three.js-master/build/GLTFLoader.js";
 import { TCharacter } from './Character.js';
+import { TCharacterOptions } from './characterOptions.js';
 
 
 export function TinitialiseScene(anAvatar) {
@@ -43,8 +44,9 @@ export function TinitialiseScene(anAvatar) {
     window.addEventListener('resize', windowResized);
 
     //-----------------character-------------------------
-    const character = new TCharacter(scene);    
-    scene.add(character);
+    const character = new TCharacter(scene);
+    const characterOptions = new TCharacterOptions(scene)    
+    scene.add(character, characterOptions);
 
     //-------------functions-------------------------------
 
