@@ -7,7 +7,7 @@ import { TCharacter } from './Character.js';
 
 export function TinitialiseScene(anAvatar) {
 
-    let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial;
+    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial;
 
     scene = new THREE.Scene();
 
@@ -30,10 +30,8 @@ export function TinitialiseScene(anAvatar) {
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
 
-    cubeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1), cubeMaterial);
-    cube.position.set(0, 0, 0);
-    scene.add(cube);
+    eyeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    hairMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
 
     renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -49,11 +47,22 @@ export function TinitialiseScene(anAvatar) {
 
     function addControls() {
         const gui = new dat.GUI();
-        const colorChanger = { color: cubeMaterial.color.getHex() };
+        const colorChanger = { color: eyeMaterial.color.getHex() };
 
         gui.addColor(colorChanger, 'color').onChange(function (color) {
-            cubeMaterial.color.set(color);
+            eyeMaterial.color.set(color);
             character.setIrisColor(color);
+            // Set the color of the loaded model's material to the same color
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
+        });
+
+        const hairChanger = { color: hairMaterial.color.getHex() };
+
+        gui.addColor(hairChanger, 'color').onChange(function (color) {
+            hairMaterial.color.set(color);
+            character.setHairColor(color);
             // Set the color of the loaded model's material to the same color
             if (modelMaterial) {
                 modelMaterial.color.set(color);
@@ -62,13 +71,15 @@ export function TinitialiseScene(anAvatar) {
     }
 
     addControls();
+    function makeHairColorPicker() {
+        const gui = new dat.GUI();
+        
+    }
+    makeHairColorPicker()
 
     function render() {
         requestAnimationFrame(render);
-
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
-
+        
         renderer.render(scene, camera);
     }
 
