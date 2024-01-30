@@ -8,7 +8,7 @@ import { TCharacterOptions } from './characterOptions.js';
 
 export function TinitialiseScene(anAvatar) {
 
-    let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial, eyeMaterial, hairMaterial;
+    let scene, camera, renderer, cubeMaterial, cube, model, modelMaterial, eyeMaterial, hairMaterial, skinMaterial;
 
     scene = new THREE.Scene();
 
@@ -33,6 +33,7 @@ export function TinitialiseScene(anAvatar) {
 
     eyeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
     hairMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    skinMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
     //cube = new THREE.Mesh(new THREE.BoxGeometry(1, 1), cubeMaterial);
     //cube.position.set(0, 0, 0);
     //scene.add(cube);
@@ -79,6 +80,22 @@ export function TinitialiseScene(anAvatar) {
         });
     }
     makeHairColorPicker()
+
+    function makeSkinColorPicker() {
+        const gui = new dat.GUI();
+        const colorChanger = { color: skinMaterial.color.getHex() };
+
+        gui.addColor(colorChanger, 'color').onChange(function (color) {
+            skinMaterial.color.set(color);
+            character.setSkinColor(color);
+            // Set the color of the loaded model's material to the same color
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
+        });
+    }
+    makeSkinColorPicker()
+
 
     function render() {
         requestAnimationFrame(render);

@@ -49,6 +49,16 @@ export class TCharacter extends THREE.Object3D {
             this.setHairColor = function (aColor) {
                 hairMaterial.material.color.set(aColor);  // Set a default color for testing
             };
+
+            const skinMaterial = gltfModel.scene.children.find(child => child.name === 'BSurfaceMesh002')
+            const earMaterial = gltfModel.scene.children.find(child => child.name === 'EARS')
+            console.log(skinMaterial)
+
+            // Define setIrisColor as a method of the class
+            this.setSkinColor = function (aColor) {
+                skinMaterial.material.color.set(aColor); 
+                earMaterial.material.color.set(aColor)
+            };
         });
 
 
