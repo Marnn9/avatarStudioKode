@@ -51,7 +51,7 @@ export function TinitialiseScene(anAvatar) {
         const gui = new dat.GUI();
         const colorChanger = { color: eyeMaterial.color.getHex() };
 
-        gui.addColor(colorChanger, 'color').name('Eye Color').onChange(function (color) {
+        gui.addColor(colorChanger, 'color').name('Eyecolor').onChange(function (color) {
             eyeMaterial.color.set(color);
             character.setIrisColor(color);
             // Set the color of the loaded model's material to the same color
@@ -62,7 +62,7 @@ export function TinitialiseScene(anAvatar) {
 
         const hairChanger = { color: hairMaterial.color.getHex() };
 
-        gui.addColor(hairChanger, 'color').name('Hair Color').onChange(function (color) {
+        gui.addColor(hairChanger, 'color').name('Haircolor').onChange(function (color) {
             hairMaterial.color.set(color);
             character.setHairColor(color);
             // Set the color of the loaded model's material to the same color
@@ -73,7 +73,7 @@ export function TinitialiseScene(anAvatar) {
 
         const skinChanger = { color: skinMaterial.color.getHex() };
 
-        gui.addColor(skinChanger, 'color').name('Skin Color').onChange(function (color) {
+        gui.addColor(skinChanger, 'color').name('Skincolor').onChange(function (color) {
             skinMaterial.color.set(color);
             character.setSkinColor(color);
             // Set the color of the loaded model's material to the same color

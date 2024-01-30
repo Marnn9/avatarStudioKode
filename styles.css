@@ -1,5 +1,6 @@
 :root {
     --mainBtnColor: #EBAC78;
+    --borderColor: #ddb271;
 }
 
 body {
@@ -108,7 +109,7 @@ canvas {
     height: auto;
     cursor: pointer;
     background-color: rgb(250, 232, 209);
-    border: 3px solid var(--mainBtnColor);
+    border: 3px solid var(--borderColor);
     border-radius: 10px;
 }
 
