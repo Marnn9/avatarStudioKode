@@ -1,6 +1,3 @@
-#
-Code for the Avatar studio
+#Code for the Avatar studio
 
-##
-
-the branches were merged jan 30. 2024
+##the branches were merged jan 30. 2024
