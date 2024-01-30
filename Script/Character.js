@@ -17,16 +17,39 @@ export class TCharacter extends THREE.Object3D {
         super(); //class constructor
 
         const loader = new GLTFLoader();
+        
+        const iris = 'eye_left'; 
+        const hair = 'hair_joined';
 
-        loader.load("../media/eye_test.gltf", (gltfModel) => {
-            this.irisOfEye = gltfModel.scene.children[2].material;
+        loader.load("../media/Boy-smaller-file.gltf", (gltfModel) => {
+            //this.irisOfEye = gltfModel.scene.children[2].material;
             gltfModel.scene.position.set(0, 0, 0);
-            gltfModel.scene.rotation.y = -Math.PI / 2;
+            //gltfModel.scene.rotation.y = -Math.PI / 2;
             this.add(gltfModel.scene);
+
+            const lights = gltfModel.scene.children.filter(child => child.isLight);
+
+            /* const eyebrows = gltfModel.scene.children.find(child => child.name === 'eyebrow')
+            if (eyebrows) {
+                // Remove the eyebrows from their parent
+                gltfModel.scene.remove(eyebrows);
+            } */
+            // Set the intensity of each light
+            lights.forEach(light => {
+               
+                light.intensity = 1;
+            });
+            const eyeMaterial = gltfModel.scene.children.find(child => child.name === iris);
+            console.log(eyeMaterial)
 
             // Define setIrisColor as a method of the class
             this.setIrisColor = function (aColor) {
-                this.irisOfEye.color.set(aColor);  // Set a default color for testing
+                eyeMaterial.children[2].material.color.set(aColor); 
+            };
+            const hairMaterial = gltfModel.scene.children.find(child => child.name === hair);
+            console.log(hairMaterial)
+            this.setHairColor = function (aColor) {
+                hairMaterial.material.color.set(aColor);   // Set a default color for testing
             };
         });
     }
