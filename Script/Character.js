@@ -17,6 +17,8 @@ export class TCharacter extends THREE.Object3D {
     constructor() {
         super(); //class constructor
 
+        const degrees = 0;
+        const radians = degrees * (Math.PI/180);
         const loader = new GLTFLoader();
 
         loader.load("../media/Boy-smaller-file.gltf", (gltfModel) => {
@@ -31,8 +33,7 @@ export class TCharacter extends THREE.Object3D {
             const earMaterial =gltfModel.scene.children.find(child => child.name === bodyParts.ears.name);
             const skinMaterial =gltfModel.scene.children.find(child => child.name === bodyParts.head.name);
 
-            
-
+            gltfModel.scene.rotation.y = radians;
             console.log(gltfModel.scene);
 
             this.setIrisColor = function (aColor) {
