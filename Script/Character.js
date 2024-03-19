@@ -18,7 +18,7 @@ export class TCharacter extends THREE.Object3D {
         super(); //class constructor
 
         const degrees = 0;
-        const radians = degrees * (Math.PI/180);
+        const rotation = degrees * (Math.PI/180);
         const loader = new GLTFLoader();
 
         loader.load("../media/Boy-smaller-file.gltf", (gltfModel) => {
@@ -28,12 +28,20 @@ export class TCharacter extends THREE.Object3D {
 
             //-----------------------------------------------------------------------------------------------------------
 
+            function locateMesh (aBodyPart){
+                const material = gltfModel.scene.children.find(child => child.name === aBodyPart)
+                return material;
+            }
+
+            //const eyeMaterial = locateMesh(bodyParts.iris.name).material;
+
+
             const eyeMaterial = gltfModel.scene.children.find(child => child.name === bodyParts.iris.name);
             const hairMaterial = gltfModel.scene.children.find(child => child.name === bodyParts.hair.name);
             const earMaterial =gltfModel.scene.children.find(child => child.name === bodyParts.ears.name);
             const skinMaterial =gltfModel.scene.children.find(child => child.name === bodyParts.head.name);
 
-            gltfModel.scene.rotation.y = radians;
+            gltfModel.scene.rotation.y = rotation;
             console.log(gltfModel.scene);
 
             this.setIrisColor = function (aColor) {
