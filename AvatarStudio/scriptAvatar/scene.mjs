@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 import * as THREE from 'three';
 import * as dat from "dat.gui";
 import { TCharacter } from "./characterClass.mjs";
@@ -18,9 +18,9 @@ export function TinitialiseScene(anAvatar) {
     scene = new THREE.Scene();
 
     const guiWidth = 300;
-    let centerX = window.innerWidth / 2 - (guiWidth/2); 
+    let centerX = window.innerWidth / 2 - (guiWidth / 2);
 
-    const guiPosition = { x: centerX, y: 10 }; 
+    const guiPosition = { x: centerX, y: 10 };
     //---------------gradient Background & color -----------------------
 
     let hexValue = "ffffff";
@@ -30,18 +30,18 @@ export function TinitialiseScene(anAvatar) {
 
     //----------------scene objects----------------------
 
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
     camera.position.z = 10;
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
 
     renderer = new THREE.WebGLRenderer();
-    renderer.setSize(window.innerWidth, window.innerHeight);
+    //renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.id = "sceneCanvas";
     renderer.domElement.setAttribute('alt', 'sceneCanvas');
-
     document.body.appendChild(renderer.domElement);
-    window.addEventListener('resize', windowResized);
+    setConstantSize();
+
 
     //-----------------character-------------------------
     const character = new TCharacter(scene);
@@ -74,6 +74,8 @@ export function TinitialiseScene(anAvatar) {
 
 
     //-------------functions-------------------------------
+
+
 
     function guiControls() {
         const gui = new dat.GUI();
@@ -133,14 +135,35 @@ export function TinitialiseScene(anAvatar) {
     }
 
     function windowResized() {
-        centerX = window.innerWidth / 2 - (guiWidth/2);
-        camera.aspect = window.innerWidth / window.innerHeight;
+        const newAspectRatio = window.innerWidth / window.innerHeight;
+
+        if (newAspectRatio >= 300 / 500) { // Landscape aspect ratio
+            const newWidth = 500 * newAspectRatio;
+            const newHeight = 500;
+            renderer.setSize(newWidth, newHeight);
+        } else { // Portrait aspect ratio
+            const newWidth = 300;
+            const newHeight = 300 / newAspectRatio;
+            renderer.setSize(newWidth, newHeight);
+        }
+
+        centerX = window.innerWidth / 2 - (guiWidth / 2);
+        camera.aspect = newAspectRatio;
         camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.render(scene, camera); // Render scene again with updated size
+    }
+
+    function setConstantSize() {
+        const canvasWidth = 300;
+        const canvasHeight = 300;
+        
+        renderer.setSize(canvasWidth, canvasHeight);
+        camera.aspect = canvasWidth / canvasHeight;
+        camera.updateProjectionMatrix();
+        
+        document.body.appendChild(renderer.domElement);
+        renderer.render(scene, camera);
     }
 
     render();
-
 }
-
-

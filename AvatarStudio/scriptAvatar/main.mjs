@@ -6,7 +6,10 @@ export function loadScene() {
 
 }
 
-export function saveImage(userId) {
+/* const {canvasForImg} = TinitialiseScene();
+canvasForImg();
+ */
+function saveImage (userId) {
     const saveConfirm = confirm("An image of the avatar will now be downloaded");
 
     if (saveConfirm) {
@@ -17,12 +20,12 @@ export function saveImage(userId) {
                 console.error("Canvas not found");
                 return;
             }
-           
-            const fileType = canvas.toDataURL('image/svg+xml');
+
+            const fileType = canvas.toDataURL('image/webp');
 
             const downloadLink = document.createElement('a');
             downloadLink.href = fileType;
-            downloadLink.download = `avatar_test.svg`
+            downloadLink.download = `avatar_test.webp`
             //downloadLink.download = `avatar_${userId}.svg`;
 
             downloadLink.click();
@@ -31,7 +34,6 @@ export function saveImage(userId) {
         return;
     }
 }
-
 const checkBtn = document.getElementById("checkBtn")
 checkBtn.addEventListener("click", saveImage);
 
