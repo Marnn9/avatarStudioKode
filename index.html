@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AvatarStudioMain</title>
     <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
@@ -16,18 +15,18 @@
     <button id="checkBtn" class="globalBtn">&#10004;</button>
 
     <div id="choiceMenu">
-        <img id="option1" class="thumbnail" src="./Media/pearlRender2.jpg">
-        <img id="option2" class="thumbnail" src="./Media/head.png"> 
-        <img id="option3" class="thumbnail" src="./Media/head.png">
-        <img id="option4" class="thumbnail" src="./Media/head.png">
-        <img id="option5" class="thumbnail" src="./Media/head.png">
-        <img id="option6" class="thumbnail" src="./Media/head.png">
-        <img id="option7" class="thumbnail" src="./Media/head.png">
+        <img id="option1" class="thumbnail" src="./AvatarStudio/mediaAvatar/eyebrowRender.jpg">
+        <img id="option2" class="thumbnail" src="./AvatarStudio/mediaAvatar/eyebrow-1Render.jpg"> 
+        <img id="option3" class="thumbnail" src="./AvatarStudio/mediaAvatar/head.png">
+        <img id="option4" class="thumbnail" src="./AvatarStudio/mediaAvatar/head.png">
+        <img id="option5" class="thumbnail" src="./AvatarStudio/mediaAvatar/head.png">
+        <img id="option6" class="thumbnail" src="./AvatarStudio/mediaAvatar/head.png">
+        <img id="option7" class="thumbnail" src="./AvatarStudio/mediaAvatar/head.png">
     </div>
 
-    <script type="module" src="./Script/main.mjs"></script>
+    <script type="module" src="./AvatarStudio/scriptAvatar/main.mjs"></script>
     <script type="module">
-        import * as main from "./Script/main.mjs";
+        import * as main from "./AvatarStudio/scriptAvatar/main.mjs";
         main.loadScene()
 
         const option1 = document.getElementById("option1");
