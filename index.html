@@ -13,7 +13,7 @@
     <button id="mainBtn" class="globalBtn">Avatar</button>
     <button id="exitBtn" class="globalBtn">X</button>
     <button id="questionBtn" class="globalBtn">?</button>
-    <button id="checkBtn" class="globalBtn">&#10004</button>
+    <button id="checkBtn" class="globalBtn">&#10004;</button>
 
     <div id="choiceMenu">
         <img id="option1" class="thumbnail" src="./Media/pearlRender2.jpg">
@@ -25,9 +25,9 @@
         <img id="option7" class="thumbnail" src="./Media/head.png">
     </div>
 
-    <script type="module" src="../Script/main.js"></script>
+    <script type="module" src="./Script/main.mjs"></script>
     <script type="module">
-        import * as main from "../Script/main.js";
+        import * as main from "./Script/main.mjs";
         main.loadScene()
 
         const option1 = document.getElementById("option1");
