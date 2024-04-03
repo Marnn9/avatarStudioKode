@@ -1,11 +1,15 @@
 :root {
     --mainBtnColor: #EBAC78;
     --borderColor: #ddb271;
+    --backgroundcolor: #ffffff;
+}
+
+html {
+    background-color: var(--backgroundcolor);
 }
 
 body {
     margin: 0;
-    overflow: hidden;
     position: relative;
 }
 
@@ -30,6 +34,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: -5;
 }
 
 #mainBtn {
@@ -61,6 +66,7 @@ body {
 }
 
 #checkBtn {
+    position: fixed;
     color: rgb(47, 185, 70);
     background-color: white;
     right: 2em;
@@ -83,47 +89,35 @@ body {
     background-color: rgb(17, 75, 75)
 }
 
-#choiceMenu {
-    background-color: green;
+/* #choiceMenu {
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
     position: fixed;
-    bottom: 2em; /* Adjust this value as needed */
+    bottom: 2em;
     left: 50%;
     transform: translateX(-50%);
     padding: 20px;
-    width: 80%; /* Adjust the width as needed */
-    max-width: 600px; /* Optionally, limit the maximum width */
-    height: 20%; /* Adjust the height as needed */
+    width: 80%;
+    max-width: 600px;
+    height: 20%;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     gap: 10px;
     justify-items: center;
     align-items: center;
-    z-index: 999; /* Ensure it appears above other content */
-}
+    z-index: 5;
+} */
 
-.thumbnail {
+/* .thumbnail {
     width: 70%;
     height: auto;
     cursor: pointer;
     background-color: rgb(250, 232, 209);
     border: 3px solid var(--borderColor);
     border-radius: 10px;
-}
+} */
 
 @media (max-width: 480px) {
-    #choiceMenu {
-        background-color: white;
-        border-radius: 10px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 10px;
-        bottom: 0em;
-        width: 100%;
-        height: 35%;
-
-    }
 
     #checkBtn {
         background-color: white;

@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "bootstrap": "^5.3.3",
     "dat.gui": "^0.7.9",
     "three": "^0.162.0"
   },

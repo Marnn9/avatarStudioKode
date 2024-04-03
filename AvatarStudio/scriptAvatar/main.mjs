@@ -6,9 +6,7 @@ export function loadScene() {
 
 }
 
-/* const {canvasForImg} = TinitialiseScene();
-canvasForImg();
- */
+
 function saveImage (userId) {
     const saveConfirm = confirm("An image of the avatar will now be downloaded");
 
@@ -34,6 +32,6 @@ function saveImage (userId) {
         return;
     }
 }
-const checkBtn = document.getElementById("checkBtn")
-checkBtn.addEventListener("click", saveImage);
+const questionBtn = document.getElementById("questionBtn")
+//questionBtn.addEventListener("click", saveImage);
 

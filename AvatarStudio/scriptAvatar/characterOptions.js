@@ -1,7 +1,7 @@
 "use strict"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from 'three';
-import { avatarFeatures } from "./scene.mjs";
+import { avatarFeatures, scenePositions } from "./scene.mjs";
 
 export class TCharacterOptions extends THREE.Object3D {
     constructor(scene) {
@@ -16,7 +16,7 @@ export class TCharacterOptions extends THREE.Object3D {
             activeType = avatarFeatures.browType;
             if (activeType == 1) {
                 loader.load("AvatarStudio/mediaAvatar/eyebrows.gltf", (gltfModel) => {
-                    gltfModel.scene.position.set(0, 1, 2);
+                    gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
                     activeType = 1;
                     avatarFeatures.browType = activeType;
                     this.add(gltfModel.scene);
@@ -42,7 +42,7 @@ export class TCharacterOptions extends THREE.Object3D {
             }
 
             loader.load("AvatarStudio/mediaAvatar/eyebrows.gltf", (gltfModel) => {
-                gltfModel.scene.position.set(0, 1, 2);
+                gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
                 activeType = 1;
                 avatarFeatures.browType = activeType;
                 this.add(gltfModel.scene);
@@ -60,7 +60,7 @@ export class TCharacterOptions extends THREE.Object3D {
                     this.remove(activeEyebrow);
                 }
 
-                gltfModel.scene.position.set(0, 1, 2);
+                gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
                 activeType = 2;
                 avatarFeatures.browType = activeType;
                 this.add(gltfModel.scene);

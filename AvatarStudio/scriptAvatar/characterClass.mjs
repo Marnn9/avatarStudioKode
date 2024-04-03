@@ -1,6 +1,7 @@
 "use strict"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from 'three';
+import { scenePositions } from "./scene.mjs";
 
 
 export class TCharacter extends THREE.Object3D {
@@ -14,7 +15,7 @@ export class TCharacter extends THREE.Object3D {
 
         loader.load("AvatarStudio/mediaAvatar/Boy-smaller-file.gltf", (gltfModel) => {
             //this.irisOfEye = gltfModel.scene.children[2].material;
-            gltfModel.scene.position.set(0, 1, 2);
+            gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
             this.add(gltfModel.scene);
 
             const lights = gltfModel.scene.children.filter(child => child.isLight);

@@ -12,6 +12,14 @@ export const avatarFeatures = {
     loggedInUser: null,
 }
 
+export const scenePositions = {
+    x: 0,
+    y: 1,
+    z: 5,
+    cvsWidth: 300,
+    cvsHeight: 500,
+}
+
 export function TinitialiseScene(anAvatar) {
 
     let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial;
@@ -154,8 +162,8 @@ export function TinitialiseScene(anAvatar) {
     }
 
     function setConstantSize() {
-        const canvasWidth = 300;
-        const canvasHeight = 300;
+        const canvasWidth = scenePositions.cvsWidth;
+        const canvasHeight = scenePositions.cvsHeight;
         
         renderer.setSize(canvasWidth, canvasHeight);
         camera.aspect = canvasWidth / canvasHeight;
