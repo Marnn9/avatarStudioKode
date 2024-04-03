@@ -1,17 +1,16 @@
 :root {
     --mainBtnColor: #EBAC78;
+    --borderColor: #ddb271;
+    --backgroundcolor: #ffffff;
+}
+
+html {
+    background-color: var(--backgroundcolor);
 }
 
 body {
     margin: 0;
-    overflow: hidden;
     position: relative;
-}
-
-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
 }
 
 .globalBtn {
@@ -28,6 +27,14 @@ canvas {
 .globalBtn:hover {
     cursor: pointer;
 
+}
+
+#sceneCanvas {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -5;
 }
 
 #mainBtn {
@@ -59,6 +66,7 @@ canvas {
 }
 
 #checkBtn {
+    position: fixed;
     color: rgb(47, 185, 70);
     background-color: white;
     right: 2em;
@@ -81,50 +89,35 @@ canvas {
     background-color: rgb(17, 75, 75)
 }
 
-#choiceMenu {
-    background-color: white;
+/* #choiceMenu {
+    background-color: rgb(255, 255, 255);
     border-radius: 10px;
-    position: absolute;
+    position: fixed;
+    bottom: 2em;
     left: 50%;
     transform: translateX(-50%);
     padding: 20px;
-    bottom: 2em;
     width: 80%;
+    max-width: 600px;
     height: 20%;
-    align-content: center;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(50px, 1fr));
     gap: 10px;
     justify-items: center;
-    align-content: center;
+    align-items: center;
+    z-index: 5;
+} */
 
-    /*pointer-events: none; /* Allows click events to pass through the choice menu */
-    /*might need to be able to click the images*/
-
-}
-
-.thumbnail {
+/* .thumbnail {
     width: 70%;
     height: auto;
     cursor: pointer;
     background-color: rgb(250, 232, 209);
-    border: 3px solid var(--mainBtnColor);
+    border: 3px solid var(--borderColor);
     border-radius: 10px;
-}
+} */
 
 @media (max-width: 480px) {
-    #choiceMenu {
-        background-color: white;
-        border-radius: 10px;
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        padding: 10px;
-        bottom: 0em;
-        width: 100%;
-        height: 35%;
-
-    }
 
     #checkBtn {
         background-color: white;
