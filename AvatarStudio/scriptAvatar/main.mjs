@@ -1,13 +1,15 @@
 "use strict";
 import { TinitialiseScene } from './scene.mjs';
+/* import {initializeSkinColorSelectors} from './colorOptions.mjs' */
 
 export function loadScene() {
     TinitialiseScene();
+    //initializeSkinColorSelectors();
 
 }
 
 
-function saveImage (userId) {
+function saveImage(userId) {
     const saveConfirm = confirm("An image of the avatar will now be downloaded");
 
     if (saveConfirm) {
@@ -32,6 +34,8 @@ function saveImage (userId) {
         return;
     }
 }
-const questionBtn = document.getElementById("questionBtn")
-//questionBtn.addEventListener("click", saveImage);
+const checkBtn = document.getElementById("checkBtn")
+checkBtn.addEventListener("click", saveImage);
+
+
 

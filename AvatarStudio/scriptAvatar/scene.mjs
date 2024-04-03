@@ -13,8 +13,8 @@ export const avatarFeatures = {
 }
 
 export const scenePositions = {
-    x: 0,
-    y: 1,
+    x: 5,
+    y: 1.8,
     z: 5,
     cvsWidth: 300,
     cvsHeight: 500,
@@ -22,7 +22,8 @@ export const scenePositions = {
 
 export function TinitialiseScene(anAvatar) {
 
-    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial;
+
+    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
     scene = new THREE.Scene();
 
     const guiWidth = 300;
@@ -34,11 +35,11 @@ export function TinitialiseScene(anAvatar) {
     let hexValue = "ffffff";
     const colorOfCube = "#" + hexValue;
 
-    scene.background = new THREE.Color(0xC3D1C3);
+    scene.background = new THREE.Color(0xffffff);
 
     //----------------scene objects----------------------
 
-    camera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
+    camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
     camera.position.z = 10;
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
@@ -53,12 +54,16 @@ export function TinitialiseScene(anAvatar) {
 
     //-----------------character-------------------------
     const character = new TCharacter(scene);
+    character.position.x = 5;
+    character.rotateY(-1.5708);
     const characterOptions = new TCharacterOptions(scene)
     scene.add(character, characterOptions);
     //----------------localStorage--------------------------------------
     const localHairColor = localStorage.getItem("haircolor");
     const localEyeColor = localStorage.getItem("eyecolor");
     const localSkinColor = localStorage.getItem("skincolor");
+    const localTopColor = null;
+    const localBottomColor = null;
 
 
     if (localHairColor !== null) {
@@ -78,12 +83,20 @@ export function TinitialiseScene(anAvatar) {
         avatarFeatures.skinColor = localSkinColor;
     } else {
         skinMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    } if (localTopColor !== null) {
+        topMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
+        avatarFeatures.skinColor = localSkinColor;
+    } else {
+        topMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+    } if (localBottomColor !== null) {
+        bottomMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
+        avatarFeatures.skinColor = localSkinColor;
+    } else {
+        bottomMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
     }
 
 
     //-------------functions-------------------------------
-
-
 
     function guiControls() {
         const gui = new dat.GUI();
@@ -132,6 +145,34 @@ export function TinitialiseScene(anAvatar) {
                 modelMaterial.color.set(color);
             }
         });
+
+        const topColorChanger = { color: topMaterial.color.getHex() };
+
+        gui.addColor(topColorChanger, 'color').name('topColor').onChange(function (color) {
+            topMaterial.color.set(color);
+            character.setTopColor(color);
+
+            avatarFeatures.skinColor = topMaterial.color.getHex().toString(16);
+
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
+        });
+
+
+        const bottomColorChanger = { color: bottomMaterial.color.getHex() };
+
+        gui.addColor(topColorChanger, 'color').name('bottomColor').onChange(function (color) {
+            bottomMaterial.color.set(color);
+            character.setBottomColor(color);
+
+            avatarFeatures.skinColor = bottomMaterial.color.getHex().toString(16);
+
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
+        });
+
     }
 
     guiControls();
@@ -164,14 +205,47 @@ export function TinitialiseScene(anAvatar) {
     function setConstantSize() {
         const canvasWidth = scenePositions.cvsWidth;
         const canvasHeight = scenePositions.cvsHeight;
-        
+
         renderer.setSize(canvasWidth, canvasHeight);
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
-        
+
         document.body.appendChild(renderer.domElement);
         renderer.render(scene, camera);
     }
 
+    let skinColorSelector = document.getElementById("skinColorSelector");
+
+    async function initializeColor() {
+        try {
+            const response = await fetch('./json/skincolorOptions.json');
+            const data = await response.json();
+            const options = data.options || {};
+
+            for (const option in options) {
+                const color = options[option].hex;
+
+                let colorSelector = document.createElement("div");
+
+                colorSelector.id = option;
+                colorSelector.className = "shadow-md p-3 rounded m-2 ratio ratio-1x1";
+                colorSelector.style.backgroundColor = color;
+                colorSelector.style.width = '20%';
+
+                skinColorSelector.appendChild(colorSelector);
+
+                colorSelector.addEventListener("click", () => {
+                    character.setSkinColor(color);
+                })
+            }
+        } catch (error) {
+            console.error('Error initializing skin color selectors:', error);
+        }
+    }
+    initializeColor();
+
+    
+
     render();
+
 }

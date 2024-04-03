@@ -30,7 +30,7 @@ body {
 
 #sceneCanvas {
     position: fixed;
-    top: 50%;
+    top: 35%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -5;
@@ -48,10 +48,22 @@ body {
 
 #checkBtn {
     background-color: white;
+    position: fixed;
     color: rgb(47, 185, 70);
     right: 2em;
-    bottom: 12em;
+    bottom: 20em;
     width: 2.5em;
+}
+
+#folder-top {
+    background-color: rgb(174, 173, 173);
+}
+
+#colors{
+    background-color: white;
+    margin-bottom: 0em;
+    overflow: auto;
+    max-height: 300px; 
 }
 
 /*
