@@ -3,5 +3,5 @@
 
 > [!IMPORTANT]
 > The branches were merged apr 3. 2024. <br>
-> in the code here Bootstrap is used and three is imported using node
+> in the code here Bootstrap and three is imported using node
 
