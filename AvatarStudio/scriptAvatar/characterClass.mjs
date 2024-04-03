@@ -4,6 +4,15 @@ import * as THREE from 'three';
 import { scenePositions } from "./scene.mjs";
 
 
+const bodyParts = {
+    iris: {name: 'eye_left', child: 2},
+    hair: {name :'hair_joined'},
+    ears: {name: 'EARS', },
+    head: {name: 'BSurfaceMesh002'},
+    lowerBody: null,
+    leg: null,
+}
+
 export class TCharacter extends THREE.Object3D {
     constructor(scene) {
         super(); 
@@ -17,6 +26,13 @@ export class TCharacter extends THREE.Object3D {
             //this.irisOfEye = gltfModel.scene.children[2].material;
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
             this.add(gltfModel.scene);
+
+            function locateMesh (aBodyPart){
+                const material = gltfModel.scene.children.find(child => child.name === aBodyPart)
+                return material;
+            }
+
+            //const eyeMaterial = locateMesh(bodyParts.iris.name).material;
 
             const lights = gltfModel.scene.children.filter(child => child.isLight);
 
