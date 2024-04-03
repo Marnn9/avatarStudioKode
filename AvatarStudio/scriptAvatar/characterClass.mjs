@@ -7,8 +7,7 @@ import { scenePositions } from "./scene.mjs";
 const bodyParts = {
     iris: {name: 'eye_left', child: 2},
     hair: {name :'hair_joined'},
-    ears: {name: 'EARS', },
-    head: {name: 'BSurfaceMesh002'},
+    head: {name: 'BSurfaceMesh002', ears: {name: 'EARS', }},
     lowerBody: null,
     leg: null,
 }
@@ -32,8 +31,11 @@ export class TCharacter extends THREE.Object3D {
                 return material;
             }
 
-            //const eyeMaterial = locateMesh(bodyParts.iris.name).material;
-
+            const eyeMaterial = locateMesh(bodyParts.iris.name);
+            const hairMaterial = locateMesh(bodyParts.hair.name);
+            const skinMaterial = locateMesh(bodyParts.head.name);
+            const earMaterial = locateMesh(bodyParts.head.ears.name);
+            
             const lights = gltfModel.scene.children.filter(child => child.isLight);
 
             const eyebrows = gltfModel.scene.children.find(child => child.name === 'eyebrow')
@@ -44,21 +46,13 @@ export class TCharacter extends THREE.Object3D {
 
                 light.intensity = 1;
             });
-            const eyeMaterial = gltfModel.scene.children.find(child => child.name === 'eye_left')
-            console.log(eyeMaterial)
 
             this.setIrisColor = function (aColor) {
                 eyeMaterial.children[2].material.color.set(aColor);  
             };
-            const hairMaterial = gltfModel.scene.children.find(child => child.name === 'hair_joined')
-            console.log(hairMaterial)
             this.setHairColor = function (aColor) {
                 hairMaterial.material.color.set(aColor); 
             };
-
-            const skinMaterial = gltfModel.scene.children.find(child => child.name === 'BSurfaceMesh002')
-            const earMaterial = gltfModel.scene.children.find(child => child.name === 'EARS')
-            console.log(skinMaterial)
 
             this.setSkinColor = function (aColor) {
                 skinMaterial.material.color.set(aColor);

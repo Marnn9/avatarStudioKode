@@ -2,6 +2,7 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "dat.gui": "^0.7.9",
+    "react-colorful": "^5.6.1",
     "three": "^0.162.0"
   },
   "devDependencies": {
