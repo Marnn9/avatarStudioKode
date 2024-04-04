@@ -1,69 +1,76 @@
 :root {
-    --mainBtnColor: #EBAC78;
-    --borderColor: #ddb271;
-    --backgroundcolor: #ffffff;
+  --mainBtnColor: #ebac78;
+  --borderColor: #ddb271;
+  --backgroundcolor: #ffffff;
+  --purple: #9720f5;
+  --inputBackground: #f4f3ff;
+  --greyFont: #9390b2;
+  --purpleFont: #a24e98;
+  --lightgrey: #d9d9d9;
+  --darkgrey: #656062;
+  --blackBackground: #1e1e1e;
+  --redButton: #eb628e;
+  --redFont: #f5b4c9;
 }
 
-html {
-    background-color: var(--backgroundcolor);
-}
+
 
 body {
-    margin: 0;
-    position: relative;
+  margin: 0;
+  position: relative;
 }
 
 .globalBtn {
-    border: none;
-    border-radius: 10px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    position: absolute;
-    font-weight: bold;
-    font-size: large;
-    height: 2.5em;
-    margin-top: 3em;
+  border: none;
+  border-radius: 10px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  position: absolute;
+  font-weight: bold;
+  font-size: large;
+  height: 2.5em;
+  margin-top: 3em;
 }
 
 .globalBtn:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 #sceneCanvas {
-    position: fixed;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -5;
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -5;
 }
 
 #checkBtn:hover {
-    background-color: rgb(47, 185, 70);
-    color: white;
+  background-color: rgb(47, 185, 70);
+  color: white;
 }
 
 #choiceMenu {
-    background-color: white;
-    height: 30vh;
+  background-color: white;
+  height: 30vh;
 }
 
 #checkBtn {
-    background-color: white;
-    position: fixed;
-    color: rgb(47, 185, 70);
-    right: 2em;
-    bottom: 20em;
-    width: 2.5em;
+  background-color: white;
+  position: fixed;
+  color: rgb(47, 185, 70);
+  right: 2em;
+  bottom: 20em;
+  width: 2.5em;
 }
 
 #folder-top {
-    background-color: rgb(174, 173, 173);
+  background-color: rgb(174, 173, 173);
 }
 
-#colors{
-    background-color: white;
-    margin-bottom: 0em;
-    overflow: auto;
-    max-height: 300px; 
+#colors {
+  background-color: white;
+  margin-bottom: 0em;
+  overflow: auto;
+  max-height: 300px;
 }
 
 /*
@@ -93,3 +100,118 @@ body {
     border: 3px solid var(--borderColor);
     border-radius: 10px;
 } */
+#inputEmail,
+#inputUsername,
+#inputPassword {
+  background-color: var(--inputBackground);
+  color: var(--purple);
+  height: 50px;
+  border-radius: 15px;
+}
+
+.form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--purple);
+  opacity: 1;
+  /* Firefox */
+}
+
+.form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--purple);
+}
+
+.form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: var(--purple);
+}
+
+.btn-primary {
+  background-color: var(--purple);
+  border-radius: 15px;
+}
+
+.inputFont {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+
+  color: var(--purple);
+}
+
+.p {
+  font-family: "Inter";
+  font-size: small;
+  color: var(--greyFont);
+}
+.p1 {
+  font-family: "Inter";
+  font-size: small;
+  color: var(--purpleFont);
+}
+
+.form-check-input {
+  height: 40px;
+  min-width: 90px;
+}
+#flexSwitchCheckDefault {
+  color: white;
+}
+
+/* DARK-MODE */
+.html {
+    background-color: var(--blackBackground);
+}
+
+.dark-mode {
+  background-color: var(--blackBackground);
+
+}
+
+.dark-mode .btn-primary {
+  background-color: var(--redButton);
+  color: var(--blackBackground);
+}
+
+.dark-mode .inputFont {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+
+  color: var(--redFont);
+}
+.dark-mode #inputEmail,
+.dark-mode #inputUsername,
+.dark-mode #inputPassword {
+  background-color: var(--darkgrey);
+  color: var(--redFont);
+  height: 50px;
+  border-radius: 15px;
+}
+
+.dark-mode .form-control::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: var(--redFont);
+  opacity: 1;
+  /* Firefox */
+}
+
+.dark-mode .form-control:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: var(--redFont);
+}
+
+.dark-mode .form-control::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: var(--redFont);
+}
+
+.dark-mode .p1 {
+  color: var(--redFont);;
+}
