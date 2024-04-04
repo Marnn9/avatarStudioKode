@@ -1,6 +1,6 @@
 "use strict";
 import { TinitialiseScene } from './scene.mjs';
-/* import {initializeSkinColorSelectors} from './colorOptions.mjs' */
+ import {initializeColor} from './colorOptions.mjs'
 
 export function loadScene() {
     TinitialiseScene();
@@ -37,5 +37,33 @@ function saveImage(userId) {
 const checkBtn = document.getElementById("checkBtn")
 checkBtn.addEventListener("click", saveImage);
 
+document.addEventListener("DOMContentLoaded", function() {
+    const menuOptions = document.querySelectorAll('[menuOption]');
+    const defaultColor = '#CECECE';
+    const selectedColor = '#9B5EF5'; 
 
+    function handleMenuOptionClick(menuOption) {
+        const menuOptionValue = menuOption.getAttribute('menuOption');
+        const colorJsonFile = menuOption.getAttribute('colorJson');
 
+        menuOptions.forEach(previous => {
+            previous.style.backgroundColor = defaultColor;
+        });
+        menuOption.style.backgroundColor = selectedColor;
+
+        while (colorSelector.firstChild) {
+            colorSelector.removeChild(colorSelector.firstChild);
+        }
+        initializeColor(menuOptionValue, colorJsonFile);
+    }
+
+    if (menuOptions.length > 0) {
+        handleMenuOptionClick(menuOptions[0]);
+    }
+
+    menuOptions.forEach(option => {
+        option.addEventListener('click', function() {
+            handleMenuOptionClick(this);
+        });
+    });
+});
