@@ -42,6 +42,8 @@
         </div>
     </nav>
 
+<!--     <div class="loadBar"></div>
+ -->
     <div id="choiceMenu" class="fixed-bottom container-lg">
         <div class="row">
             <div class="col"><img id="option1" class="thumbnail img-fluid"
@@ -55,49 +57,51 @@
         </div>
     </div>
 
-    <div class="container-fluid fixed-bottom ">
-        <div id="menuOptions" class="row g-0 ">
-            <div class="col-2" menuOption="Hair" colorJson="hair">
+    <div class="container-fluid fixed-bottom">
+        <div id="menuOptions" class="tabs row g-0">
+            <div class="col-2 tab" menuOption="Hair" optionName="Hair" colorJson="hair">
                 <div id="folder-top"
-                    class=" border rectangle  rounded-top d-flex justify-content-center align-items-center">
+                    class="border rectangle rounded-top d-flex justify-content-center align-items-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div class="col-2" menuOption="Iris" colorJson="iris">
-                <div id="folder-top" class=" border rectangle rounded-top d-flex justify-content-center ">
+            <div class="col-2 tab" menuOption="Iris" optionName="Iris" colorJson="iris">
+                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_eye.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div class="col-2" menuOption="Hair" colorJson="hair">
-                <div id="folder-top" class=" border rectangle rounded-top d-flex justify-content-center ">
-                    <img src="AvatarStudio/mediaAvatar/buttons/icons_eyebrow.png" alt="icon of hair" class="w-50">
-                </div>
-            </div>
-            <div class="col-2" menuOption="Skin" colorJson="skin">
-                <div id="folder-top" class=" border rectangle rounded-top d-flex justify-content-center ">
+            <div class="col-2 tab" menuOption="Skin" optionName="Skin" colorJson="skin">
+                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_skin.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div class="col-2" menuOption="Top" colorJson="clothing">
+            <div class="col-2 tab" menuOption="clothesMenu" colorJson="clothing" parent="true">
+                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
+                    <img src="AvatarStudio/mediaAvatar/buttons/icons_clothes.png" alt="icon of clothes" class="w-50">
+                </div>
+            </div>
+            <div class="col-2 tab" menuOption="Top" optionName="Top" colorJson="clothing">
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_top.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div class="col-2" menuOption="Bottom" colorJson="clothing">
-                <div id="folder-top" class="border rectangle  rounded-top d-flex justify-content-center ">
+            <div class="col-2 tab" menuOption="Bottom" optionName="Bottom" colorJson="clothing">
+                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_pants.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
 
-
         </div>
         <div id="colors" class="p-3">
-            <div class="row justify-content-center " id="colorSelector">
+            <div class="row justify-content-center" id="colorSelector">
+                <!-- Content for tabs will be added dynamically here -->
             </div>
         </div>
     </div>
-    </div>
-    </div>
+
+    <!-- Hidden options for clothing -->
+
+
 
     <button id="checkBtn" class="globalBtn">&#10004;</button>
 

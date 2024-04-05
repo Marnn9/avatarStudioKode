@@ -3,15 +3,12 @@ import { TinitialiseScene } from './scene.mjs';
 import { initializeColor } from './colorOptions.mjs'
 
 
-const menuOptions = document.querySelectorAll('[menuOption]');
-
-
-
 export function loadScene() {
     TinitialiseScene();
     //initializeSkinColorSelectors();
 
 }
+const menuOptions = document.querySelectorAll('[menuOption]');
 
 
 function saveImage(userId) {
@@ -58,6 +55,7 @@ function handleMenuOptionClick(menuOption) {
     const selectedColor = '#9B5EF5';
     const menuOptionValue = menuOption.getAttribute('menuOption');
     const colorJsonFile = menuOption.getAttribute('colorJson');
+    const parentObject = menuOption.getAttribute('parent');
 
     menuOptions.forEach(previous => {
         previous.style.backgroundColor = defaultColor;
@@ -67,6 +65,14 @@ function handleMenuOptionClick(menuOption) {
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
     }
-    initializeColor(menuOptionValue, colorJsonFile);
-}
 
+    if (colorJsonFile != null) {
+        initializeColor(menuOptionValue, colorJsonFile);
+    } else if (parentObject != null) {
+        console.log("Parent clicked, load child options");
+        //set the actiev to the first child of the parent (and make parent smaller?)
+        //load this.children so you only get the children of the clicked menu option
+    } else {
+        console.log("anError");
+    }
+}
