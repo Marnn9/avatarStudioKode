@@ -14,7 +14,7 @@ const bodyParts = {
 }
 
 export class TCharacter extends THREE.Object3D {
-    constructor(scene) {
+    constructor() {
         super(); 
 
         const loader = new GLTFLoader();

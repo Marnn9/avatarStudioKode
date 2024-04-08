@@ -20,6 +20,9 @@ export const scenePositions = {
     cvsHeight: 500,
 }
 
+export const character = new TCharacter();
+
+
 export function TinitialiseScene(anAvatar) {
 
 
@@ -53,10 +56,9 @@ export function TinitialiseScene(anAvatar) {
 
 
     //-----------------character-------------------------
-    const character = new TCharacter(scene);
     character.position.x = 5;
     character.rotateY(-1.5708);
-    const characterOptions = new TCharacterOptions(scene)
+    const characterOptions = new TCharacterOptions()
     scene.add(character, characterOptions);
     //----------------localStorage--------------------------------------
     const localHairColor = localStorage.getItem("haircolor");
@@ -213,39 +215,6 @@ export function TinitialiseScene(anAvatar) {
         document.body.appendChild(renderer.domElement);
         renderer.render(scene, camera);
     }
-
-    let skinColorSelector = document.getElementById("skinColorSelector");
-
-    async function initializeColor() {
-        try {
-            const response = await fetch('./json/skincolorOptions.json');
-            const data = await response.json();
-            const options = data.options || {};
-
-            for (const option in options) {
-                const color = options[option].hex;
-
-                let colorSelector = document.createElement("div");
-
-                colorSelector.id = option;
-                colorSelector.className = "shadow-md p-3 rounded m-2 ratio ratio-1x1";
-                colorSelector.style.backgroundColor = color;
-                colorSelector.style.width = '20%';
-
-                skinColorSelector.appendChild(colorSelector);
-
-                colorSelector.addEventListener("click", () => {
-                    character.setSkinColor(color);
-                })
-            }
-        } catch (error) {
-            console.error('Error initializing skin color selectors:', error);
-        }
-    }
-    initializeColor();
-
-    
-
     render();
 
 }
