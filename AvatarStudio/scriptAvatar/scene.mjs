@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import * as dat from "dat.gui";
 import { TCharacter } from "./characterClass.mjs";
 import { TCharacterOptions } from "./characterOptions.js";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export const avatarFeatures = {
     skinColor: null,
@@ -46,13 +47,30 @@ export function TinitialiseScene(anAvatar) {
     camera.position.z = 10;
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
+    
 
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer({antialias:true});
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     //renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.id = "sceneCanvas";
     renderer.domElement.setAttribute('alt', 'sceneCanvas');
     document.body.appendChild(renderer.domElement);
     setConstantSize();
+
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(10, 10, 10);
+directionalLight.castShadow = true; // Enable shadow casting
+scene.add(directionalLight);
+
+// Configure shadow properties
+directionalLight.shadow.mapSize.width = 1024; // Shadow map width
+directionalLight.shadow.mapSize.height = 1024; // Shadow map height
+directionalLight.shadow.camera.near = 0.5; // Near plane of the shadow camera
+directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
+
+
+
 
 
     //-----------------character-------------------------
@@ -69,32 +87,32 @@ export function TinitialiseScene(anAvatar) {
 
 
     if (localHairColor !== null) {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: `#${localHairColor}` });
+        hairMaterial = new THREE.MeshPhongMaterial({ color: `#${localHairColor}` });
         avatarFeatures.hairColor = localHairColor;
     } else {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        hairMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     }
     if (localEyeColor !== null) {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: `#${localEyeColor}` });
+        eyeMaterial = new THREE.MeshPhongMaterial({ color: `#${localEyeColor}` });
         avatarFeatures.eyeColor = localEyeColor;
     } else {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        eyeMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     }
     if (localSkinColor !== null) {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: `#${localSkinColor}` });
+        skinMaterial = new THREE.MeshPhongMaterial({ color: `#${localSkinColor}` });
         avatarFeatures.skinColor = localSkinColor;
     } else {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        skinMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     } if (localTopColor !== null) {
-        topMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
+        topMaterial = new THREE.MeshPhongMaterial({ color: `#${localTopColor}` });
         avatarFeatures.skinColor = localSkinColor;
     } else {
-        topMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        topMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     } if (localBottomColor !== null) {
-        bottomMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
+        bottomMaterial = new THREE.MeshPhongMaterial({ color: `#${localTopColor}` });
         avatarFeatures.skinColor = localSkinColor;
     } else {
-        bottomMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        bottomMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     }
 
 
