@@ -14,15 +14,20 @@ export const avatarFeatures = {
 }
 
 export const scenePositions = {
-    x: 5,
-    y: 1.8,
-    z: 5,
+    x: 0,
+    y: 0,
+    z: 0,
     cvsWidth: 300,
     cvsHeight: 500,
 }
 
 export const character = new TCharacter();
 
+function degreesToRadians(degrees) {
+    const mathToMultiply = Math.PI / 180;
+    const radians = degrees * mathToMultiply;
+    return radians;
+}
 
 export function TinitialiseScene(anAvatar) {
 
@@ -38,18 +43,21 @@ export function TinitialiseScene(anAvatar) {
 
     let hexValue = "ffffff";
     const colorOfCube = "#" + hexValue;
-
-    scene.background = new THREE.Color(0xffffff);
+    const white = 0xffffff;
+    scene.background = new THREE.Color(white);
 
     //----------------scene objects----------------------
 
     camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
-    camera.position.z = 10;
+    camera.position.z = 2;
+
+    //-----------------lights------------------
+    
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
-    
 
-    renderer = new THREE.WebGLRenderer({antialias:true});
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     //renderer.setSize(window.innerWidth, window.innerHeight);
@@ -59,23 +67,35 @@ export function TinitialiseScene(anAvatar) {
     setConstantSize();
 
     const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-directionalLight.position.set(10, 10, 10);
-directionalLight.castShadow = true; // Enable shadow casting
-scene.add(directionalLight);
+    directionalLight.position.set(10, 10, 10);
+    directionalLight.castShadow = true; // Enable shadow casting
+    scene.add(directionalLight);
 
-// Configure shadow properties
-directionalLight.shadow.mapSize.width = 1024; // Shadow map width
-directionalLight.shadow.mapSize.height = 1024; // Shadow map height
-directionalLight.shadow.camera.near = 0.5; // Near plane of the shadow camera
-directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
+    // Configure shadow properties
+    directionalLight.shadow.mapSize.width = 1024; // Shadow map width
+    directionalLight.shadow.mapSize.height = 1024; // Shadow map height
+    directionalLight.shadow.camera.near = 0.5; // Near plane of the shadow camera
+    directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
 
 
+
+
+    renderer = new THREE.WebGLRenderer();
+    //renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.domElement.id = "sceneCanvas";
+    renderer.domElement.setAttribute('alt', 'sceneCanvas');
+    document.body.appendChild(renderer.domElement);
+
+    var controls = new OrbitControls(camera, renderer.domElement);
+
+    setConstantSize();
+
+   
 
 
 
     //-----------------character-------------------------
-    character.position.x = 5;
-    character.rotateY(-1.5708);
+    character.rotateY(degreesToRadians(-90));
     const characterOptions = new TCharacterOptions()
     scene.add(character, characterOptions);
     //----------------localStorage--------------------------------------
@@ -199,7 +219,7 @@ directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
 
     function render() {
         requestAnimationFrame(render);
-
+        controls.update();
         renderer.render(scene, camera);
     }
 
@@ -233,6 +253,9 @@ directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
         document.body.appendChild(renderer.domElement);
         renderer.render(scene, camera);
     }
+
+
+
     render();
 
 }

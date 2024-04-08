@@ -100,7 +100,21 @@ body {
     100% { transform: rotate(360deg); }
   }
 
+  #bootstrapTab{
+    background-color: rgb(255, 255, 255);
+  }
 
+  .imgIconTab{
+    height: 30px;
+  }
+
+  #link{
+    padding-left: 20px;
+    padding-right: 20px;
+    height: 40px;
+    background-color: rgb(164, 131, 131);
+    
+  }
 /*
     background-color: rgb(255, 255, 255);
     border-radius: 10px;

@@ -5,31 +5,48 @@ import { scenePositions } from "./scene.mjs";
 
 
 const bodyParts = {
-    iris: {name: 'eye002', child: 2},
-    hair: {name :'hair_midlength'},
-    head: {name: 'remeshed_joined', ears: {name: 'EARS', }},
-    shirt: {name: 'shirt_base'},
-    lowerBody: {name: 'pants_jogging'},
+    iris: { name: 'eye002', child: 2 },
+    hair: { name: 'hair_midlength' },
+    head: { name: 'remeshed_joined' },
+    shirt: { name: 'shirt_base' },
+    lowerBody: { name: 'pants_jogging' },
     leg: null,
 }
 
 export class TCharacter extends THREE.Object3D {
     constructor() {
-        super(); 
+        super();
 
         const loader = new GLTFLoader();
         const localHairColor = localStorage.getItem("haircolor");
         const localEyeColor = localStorage.getItem("eyecolor");
         const localSkinColor = localStorage.getItem("skincolor");
 
-        loader.load("./AvatarStudio/mediaAvatar/baseModel.gltf", (gltfModel) => {
+        loader.load("./AvatarStudio/mediaAvatar/whiteSkin.gltf", (gltfModel) => {
             //this.irisOfEye = gltfModel.scene.children[2].material;
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
             this.add(gltfModel.scene);
 
-            function locateMesh (aBodyPart){
-                const material = gltfModel.scene.children.find(child => child.name === aBodyPart)
-                return material;
+            function locateMesh(aBodyPart) {
+                const mesh = gltfModel.scene.children.find(child => child.name === aBodyPart)
+                if (mesh.name !== bodyParts.iris.name) {
+                    // Create a new MeshPhongMaterial
+                    const phongMaterial = new THREE.MeshPhongMaterial();
+
+                    // Copy properties from MeshStandardMaterial to MeshPhongMaterial
+                    phongMaterial.color.copy(mesh.material.color);
+                    phongMaterial.map = mesh.material.map;
+                    phongMaterial.normalMap = mesh.material.normalMap;
+                    phongMaterial.normalScale.copy(mesh.material.normalScale);
+                    // You would need to do similar for other properties like roughness, emissive, etc.
+
+                    // Replace mesh material with the newly created MeshPhongMaterial
+                    mesh.material = phongMaterial;
+                    //console.log("material =", mesh.material);
+
+                }
+
+                return mesh;
             }
             console.log(gltfModel.scene);
 
@@ -38,31 +55,29 @@ export class TCharacter extends THREE.Object3D {
             const eyeMaterial = locateMesh(bodyParts.iris.name);
             const hairMaterial = locateMesh(bodyParts.hair.name);
             const skinMaterial = locateMesh(bodyParts.head.name);
-            const earMaterial = locateMesh(bodyParts.head.ears.name);
-
             const shirtMaterial = locateMesh(bodyParts.shirt.name);
             const pantsMaterial = locateMesh(bodyParts.lowerBody.name);
-            console.log(shirtMaterial);
-            
+
             const lights = gltfModel.scene.children.filter(child => child.isLight);
 
             const eyebrows = gltfModel.scene.children.find(child => child.name === 'eyebrow')
             if (eyebrows) {
                 gltfModel.scene.remove(eyebrows);
             }
+
             lights.forEach(light => {
 
                 light.intensity = 1;
             });
 
             this.setIrisColor = function (aColor) {
-                
+
                 eyeMaterial.children[1].material.color.set(aColor);
                 eyeMaterial.children[1].material.transparent = true
             };
-           
+
             this.setHairColor = function (aColor) {
-                hairMaterial.material.color.set(aColor); 
+                hairMaterial.material.color.set(aColor);
             };
 
             this.setSkinColor = function (aColor) {
@@ -71,11 +86,11 @@ export class TCharacter extends THREE.Object3D {
             };
 
             this.setTopColor = function (aColor) {
-                shirtMaterial.material.color.set(aColor); 
+                shirtMaterial.material.color.set(aColor);
             };
 
             this.setBottomColor = function (aColor) {
-                pantsMaterial.material.color.set(aColor); 
+                pantsMaterial.material.color.set(aColor);
             };
 
 

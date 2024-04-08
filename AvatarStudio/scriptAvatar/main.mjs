@@ -70,7 +70,7 @@ function handleMenuOptionClick(menuOption) {
         initializeColor(menuOptionValue, colorJsonFile);
     } else if (parentObject != null) {
         console.log("Parent clicked, load child options");
-        //set the actiev to the first child of the parent (and make parent smaller?)
+        //set the active to the first child of the parent (and make parent smaller?)
         //load this.children so you only get the children of the clicked menu option
     } else {
         console.log("anError");
