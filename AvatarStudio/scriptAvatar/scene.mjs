@@ -1,5 +1,6 @@
 'use strict';
 import * as THREE from 'three';
+import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js';
 import * as dat from "dat.gui";
 import { TCharacter } from "./characterClass.mjs";
 import { TCharacterOptions } from "./characterOptions.js";
@@ -13,9 +14,9 @@ export const avatarFeatures = {
 }
 
 export const scenePositions = {
-    x: 5,
-    y: 1.8,
-    z: 5,
+    x: 0,
+    y: 0,
+    z: 0,
     cvsWidth: 300,
     cvsHeight: 500,
 }
@@ -52,6 +53,9 @@ export function TinitialiseScene(anAvatar) {
     renderer.domElement.id = "sceneCanvas";
     renderer.domElement.setAttribute('alt', 'sceneCanvas');
     document.body.appendChild(renderer.domElement);
+
+    var controls = new OrbitControls(camera, renderer.domElement);
+
     setConstantSize();
 
 
@@ -181,7 +185,7 @@ export function TinitialiseScene(anAvatar) {
 
     function render() {
         requestAnimationFrame(render);
-
+        controls.update();
         renderer.render(scene, camera);
     }
 
@@ -215,6 +219,9 @@ export function TinitialiseScene(anAvatar) {
         document.body.appendChild(renderer.domElement);
         renderer.render(scene, camera);
     }
+
+
+
     render();
 
 }
