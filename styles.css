@@ -157,9 +157,19 @@ body {
   height: 40px;
   min-width: 90px;
 }
-#flexSwitchCheckDefault {
-  color: white;
-}
+ #flexSwitchCheckDefault {
+    color: white;
+ background-color: var(--lightgrey);
+    border: none;
+    box-shadow: none;
+  }
+
+#flexSwitchCheckDefault:focus {
+    color: white;
+    border: none;
+    box-shadow: none;
+  }
+
 
 /* DARK-MODE */
 .html {
@@ -215,3 +225,16 @@ body {
 .dark-mode .p1 {
   color: var(--redFont);;
 }
+
+.dark-mode #flexSwitchCheckDefault {
+    color: white;
+    background-color: black;
+    border: none;
+    box-shadow: none;
+  }
+  .dark-mode #flexSwitchCheckDefault:focus {
+      color: white;
+      background-color: black;
+      border: none;
+      box-shadow: none;
+    }
