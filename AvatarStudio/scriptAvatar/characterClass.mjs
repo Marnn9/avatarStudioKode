@@ -22,7 +22,7 @@ export class TCharacter extends THREE.Object3D {
         const localEyeColor = localStorage.getItem("eyecolor");
         const localSkinColor = localStorage.getItem("skincolor");
 
-        loader.load("./AvatarStudio/mediaAvatar/baseModel.gltf", (gltfModel) => {
+        loader.load("./AvatarStudio/mediaAvatar/whiteSkin.gltf", (gltfModel) => {
             //this.irisOfEye = gltfModel.scene.children[2].material;
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
             this.add(gltfModel.scene);
@@ -42,7 +42,7 @@ export class TCharacter extends THREE.Object3D {
 
                     // Replace mesh material with the newly created MeshPhongMaterial
                     mesh.material = phongMaterial;
-                    console.log("material =", mesh.material);
+                    //console.log("material =", mesh.material);
 
                 }
 
@@ -68,7 +68,6 @@ export class TCharacter extends THREE.Object3D {
             lights.forEach(light => {
 
                 light.intensity = 1;
-                console.log(light);
             });
 
             this.setIrisColor = function (aColor) {
