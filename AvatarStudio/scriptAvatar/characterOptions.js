@@ -4,7 +4,7 @@ import * as THREE from 'three';
 import { avatarFeatures, scenePositions } from "./scene.mjs";
 
 export class TCharacterOptions extends THREE.Object3D {
-    constructor(scene) {
+    constructor() {
         super();
 
         const loader = new GLTFLoader();
