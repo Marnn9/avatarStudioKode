@@ -23,7 +23,6 @@ export class TCharacter extends THREE.Object3D {
         const localSkinColor = localStorage.getItem("skincolor");
 
         loader.load("./AvatarStudio/mediaAvatar/whiteSkin.gltf", (gltfModel) => {
-            //this.irisOfEye = gltfModel.scene.children[2].material;
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
             this.add(gltfModel.scene);
 
@@ -32,18 +31,14 @@ export class TCharacter extends THREE.Object3D {
                 if (mesh.name !== bodyParts.iris.name) {
                     // Create a new MeshPhongMaterial
                     const phongMaterial = new THREE.MeshPhongMaterial();
-
                     // Copy properties from MeshStandardMaterial to MeshPhongMaterial
                     phongMaterial.color.copy(mesh.material.color);
                     phongMaterial.map = mesh.material.map;
                     phongMaterial.normalMap = mesh.material.normalMap;
                     phongMaterial.normalScale.copy(mesh.material.normalScale);
+                    phongMaterial.receiveShadow = true;
                     // You would need to do similar for other properties like roughness, emissive, etc.
-
-                    // Replace mesh material with the newly created MeshPhongMaterial
                     mesh.material = phongMaterial;
-                    //console.log("material =", mesh.material);
-
                 }
 
                 return mesh;
@@ -71,7 +66,6 @@ export class TCharacter extends THREE.Object3D {
             });
 
             this.setIrisColor = function (aColor) {
-
                 eyeMaterial.children[1].material.color.set(aColor);
                 eyeMaterial.children[1].material.transparent = true
             };
@@ -82,7 +76,6 @@ export class TCharacter extends THREE.Object3D {
 
             this.setSkinColor = function (aColor) {
                 skinMaterial.material.color.set(aColor);
-                //earMaterial.material.color.set(aColor)
             };
 
             this.setTopColor = function (aColor) {
@@ -93,20 +86,14 @@ export class TCharacter extends THREE.Object3D {
                 pantsMaterial.material.color.set(aColor);
             };
 
-
             this.setColor = function () {
                 skinMaterial.material.color.set("#" + localSkinColor);
-                earMaterial.material.color.set("#" + localSkinColor);
                 eyeMaterial.children[2].material.color.set("#" + localEyeColor);
                 hairMaterial.material.color.set("#" + localHairColor);
-
             }
             if ((localEyeColor && localHairColor && localSkinColor) !== null) {
                 this.setColor();
             }
         });
-
-
-
     }
 }

@@ -16,8 +16,8 @@ export const scenePositions = {
     x: 0,
     y: 0,
     z: 0,
-    cvsWidth: 300,
-    cvsHeight: 500,
+    cvsWidth: window.innerWidth,
+    cvsHeight: window.innerHeight,
 }
 
 export const character = new TCharacter();
@@ -48,9 +48,18 @@ export function TinitialiseScene(anAvatar) {
     //----------------scene objects----------------------
 
     camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
-    camera.position.z = 4;
+    camera.position.z = 5;
     //camera.position.y = -2
 
+    /*  const planeGeometry = new THREE.PlaneGeometry(20, 20); // Adjust the size as needed
+     const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
+     const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+     const planeFloor = new THREE.Mesh(planeGeometry, planeMaterial);
+     planeFloor.rotateX(degreesToRadians(90));
+     planeFloor.position.y = -5;
+     planeMesh.receiveShadow = true;
+     planeMesh.position.z = -8;
+     scene.add(planeMesh, planeFloor); */
     //-----------------lights------------------
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
@@ -64,9 +73,9 @@ export function TinitialiseScene(anAvatar) {
     renderer.domElement.id = "sceneCanvas";
     renderer.domElement.setAttribute('alt', 'sceneCanvas');
     document.body.appendChild(renderer.domElement);
-    setConstantSize();
+    setConstantAspectRatio();
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(white, 1);
     directionalLight.position.set(10, 10, 10);
     directionalLight.castShadow = true; // Enable shadow casting
     scene.add(directionalLight);
@@ -77,17 +86,7 @@ export function TinitialiseScene(anAvatar) {
     directionalLight.shadow.camera.near = 0.5; // Near plane of the shadow camera
     directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
 
-
-
-    //renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.domElement.id = "sceneCanvas";
-    renderer.domElement.setAttribute('alt', 'sceneCanvas');
-    document.body.appendChild(renderer.domElement);
-
     var controls = new OrbitControls(camera, renderer.domElement);
-
-    setConstantSize();
-
 
     //-----------------character-------------------------
     character.rotateY(degreesToRadians(-90));
@@ -139,38 +138,14 @@ export function TinitialiseScene(anAvatar) {
         renderer.render(scene, camera);
     }
 
-    function windowResized() {
-        const newAspectRatio = window.innerWidth / window.innerHeight;
-
-        if (newAspectRatio >= 300 / 500) { // Landscape aspect ratio
-            const newWidth = 500 * newAspectRatio;
-            const newHeight = 500;
-            renderer.setSize(newWidth, newHeight);
-        } else { // Portrait aspect ratio
-            const newWidth = 300;
-            const newHeight = 300 / newAspectRatio;
-            renderer.setSize(newWidth, newHeight);
-        }
-
-        centerX = window.innerWidth / 2 - (guiWidth / 2);
-        camera.aspect = newAspectRatio;
-        camera.updateProjectionMatrix();
-        renderer.render(scene, camera); // Render scene again with updated size
-    }
-
-    function setConstantSize() {
+    function setConstantAspectRatio() {
         const canvasWidth = scenePositions.cvsWidth;
         const canvasHeight = scenePositions.cvsHeight;
 
         renderer.setSize(canvasWidth, canvasHeight);
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
-
-        document.body.appendChild(renderer.domElement);
-        renderer.render(scene, camera);
     }
-
-
 
     render();
 

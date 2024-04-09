@@ -48,7 +48,17 @@
         <h2>laster inn <br><span class="dots"></span></h2>
     </div>
 
+    <template id="menuItemInfo">
+        <div id="menuInfo" class="menuInfoContainer">
+            <h1 id="menuTitle" class="menuTitleContent"></h1>
+            <p id="menuContent" class="menuContentData"></p>
+            <img id="menuImg" class="imgMenuContent" src="./AvatarStudio/mediaAvatar/buttons/logo_pruple_tst.png"
+                alt="logoA">
+        </div>
+    </template>
+
     <div id="aboutContent" class="about-container" style="display: none;">
+        <!-- this should be done as one template getting the text elements from the server -->
         <p>
         <h1>Om oss</h1> <br>
 
@@ -60,7 +70,8 @@
 
         </p>
 
-        <img id="logoImg" src="./AvatarStudio/mediaAvatar/buttons/logo_pruple_tst.png" alt="logoA">
+        <img id="logoImgAbout" class="imgMenuContent" src="./AvatarStudio/mediaAvatar/buttons/logo_pruple_tst.png"
+            alt="logoA">
 
     </div>
 
@@ -73,11 +84,19 @@
         unchanged.
         <b> It was popularised in the 1960s </b>with the release of Letraset sheets containing Lorem Ipsum passages.
         </p>
-
-        
-            <img id="logoImg" src="./AvatarStudio/mediaAvatar/head.png" alt="head">
-        
+        <img id="logoImgHow" class="imgMenuContent" src="./AvatarStudio/mediaAvatar/head.png" alt="head">
     </div>
+
+
+    <template id="footerTmp">
+        <footer class="hiding">
+            <div class="text-center p-3" style="background-color: rgba(240, 231, 231, 0.05);">
+                © 2024 Copyright:
+                <a class="text-body" href="#">Metods.no</a>
+            </div>
+        </footer>
+    </template>
+
 
     <style>
         @keyframes changeColors {
@@ -164,48 +183,100 @@
             line-height: 1.5;
         }
 
-        #logoImg {
+
+
+        /* for the menu items like the about page etc. */
+
+        .menuInfoContainer {
+            position: relative;
+            margin: 20% 15%;
+            font-size: large;
+            line-height: 1.5;
+        }
+
+        .menuTitleContent {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-style: normal;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .imgMenuContent {
             margin-top: 23%;
             max-width: 80%;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+        footer {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 1);
+            text-align: center;
+            padding: 10px;
         }
     </style>
     <script>
+
+        const aboutTitle = "Om oss";
+        const howToTitle = "Hvordan starte";
+        const content = `<b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry.
+    It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially
+    unchanged.
+    <b> It was popularised in the 1960s </b>with the release of Letraset sheets containing Lorem Ipsum passages.`;
+
+        const aboutImg = './AvatarStudio/mediaAvatar/buttons/logo_pruple_tst.png';
+        const howToImg = './AvatarStudio/mediaAvatar/head.png';
 
         setTimeout(showAboutContent, 2000);
 
         function showAboutContent() {
             const loading = document.getElementById("loadingContent");
             loading.style.display = "none";
-            const about = document.getElementById("aboutContent");
-            about.style.display = "block";
-            setTimeout(showHowToContent, 3000);
+            addTemplate('menuItemInfo', aboutTitle, content, aboutImg);
+            setTimeout(showHowToContent, 2000);
         }
 
         function showHowToContent() {
-            const loading = document.getElementById("loadingContent");
-            loading.style.display = "none";
-            const about = document.getElementById("aboutContent");
-            about.style.display = "none";
-            const how = document.getElementById("howContent");
-            how.style.display = "block";
+            addTemplate('menuItemInfo', howToTitle, content, howToImg);
         }
+
+        function addTemplate(aTemplateId, aTitle, aContent, anImagePath) {
+            const template = document.getElementById(aTemplateId);
+            const clone = template.content.cloneNode(true);
+
+            const titleElement = clone.getElementById('menuTitle');
+            const contentElement = clone.getElementById('menuContent');
+            const img = clone.getElementById('menuImg');
+            img.src = anImagePath
+
+            titleElement.textContent = aTitle;
+            contentElement.innerHTML = aContent;
+
+            const tempContainer = document.createElement('div');
+            tempContainer.appendChild(clone);
+
+            const menuContainer = tempContainer.querySelector('#menuInfo');
+            document.body.appendChild(menuContainer);
+        }
+
+        function loadFooterTmp() {
+            const template = document.getElementById('footerTmp');
+            const clone = template.content.cloneNode(true);
+
+            document.body.appendChild(clone);
+        }
+        loadFooterTmp();
+
+
 
     </script>
 
-    <footer>
-        <a
-        data-mdb-ripple-init
-        class="btn btn-link btn-floating btn-lg text-body m-1"
-        href="#!"
-        role="button"
-        data-mdb-ripple-color="dark"
-        ><i class="fab fa-linkedin"></i
-      ></a>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-            © 2024 Copyright:
-            <a class="text-body" href="#">Metods.no</a>
-          </div>
-    </footer>
+
 
 </body>
 

@@ -16,20 +16,32 @@ function saveImage(userId) {
 
     if (saveConfirm) {
         requestAnimationFrame(() => {
-            //thew canvas that exports teh image should have a constant size and aspectratio set in this function
-            const canvas = document.getElementById('sceneCanvas');
+            const originalCanvas = document.getElementById('sceneCanvas');
 
-            if (!canvas) {
+            if (!originalCanvas) {
                 console.error("Canvas not found");
                 return;
             }
 
-            const fileType = canvas.toDataURL('image/webp');
+            const newCanvas = document.createElement('canvas');
+            const newCanvasContext = newCanvas.getContext('2d');
+
+            const canvasWidth = 800; // Set your desired width
+            const canvasHeight = 600; // Set your desired height
+
+            newCanvas.width = canvasWidth;
+            newCanvas.height = canvasHeight;
+
+            // Set constant aspect ratio for rendering
+            setConstantAspectRatio(canvasWidth, canvasHeight);
+
+            newCanvasContext.drawImage(originalCanvas, 0, 0, canvasWidth, canvasHeight);
+
+            const fileType = newCanvas.toDataURL('image/webp');
 
             const downloadLink = document.createElement('a');
             downloadLink.href = fileType;
-            downloadLink.download = `avatar_test.webp`
-            //downloadLink.download = `avatar_${userId}.svg`;
+            downloadLink.download = `avatar_test.webp`;
 
             downloadLink.click();
         });
@@ -37,6 +49,14 @@ function saveImage(userId) {
         return;
     }
 }
+
+function setConstantAspectRatio(width, height) {
+    renderer.setSize(width, height);
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    // Don't append the renderer.domElement or render the scene here
+}
+
 const checkBtn = document.getElementById("checkBtn")
 checkBtn.addEventListener("click", saveImage);
 
