@@ -1,7 +1,6 @@
 'use strict';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import * as dat from "dat.gui";
 import { TCharacter } from "./characterClass.mjs";
 import { TCharacterOptions } from "./characterOptions.js";
 
@@ -49,10 +48,11 @@ export function TinitialiseScene(anAvatar) {
     //----------------scene objects----------------------
 
     camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
-    camera.position.z = 2;
+    camera.position.z = 4;
+    //camera.position.y = -2
 
     //-----------------lights------------------
-    
+
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
 
@@ -79,8 +79,6 @@ export function TinitialiseScene(anAvatar) {
 
 
 
-
-    renderer = new THREE.WebGLRenderer();
     //renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.id = "sceneCanvas";
     renderer.domElement.setAttribute('alt', 'sceneCanvas');
@@ -134,85 +132,6 @@ export function TinitialiseScene(anAvatar) {
 
 
     //-------------functions-------------------------------
-
-    function guiControls() {
-        const gui = new dat.GUI();
-
-        gui.domElement.style.position = 'absolute';
-        gui.domElement.style.left = guiPosition.x + 'px';
-        gui.domElement.style.top = guiPosition.y + 'px';
-
-        const eyeChanger = { color: eyeMaterial.color.getHex() };
-
-        gui.addColor(eyeChanger, 'color').name('Eyecolor').onChange(function (color) {
-
-            eyeMaterial.color.set(color);
-            character.setIrisColor(color);
-
-            avatarFeatures.eyeColor = eyeMaterial.color.getHex().toString(16);
-
-            if (modelMaterial) {
-                modelMaterial.color.set(color);
-            }
-
-        });
-
-        const hairChanger = { color: hairMaterial.color.getHex() };
-
-        gui.addColor(hairChanger, 'color').name('Haircolor').onChange(function (color) {
-            hairMaterial.color.set(color);
-            character.setHairColor(color);
-
-            avatarFeatures.hairColor = hairMaterial.color.getHex().toString(16);
-
-            if (modelMaterial) {
-                modelMaterial.color.set(color);
-            }
-        });
-
-        const skinChanger = { color: skinMaterial.color.getHex() };
-
-        gui.addColor(skinChanger, 'color').name('Skincolor').onChange(function (color) {
-            skinMaterial.color.set(color);
-            character.setSkinColor(color);
-
-            avatarFeatures.skinColor = skinMaterial.color.getHex().toString(16);
-
-            if (modelMaterial) {
-                modelMaterial.color.set(color);
-            }
-        });
-
-        const topColorChanger = { color: topMaterial.color.getHex() };
-
-        gui.addColor(topColorChanger, 'color').name('topColor').onChange(function (color) {
-            topMaterial.color.set(color);
-            character.setTopColor(color);
-
-            avatarFeatures.skinColor = topMaterial.color.getHex().toString(16);
-
-            if (modelMaterial) {
-                modelMaterial.color.set(color);
-            }
-        });
-
-
-        const bottomColorChanger = { color: bottomMaterial.color.getHex() };
-
-        gui.addColor(topColorChanger, 'color').name('bottomColor').onChange(function (color) {
-            bottomMaterial.color.set(color);
-            character.setBottomColor(color);
-
-            avatarFeatures.skinColor = bottomMaterial.color.getHex().toString(16);
-
-            if (modelMaterial) {
-                modelMaterial.color.set(color);
-            }
-        });
-
-    }
-
-    guiControls();
 
     function render() {
         requestAnimationFrame(render);

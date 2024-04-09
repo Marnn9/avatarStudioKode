@@ -16,6 +16,7 @@ function saveImage(userId) {
 
     if (saveConfirm) {
         requestAnimationFrame(() => {
+            //thew canvas that exports teh image should have a constant size and aspectratio set in this function
             const canvas = document.getElementById('sceneCanvas');
 
             if (!canvas) {

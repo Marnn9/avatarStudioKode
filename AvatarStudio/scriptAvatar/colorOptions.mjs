@@ -23,7 +23,8 @@ export async function initializeColor(aMenuObject, aColorType) {
 
             colorSelector.addEventListener("click", () => {
                 const functionName = `set${aMenuObject}Color`;
-                character[functionName](color);                });
+                character[functionName](color);                
+            });
         }
 
     } catch (error) {
