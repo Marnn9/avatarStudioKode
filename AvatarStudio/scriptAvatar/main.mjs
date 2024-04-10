@@ -6,7 +6,6 @@ import { initializeColor } from './colorOptions.mjs'
 export function loadScene() {
     TinitialiseScene();
     //initializeSkinColorSelectors();
-
 }
 const menuOptions = document.querySelectorAll('[menuOption]');
 
@@ -16,45 +15,24 @@ function saveImage(userId) {
 
     if (saveConfirm) {
         requestAnimationFrame(() => {
-            const originalCanvas = document.getElementById('sceneCanvas');
+            const canvas = document.getElementById('sceneCanvas');
 
-            if (!originalCanvas) {
+            if (!canvas) {
                 console.error("Canvas not found");
                 return;
             }
 
-            const newCanvas = document.createElement('canvas');
-            const newCanvasContext = newCanvas.getContext('2d');
-
-            const canvasWidth = 800; // Set your desired width
-            const canvasHeight = 600; // Set your desired height
-
-            newCanvas.width = canvasWidth;
-            newCanvas.height = canvasHeight;
-
-            // Set constant aspect ratio for rendering
-            setConstantAspectRatio(canvasWidth, canvasHeight);
-
-            newCanvasContext.drawImage(originalCanvas, 0, 0, canvasWidth, canvasHeight);
-
-            const fileType = newCanvas.toDataURL('image/webp');
+            const fileType = canvas.toDataURL('image/webp');
 
             const downloadLink = document.createElement('a');
             downloadLink.href = fileType;
-            downloadLink.download = `avatar_test.webp`;
+            downloadLink.download = `avatar_test.webp`
 
             downloadLink.click();
         });
     } else {
         return;
     }
-}
-
-function setConstantAspectRatio(width, height) {
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-    // Don't append the renderer.domElement or render the scene here
 }
 
 const checkBtn = document.getElementById("checkBtn")

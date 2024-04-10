@@ -36,8 +36,7 @@ export function TinitialiseScene(anAvatar) {
 
     const guiWidth = 300;
     let centerX = window.innerWidth / 2 - (guiWidth / 2);
-
-    const guiPosition = { x: centerX, y: 10 };
+    
     //---------------gradient Background & color -----------------------
 
     let hexValue = "ffffff";
