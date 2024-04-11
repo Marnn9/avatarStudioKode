@@ -24,7 +24,7 @@ export class TCharacterOptions extends THREE.Object3D {
                 });
             } else {
                 loader.load("AvatarStudio/mediaAvatar/eyebrows-1.gltf", (gltfModel) => {
-                    gltfModel.scene.position.set(0, 1, 2);
+                    gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
                     activeType = 2;
                     avatarFeatures.browType = activeType;
                     this.add(gltfModel.scene);

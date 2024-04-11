@@ -2,12 +2,13 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from 'three';
 import { scenePositions } from "./scene.mjs";
+import fs from 'fs';
 
 
 const bodyParts = {
-    iris: { name: 'eye002', child: 2 },
+    iris: { name: 'eyes', child: 2 },
     hair: { name: 'hair_midlength' },
-    head: { name: 'remeshed_joined' },
+    head: { name: 'skin' },
     shirt: { name: 'shirt_base' },
     lowerBody: { name: 'pants_jogging' },
     leg: null,
@@ -22,11 +23,11 @@ export class TCharacter extends THREE.Object3D {
         const localEyeColor = localStorage.getItem("eyecolor");
         const localSkinColor = localStorage.getItem("skincolor");
 
-        loader.load("./AvatarStudio/mediaAvatar/whiteSkin.gltf", (gltfModel) => {
+        loader.load("./AvatarStudio/mediaAvatar/character/avatar.gltf", (gltfModel) => {
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
             this.add(gltfModel.scene);
 
-            function locateMesh(aBodyPart) {
+            function locateMeshColor(aBodyPart) {
                 const mesh = gltfModel.scene.children.find(child => child.name === aBodyPart)
                 if (mesh.name !== bodyParts.iris.name) {
                     // Create a new MeshPhongMaterial
@@ -47,11 +48,11 @@ export class TCharacter extends THREE.Object3D {
 
             console.log(gltfModel.scene.parent.children);
 
-            const eyeMaterial = locateMesh(bodyParts.iris.name);
-            const hairMaterial = locateMesh(bodyParts.hair.name);
-            const skinMaterial = locateMesh(bodyParts.head.name);
-            const shirtMaterial = locateMesh(bodyParts.shirt.name);
-            const pantsMaterial = locateMesh(bodyParts.lowerBody.name);
+            const eyeMaterial = locateMeshColor(bodyParts.iris.name);
+            const hairMaterial = locateMeshColor(bodyParts.hair.name);
+            const skinMaterial = locateMeshColor(bodyParts.head.name);
+            const shirtMaterial = locateMeshColor(bodyParts.shirt.name);
+            const pantsMaterial = locateMeshColor(bodyParts.lowerBody.name);
 
             const lights = gltfModel.scene.children.filter(child => child.isLight);
 
@@ -61,8 +62,7 @@ export class TCharacter extends THREE.Object3D {
             }
 
             lights.forEach(light => {
-
-                light.intensity = 1;
+                light.intensity = 40;
             });
 
             this.setIrisColor = function (aColor) {
@@ -94,6 +94,63 @@ export class TCharacter extends THREE.Object3D {
             if ((localEyeColor && localHairColor && localSkinColor) !== null) {
                 this.setColor();
             }
+
+            this.changeMesh = function (aNewMesh, aType) {
+                const updatedMesh = loadMesh(aNewMesh);
+                this.remove(aType); //the type could be eyebrow.. in some way we need to store all eyebrows so we can remove them using the type and add new
+                gltfModel.scene.add(updatedMesh);
+            }
+
+            function locateAllMeshes(scene) {
+                const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress'];
+                const meshCategories = {};
+
+                categoryNames.forEach(categoryName => {
+                    const options = {};
+                    let optionCounter = 1;
+                    scene.children.forEach(child => {
+                        if (child.name.startsWith(categoryName)) {
+                            options[`option${optionCounter++}`] = child.name;
+                            scene.remove(child);
+                        }
+                    });
+                    if (Object.keys(options).length > 0) {
+                        meshCategories[categoryName] = options;
+                    }
+                });
+
+                //setting up initial scene
+                scene.children = scene.children.filter(child => child.name === 'skin');
+                scene.children = scene.filter(child => child.isLight);
+
+                saveMeshCategoriesToFile(meshCategories, 'meshCategories.json');
+            }
+
+            function initializeScene (scene){
+               // scene.children = ;
+               //setting all the nessasary children for the scene and adding to the object bodyparts etc.
+            }
+
+            function saveMeshCategoriesToFile(meshCategories, fileName) {
+                const jsonData = JSON.stringify(meshCategories, null, 2);
+                console.log(jsonData);
+                // Save jsonData to file (your implementation here)
+            }
+
+            // Usage:
+            locateAllMeshes(gltfModel.scene);
         });
+
+        /* function locateAllMeshes (){
+            //categiries is named, shirt and hair
+            foreach (categoryName in gltfModel.scene){
+                const sceneMeshes = gltfModel.scene.children.find(child => child.name === categoryName)
+                //set all meshes with the same category name in one object
+                //continue to next categoryName
+                //when all categories has been sorted, send them sorted to a json file
+            }
+        } */
+
+
     }
 }

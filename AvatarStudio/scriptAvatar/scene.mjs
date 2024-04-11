@@ -62,7 +62,7 @@ export function TinitialiseScene(anAvatar) {
     //-----------------lights------------------
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-    scene.add(ambientLight);
+    //scene.add(ambientLight);
 
 
     renderer = new THREE.WebGLRenderer({ antialias: true });

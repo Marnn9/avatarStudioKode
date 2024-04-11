@@ -59,12 +59,11 @@ function handleMenuOptionClick(menuOption) {
     const colorJsonFile = menuOption.getAttribute('colorJson');
     const parentAttribute = menuOption.getAttribute('parent');
 
-    console.log(menuOptionValue);
-    console.log(colorJsonFile);
+    /* console.log(menuOptionValue);
+    console.log(colorJsonFile); */
 
     menuOptions.forEach(previous => {
         previous.style.backgroundColor = defaultColor;
-       
     });
    
     menuOption.style.backgroundColor = selectedColor;
