@@ -73,23 +73,31 @@
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_skin.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div class="col-2 tab" menuOption="clothesMenu" colorJson="clothing" parent="true">
-                <details></details>
-                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
-                    <img src="AvatarStudio/mediaAvatar/buttons/icons_clothes.png" alt="icon of clothes" class="w-50">
-                </div>
-            </div>
-            <div class="col-2 tab" menuOption="Top" optionName="Top" colorJson="clothing">
+            <div id="parent" class="col-2 tab" menuOption="clothesMenu" colorJson="clothing" parent="true">
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
-                    <img src="AvatarStudio/mediaAvatar/buttons/icons_top.png" alt="icon of hair" class="w-50">
+                    <img src="AvatarStudio/mediaAvatar/buttons/icons_clothes.png" alt="icon of hair" class="w-50">
                 </div>
+                <details id="details">
+                    <summary></summary>
+                    <div class="container">
+                        <div class="col-2 tab" menuOption="Top" optionName="Top" colorJson="clothing">
+                            <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
+                                <img src="AvatarStudio/mediaAvatar/buttons/icons_top.png" alt="icon of hair" class="w-50">
+                            </div>
+                        </div>
+                        <div class="col-2 tab" menuOption="Bottom" optionName="Bottom" colorJson="clothing">
+                            <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
+                                <img src="AvatarStudio/mediaAvatar/buttons/icons_pants.png" alt="icon of hair" class="w-50">
+                            </div>
+                        </div>
+                    </div>
+                </details>
             </div>
-            <div class="col-2 tab" menuOption="Bottom" optionName="Bottom" colorJson="clothing">
+            <div class="col-2 tab" menuOption="Skin" optionName="Skin" colorJson="skin">
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
-                    <img src="AvatarStudio/mediaAvatar/buttons/icons_pants.png" alt="icon of hair" class="w-50">
+                    <img src="AvatarStudio/mediaAvatar/buttons/icons_skin.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-
         </div>
         <div id="colors" class="p-3">
             <div class="row justify-content-center" id="colorSelector">
@@ -97,8 +105,6 @@
             </div>
         </div>
     </div>
-
-            
 
     <button id="checkBtn" class="globalBtn">&#10004;</button>
 
