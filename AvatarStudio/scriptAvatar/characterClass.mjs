@@ -102,42 +102,55 @@ export class TCharacter extends THREE.Object3D {
             }
 
             function locateAllMeshes(scene) {
-                const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress'];
+                const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane'];
+                //const bodyPartsArray = [bodyParts.hair.name, bodyParts.head.name, bodyParts.iris.name, bodyParts.leg.name, bodyParts.lowerBody.name, bodyParts.shirt.name, gltfModel.scene.children.filter(child => child.isLight)]
                 const meshCategories = {};
-
+            
                 categoryNames.forEach(categoryName => {
                     const options = {};
                     let optionCounter = 1;
+                    
                     scene.children.forEach(child => {
                         if (child.name.startsWith(categoryName)) {
-                            options[`option${optionCounter++}`] = child.name;
-                            scene.remove(child);
+                            let currentChild = child; 
+                            do {
+                                options[`option${optionCounter++}`] = currentChild.name;
+                                scene.remove(currentChild);
+                                // Get the next child
+                                currentChild = scene.children.find(nextChild => nextChild !== currentChild && nextChild.name.startsWith(categoryName));
+                                meshCategories[categoryName] = options;
+                            } while (currentChild);
                         }
                     });
-                    if (Object.keys(options).length > 0) {
-                        meshCategories[categoryName] = options;
-                    }
+            
+                    
                 });
-
                 //setting up initial scene
-                scene.children = scene.children.filter(child => child.name === 'skin');
-                scene.children = scene.filter(child => child.isLight);
+                /* scene.children = scene.children.filter(child => child.name === 'skin');
+                scene.children = scene.filter(child => child.isLight); */
 
                 saveMeshCategoriesToFile(meshCategories, 'meshCategories.json');
             }
 
-            function initializeScene (scene){
-               // scene.children = ;
-               //setting all the nessasary children for the scene and adding to the object bodyparts etc.
+            function initializeScene(scene) {
+                // scene.children = ;
+                //setting all the nessasary children for the scene and adding to the object bodyparts etc.
             }
 
             function saveMeshCategoriesToFile(meshCategories, fileName) {
                 const jsonData = JSON.stringify(meshCategories, null, 2);
-                console.log(jsonData);
-                // Save jsonData to file (your implementation here)
+                const blob = new Blob([jsonData], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+            
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                a.remove();
             }
 
-            // Usage:
             locateAllMeshes(gltfModel.scene);
         });
 

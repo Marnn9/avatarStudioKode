@@ -79,7 +79,6 @@ function handleMenuOptionClick(menuOption) {
     }
 }
 
-//const parent = document.getElementById('parent');
 document.getElementById('parent').addEventListener('click', function () {
     let details = document.getElementById('details');
     details.open = !details.open;
