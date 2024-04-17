@@ -1,7 +1,6 @@
 "use strict";
 import { TinitialiseScene } from './scene.mjs';
-import { initializeColor } from './colorOptions.mjs'
-import { MarchingCubes } from 'three/examples/jsm/Addons.js';
+import { initializeColor, initializeMeshes } from './colorOptions.mjs'
 
 
 export function loadScene() {
@@ -37,28 +36,26 @@ function saveImage(userId) {
 const checkBtn = document.getElementById("checkBtn")
 checkBtn.addEventListener("click", saveImage);
 
-
 const menuOptions = document.querySelectorAll('[menuOption]');
 
 document.addEventListener("DOMContentLoaded", function () {
     if (menuOptions.length > 0) {
-        handleMenuOptionClick(menuOptions[0]);
+        setupOptinsMenu(menuOptions[0]);
     }
     menuOptions.forEach(option => {
         option.addEventListener('click', function(event) {
             event.stopPropagation(); // Stop the click event from bubbling up
-            handleMenuOptionClick(this);
+            setupOptinsMenu(this);
         });
     });
 });
 
-function handleMenuOptionClick(menuOption) {
+function setupOptinsMenu(menuOption) {
     const defaultColor = '#CECECE';
     const selectedColor = '#9B5EF5';
     const menuOptionValue = menuOption.getAttribute('menuOption');
     const colorJsonFile = menuOption.getAttribute('colorJson');
     const parentAttribute = menuOption.getAttribute('parent');
-
     /* console.log(menuOptionValue);
     console.log(colorJsonFile); */
 
@@ -71,16 +68,13 @@ function handleMenuOptionClick(menuOption) {
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
     }
-
-    if (colorJsonFile != null) {
+    if (colorJsonFile != null && colorJsonFile != 'meshCategories' ) {
         initializeColor(menuOptionValue, colorJsonFile);
-    } else {
+    } else if (colorJsonFile == 'meshCategories'){
+        console.log(colorJsonFile)
+        initializeMeshes(menuOptionValue);
+    }
+    else {
         console.log("anError");
     }
 }
-
-document.getElementById('parent').addEventListener('click', function () {
-    let details = document.getElementById('details');
-    details.open = !details.open;
-    this.style.backgroundColor = "white"
-});

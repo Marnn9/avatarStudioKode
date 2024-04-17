@@ -6,11 +6,11 @@ import fs from 'fs';
 
 
 const bodyParts = {
-    iris: { name: 'eyes', child: 2 },
+    iris: { name: 'eyes'},
     hair: { name: 'hair_midlength' },
     head: { name: 'skin' },
     shirt: { name: 'shirt_base' },
-    lowerBody: { name: 'pants_jogging' },
+    pants: { name: 'pants_jogging' },
     leg: null,
 }
 
@@ -22,6 +22,9 @@ export class TCharacter extends THREE.Object3D {
         const localHairColor = localStorage.getItem("haircolor");
         const localEyeColor = localStorage.getItem("eyecolor");
         const localSkinColor = localStorage.getItem("skincolor");
+
+
+        const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane'];
 
         loader.load("./AvatarStudio/mediaAvatar/character/avatar.gltf", (gltfModel) => {
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
@@ -52,7 +55,7 @@ export class TCharacter extends THREE.Object3D {
             const hairMaterial = locateMeshColor(bodyParts.hair.name);
             const skinMaterial = locateMeshColor(bodyParts.head.name);
             const shirtMaterial = locateMeshColor(bodyParts.shirt.name);
-            const pantsMaterial = locateMeshColor(bodyParts.lowerBody.name);
+            const pantsMaterial = locateMeshColor(bodyParts.pants.name);
 
             const lights = gltfModel.scene.children.filter(child => child.isLight);
 
@@ -95,47 +98,64 @@ export class TCharacter extends THREE.Object3D {
                 this.setColor();
             }
 
-            this.changeMesh = function (aNewMesh, aType) {
-                const updatedMesh = loadMesh(aNewMesh);
-                this.remove(aType); //the type could be eyebrow.. in some way we need to store all eyebrows so we can remove them using the type and add new
-                gltfModel.scene.add(updatedMesh);
-            }
 
             function locateAllMeshes(scene) {
-                const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane'];
-                //const bodyPartsArray = [bodyParts.hair.name, bodyParts.head.name, bodyParts.iris.name, bodyParts.leg.name, bodyParts.lowerBody.name, bodyParts.shirt.name, gltfModel.scene.children.filter(child => child.isLight)]
                 const meshCategories = {};
             
                 categoryNames.forEach(categoryName => {
-                    const options = {};
-                    let optionCounter = 1;
-                    
+                    const processedMeshes = new Set(); // Keep track of processed meshes
+            
                     scene.children.forEach(child => {
-                        if (child.name.startsWith(categoryName)) {
-                            let currentChild = child; 
+                        if (child.name.startsWith(categoryName) && !processedMeshes.has(child)) {
+                            const options = {};
+                            let optionCounter = 1;
+                            let currentChild = child;
                             do {
                                 options[`option${optionCounter++}`] = currentChild.name;
-                                scene.remove(currentChild);
+                                processedMeshes.add(currentChild); // Mark the mesh as processed
+                                // Hiding the mesh instead of removing it
+                                currentChild.visible = false;
                                 // Get the next child
-                                currentChild = scene.children.find(nextChild => nextChild !== currentChild && nextChild.name.startsWith(categoryName));
-                                meshCategories[categoryName] = options;
+                                currentChild = scene.children.find(nextChild => nextChild !== currentChild && nextChild.name.startsWith(categoryName) && !processedMeshes.has(nextChild));
                             } while (currentChild);
+                            meshCategories[categoryName] = options;
                         }
                     });
-            
-                    
                 });
-                //setting up initial scene
-                /* scene.children = scene.children.filter(child => child.name === 'skin');
-                scene.children = scene.filter(child => child.isLight); */
-
-                saveMeshCategoriesToFile(meshCategories, 'meshCategories.json');
+            
+                startupMeshes(scene);
+            
+                // Call the function to hide meshes initially            
+                // Save mesh categories to file
+                // saveMeshCategoriesToFile(meshCategories, 'meshCategories.json');
             }
 
-            function initializeScene(scene) {
-                // scene.children = ;
-                //setting all the nessasary children for the scene and adding to the object bodyparts etc.
+            function startupMeshes(scene) {
+                const startCategories = ['hair', 'shirt', 'pants'];
+            
+                startCategories.forEach(category => {
+                    const objectsInCategory = scene.children.filter(child => child.name.startsWith(category));
+            
+                    // Find the child object with the name stored in bodyParts[category].name
+                    const childWithName = objectsInCategory.find(child => child.name === bodyParts[category].name);
+            
+                    if (childWithName) {
+                        // If the child object is found, set its visibility to true
+                        childWithName.visible = true;
+                    }
+                });
             }
+
+            this.changeMesh = function (category, name) {
+
+                const childWithName = gltfModel.scene.children.find(child => child.name === bodyParts[category].name);
+                if (childWithName) {
+                    childWithName.visible = false;
+                }
+                delete bodyParts[category].name //remove the old name 
+                bodyParts[category].name = name; //set the new name when old is removed
+                startupMeshes(gltfModel.scene);
+            };
 
             function saveMeshCategoriesToFile(meshCategories, fileName) {
                 const jsonData = JSON.stringify(meshCategories, null, 2);
@@ -153,17 +173,6 @@ export class TCharacter extends THREE.Object3D {
 
             locateAllMeshes(gltfModel.scene);
         });
-
-        /* function locateAllMeshes (){
-            //categiries is named, shirt and hair
-            foreach (categoryName in gltfModel.scene){
-                const sceneMeshes = gltfModel.scene.children.find(child => child.name === categoryName)
-                //set all meshes with the same category name in one object
-                //continue to next categoryName
-                //when all categories has been sorted, send them sorted to a json file
-            }
-        } */
-
-
+        
     }
 }

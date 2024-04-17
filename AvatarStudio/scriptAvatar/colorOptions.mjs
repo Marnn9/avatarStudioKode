@@ -32,34 +32,33 @@ export async function initializeColor(aMenuObject, aColorType) {
     }
 }
 
-async function initializeMeshes() {
+export async function initializeMeshes(category) {
     try {
-
-        const response = await fetch(`./json/${aColorType}.json`);
+        // Fetch the JSON file
+        const response = await fetch(`./json/meshCategories.json`);
         const data = await response.json();
-        const options = data.options || {};
+        const options = data[category];
 
         for (const option in options) {
-            const color = options[option].hex;
+            let meshSelected = document.createElement("div");
+            
+            meshSelected.className = "shadow-md p-3 rounded m-2 ratio ratio-1x1";
+            meshSelected.style.width = '20%';
 
-            let colorSelector = document.createElement("div");
+            // Set background image for the option
+            meshSelected.style.backgroundImage = `url('./AvatarStudio/mediaAvatar/thumbnails/${options[option]}.png')`;
+            meshSelected.style.backgroundSize = 'cover';
+            meshSelected.style.backgroundPosition = 'center';
 
-            colorSelector.id = option;
-            colorSelector.className = "shadow-md p-3 rounded m-2 ratio ratio-1x1";
-            colorSelector.style.backgroundColor = color;
-            colorSelector.style.width = '20%';
+            colorSelectorContainer.appendChild(meshSelected);
+            //console.log(options[option])
 
-            colorSelectorContainer.appendChild(colorSelector);
-
-            colorSelector.addEventListener("click", () => {
-                const functionName = `set${aMenuObject}Color`;
-                character[functionName](color);
+            meshSelected.addEventListener("click", () => {
+                console.log(options[option]);
+                character.changeMesh(category, options[option]);
             });
         }
-
     } catch (error) {
-        console.error('Error initializing color selectors:', error);
+        console.error('Error initializing mesh categories:', error);
     }
 }
-
-
