@@ -2,7 +2,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TCharacter } from "./characterClass.mjs";
-import { TCharacterOptions } from "./characterOptions.js";
 
 export const avatarFeatures = {
     skinColor: null,
@@ -89,8 +88,7 @@ export function TinitialiseScene(anAvatar) {
 
     //-----------------character-------------------------
     character.rotateY(degreesToRadians(-90));
-    const characterOptions = new TCharacterOptions()
-    scene.add(character, characterOptions);
+    scene.add(character);
     //----------------localStorage--------------------------------------
     const localHairColor = localStorage.getItem("haircolor");
     const localEyeColor = localStorage.getItem("eyecolor");

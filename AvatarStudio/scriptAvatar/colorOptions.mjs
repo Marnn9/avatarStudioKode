@@ -22,8 +22,7 @@ export async function initializeColor(aMenuObject, aColorType) {
             colorSelectorContainer.appendChild(colorSelector);
 
             colorSelector.addEventListener("click", () => {
-                const functionName = `set${aMenuObject}Color`;
-                character[functionName](color);
+                character.setColor(aMenuObject, color);
             });
         }
 
@@ -54,7 +53,7 @@ export async function initializeMeshes(category) {
             //console.log(options[option])
 
             meshSelected.addEventListener("click", () => {
-                console.log(options[option]);
+                //console.log(options[option]);
                 character.changeMesh(category, options[option]);
             });
         }
