@@ -71,6 +71,7 @@ function setupOptinsMenu(menuOption) {
     if (colorJsonFile != null && colorJsonFile != 'meshCategories' ) {
         initializeColor(menuOptionValue, colorJsonFile);
     } else if (colorJsonFile == 'meshCategories'){
+        console.log(colorJsonFile)
         initializeMeshes(menuOptionValue);
     }
     else {
