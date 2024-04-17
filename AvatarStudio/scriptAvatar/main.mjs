@@ -1,15 +1,12 @@
 "use strict";
 import { TinitialiseScene } from './scene.mjs';
-import { initializeColor } from './colorOptions.mjs'
+import { initializeColor, initializeMeshes } from './colorOptions.mjs'
 
 
 export function loadScene() {
     TinitialiseScene();
     //initializeSkinColorSelectors();
-
 }
-const menuOptions = document.querySelectorAll('[menuOption]');
-
 
 function saveImage(userId) {
     const saveConfirm = confirm("An image of the avatar will now be downloaded");
@@ -28,7 +25,6 @@ function saveImage(userId) {
             const downloadLink = document.createElement('a');
             downloadLink.href = fileType;
             downloadLink.download = `avatar_test.webp`
-            //downloadLink.download = `avatar_${userId}.svg`;
 
             downloadLink.click();
         });
@@ -36,43 +32,49 @@ function saveImage(userId) {
         return;
     }
 }
+
 const checkBtn = document.getElementById("checkBtn")
 checkBtn.addEventListener("click", saveImage);
 
+const menuOptions = document.querySelectorAll('[menuOption]');
+
 document.addEventListener("DOMContentLoaded", function () {
     if (menuOptions.length > 0) {
-        handleMenuOptionClick(menuOptions[0]);
+        setupOptinsMenu(menuOptions[0]);
     }
     menuOptions.forEach(option => {
-        option.addEventListener('click', function () {
-            handleMenuOptionClick(this);
+        option.addEventListener('click', function(event) {
+            event.stopPropagation(); // Stop the click event from bubbling up
+            setupOptinsMenu(this);
         });
     });
 });
 
-function handleMenuOptionClick(menuOption) {
+function setupOptinsMenu(menuOption) {
     const defaultColor = '#CECECE';
     const selectedColor = '#9B5EF5';
     const menuOptionValue = menuOption.getAttribute('menuOption');
     const colorJsonFile = menuOption.getAttribute('colorJson');
-    const parentObject = menuOption.getAttribute('parent');
+    const parentAttribute = menuOption.getAttribute('parent');
+    /* console.log(menuOptionValue);
+    console.log(colorJsonFile); */
 
     menuOptions.forEach(previous => {
         previous.style.backgroundColor = defaultColor;
     });
+   
     menuOption.style.backgroundColor = selectedColor;
 
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
     }
-
-    if (colorJsonFile != null) {
+    if (colorJsonFile != null && colorJsonFile != 'meshCategories' ) {
         initializeColor(menuOptionValue, colorJsonFile);
-    } else if (parentObject != null) {
-        console.log("Parent clicked, load child options");
-        //set the active to the first child of the parent (and make parent smaller?)
-        //load this.children so you only get the children of the clicked menu option
-    } else {
+    } else if (colorJsonFile == 'meshCategories'){
+        console.log(colorJsonFile)
+        initializeMeshes(menuOptionValue);
+    }
+    else {
         console.log("anError");
     }
 }
