@@ -54,10 +54,10 @@ function setupOptinsMenu(menuOption) {
     const defaultColor = '#CECECE';
     const selectedColor = '#9B5EF5';
     const menuOptionValue = menuOption.getAttribute('menuOption');
-    const colorJsonFile = menuOption.getAttribute('colorJson');
+    const jsonFile = menuOption.getAttribute('jsonFile');
     const parentAttribute = menuOption.getAttribute('parent');
     /* console.log(menuOptionValue);
-    console.log(colorJsonFile); */
+    console.log(jsonFileFile); */
 
     menuOptions.forEach(previous => {
         previous.style.backgroundColor = defaultColor;
@@ -68,10 +68,9 @@ function setupOptinsMenu(menuOption) {
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
     }
-    if (colorJsonFile != null && colorJsonFile != 'meshCategories' ) {
-        initializeColor(menuOptionValue, colorJsonFile);
-    } else if (colorJsonFile == 'meshCategories'){
-        console.log(colorJsonFile)
+    if (jsonFile != null && jsonFile != 'meshCategories' ) {
+        initializeColor(menuOptionValue, jsonFile);
+    } else if (jsonFile == 'meshCategories'){
         initializeMeshes(menuOptionValue);
     }
     else {

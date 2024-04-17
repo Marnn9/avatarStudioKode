@@ -42,83 +42,101 @@
         </div>
     </nav>
 
-    <div id="choiceMenu" class="fixed-bottom container-lg">
-        <div class="row">
-            <div class="col"><img id="option1" class="thumbnail img-fluid"
-                    src="./AvatarStudio/mediaAvatar/eyebrowRender.jpg"></div>
-            <div class="col"><img id="option2" class="thumbnail img-fluid"
-                    src="./AvatarStudio/mediaAvatar/eyebrow-1Render.jpg"></div>
-            <div class="col"><img id="option3" class="thumbnail img-fluid" src="./AvatarStudio/mediaAvatar/head.png">
-            </div>
-            <div class="col"><img id="option3" class="thumbnail img-fluid" src="./AvatarStudio/mediaAvatar/head.png">
-            </div>
-        </div>
-    </div>
-
     <div class="container-fluid fixed-bottom">
         <div id="menuOptions" class="tabs row g-0">
-            <div id="parent" class="col-2 tab" menuOption="Hair" colorJson="hair" parent="true">
+            <div id="parent" class="col-2 tab" menuOption="hair" jsonFile="hair" parent="true">
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
                 </div>
                 <details id="details">
                     <summary></summary>
                     <div class="container">
-                        <div class="col-2 tab" menuOption="hair" optionName="hair" colorJson="meshCategories">
+                        <div class="col-2 tab" menuOption="hair" jsonFile="meshCategories">
                             <div id="folder-top"
                                 class="border rectangle rounded-top d-flex justify-content-center align-items-center">
-                                <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
+                                <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair"
+                                    class="w-50">
                             </div>
                         </div>
-                        <div class="col-2 tab" menuOption="Hair" optionName="Hair" colorJson="hair">
+                        <div class="col-2 tab" menuOption="hair" jsonFile="hair">
                             <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
-                                <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of hair" class="w-50">
+                                <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of hair"
+                                    class="w-50">
                             </div>
                         </div>
                     </div>
                 </details>
             </div>
-            <div class="col-2 tab" menuOption="Iris" optionName="Iris" colorJson="iris">
-                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
+            <div id="parent" class="col-2 tab" menuOption="eye" jsonFile="iris" parent="true">
+                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_eye.png" alt="icon of hair" class="w-50">
                 </div>
+                <details id="details">
+                    <summary></summary>
+                    <div class="container">
+                        <div class="container">
+                            <div class="col-2 tab" menuOption="eyebrow" jsonFile="meshCategories">
+                                <div id="folder-top"
+                                    class="border rectangle rounded-top d-flex justify-content-center align-items-center">
+                                    <img src="AvatarStudio/mediaAvatar/buttons/icons_eyebrow.png" alt="icon of eyebrow"
+                                        class="w-50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2 tab" menuOption="eyebrow" jsonFile="hair">
+                            <div id="folder-top"
+                                class="border rectangle rounded-top d-flex justify-content-center align-items-center">
+                                <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of eyebrow"
+                                    class="w-50">
+                            </div>
+                        </div>
+                    </div>
+
+                </details>
             </div>
-            <div class="col-2 tab" menuOption="Skin" optionName="Skin" colorJson="skin">
+            <div class="col-2 tab" menuOption="skin" jsonFile="skin">
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_skin.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div id="parent" class="col-2 tab" menuOption="clothesMenu" colorJson="clothing" parent="true">
+            <div id="parent" class="col-2 tab" menuOption="clothesMenu" jsonFile="clothing" parent="true">
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_clothes.png" alt="icon of hair" class="w-50">
                 </div>
                 <details id="details">
                     <summary></summary>
                     <div class="container">
-                        <div class="col-2 tab" menuOption="shirt" optionName="shirt" colorJson="meshCategories">
+                        <div class="col-2 tab" menuOption="shirt" jsonFile="meshCategories">
                             <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
                                 <img src="AvatarStudio/mediaAvatar/buttons/icons_top.png" alt="icon of hair"
                                     class="w-50">
                             </div>
                         </div>
-                        <div class="col-2 tab" menuOption="pants" optionName="pants" colorJson="meshCategories">
+                        <div class="col-2 tab" menuOption="shirt" jsonFile="clothing">
+                            <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
+                                <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of hair"
+                                    class="w-50">
+                            </div>
+                        </div>
+                        <div class="col-2 tab" menuOption="pants" jsonFile="meshCategories">
                             <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
                                 <img src="AvatarStudio/mediaAvatar/buttons/icons_pants.png" alt="icon of hair"
+                                    class="w-50">
+                            </div>
+                        </div>
+                        <div class="col-2 tab" menuOption="pants" jsonFile="clothing">
+                            <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
+                                <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of hair"
                                     class="w-50">
                             </div>
                         </div>
                     </div>
                 </details>
             </div>
-            <div class="col-2 tab" menuOption="Skin" optionName="Skin" colorJson="skin">
-                <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
-                    <img src="AvatarStudio/mediaAvatar/buttons/icons_skin.png" alt="icon of hair" class="w-50">
-                </div>
-            </div>
         </div>
         <div id="colors" class="p-3">
             <div class="row justify-content-center" id="colorSelector">
-                <!-- Content for tabs will be added dynamically here -->
+                <!-- added in main.js-->
             </div>
         </div>
     </div>
@@ -128,9 +146,6 @@
     <script type="module">
         import * as main from "./AvatarStudio/scriptAvatar/main.mjs";
         main.loadScene()
-
-        const option1 = document.getElementById("option1");
-        option1.addEventListener('click', main.addBrows);
 
     </script>
 
