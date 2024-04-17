@@ -30,11 +30,28 @@ function switchImageMode(mode) {
 }
 
 
+function applyDarkMode() {
+    let darkMode = localStorage.getItem("darkMode");
+
+    if (darkMode === "enabled") {
+        document.body.classList.add("dark-mode");
+        darkModeToggle.checked = true;
+        switchImageMode("_dark");
+    } else {
+        document.body.classList.remove("dark-mode");
+        darkModeToggle.checked = false;
+        switchImageMode("_light");
+    }
+}
+
+
+applyDarkMode();
+
 darkModeToggle.addEventListener("change", toggleDarkMode);
 
 let loginBtn = document.getElementById("loginBtn");
 
 loginBtn.addEventListener('click', (event) => {
-    event.preventDefault(); // Prevent default form submission
-    location.href = "index.html"; // Navigate to index.html
+    event.preventDefault(); 
+    location.href = "index.html"; 
 });
