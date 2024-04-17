@@ -3,6 +3,7 @@ import * as THREE from 'three';
 import * as dat from "dat.gui";
 import { TCharacter } from "./characterClass.mjs";
 import { TCharacterOptions } from "./characterOptions.js";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 
 export const avatarFeatures = {
     skinColor: null,
@@ -14,15 +15,24 @@ export const avatarFeatures = {
 
 export const scenePositions = {
     x: 0,
-    y: 1,
-    z: 5,
+    y: 0,
+    z: 0,
     cvsWidth: 300,
     cvsHeight: 500,
 }
 
+export const character = new TCharacter();
+
+function degreesToRadians(degrees) {
+    const mathToMultiply = Math.PI / 180;
+    const radians = degrees * mathToMultiply;
+    return radians;
+}
+
 export function TinitialiseScene(anAvatar) {
 
-    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial;
+
+    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
     scene = new THREE.Scene();
 
     const guiWidth = 300;
@@ -33,57 +43,100 @@ export function TinitialiseScene(anAvatar) {
 
     let hexValue = "ffffff";
     const colorOfCube = "#" + hexValue;
-
-    scene.background = new THREE.Color(0xC3D1C3);
+    const white = 0xffffff;
+    scene.background = new THREE.Color(white);
 
     //----------------scene objects----------------------
 
-    camera = new THREE.PerspectiveCamera(75, 1, 0.1, 100);
-    camera.position.z = 10;
+    camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
+    camera.position.z = 2;
+
+    //-----------------lights------------------
+    
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
     scene.add(ambientLight);
 
-    renderer = new THREE.WebGLRenderer();
+
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     //renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.domElement.id = "sceneCanvas";
     renderer.domElement.setAttribute('alt', 'sceneCanvas');
     document.body.appendChild(renderer.domElement);
     setConstantSize();
 
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    directionalLight.position.set(10, 10, 10);
+    directionalLight.castShadow = true; // Enable shadow casting
+    scene.add(directionalLight);
+
+    // Configure shadow properties
+    directionalLight.shadow.mapSize.width = 1024; // Shadow map width
+    directionalLight.shadow.mapSize.height = 1024; // Shadow map height
+    directionalLight.shadow.camera.near = 0.5; // Near plane of the shadow camera
+    directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
+
+
+
+
+    renderer = new THREE.WebGLRenderer();
+    //renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.domElement.id = "sceneCanvas";
+    renderer.domElement.setAttribute('alt', 'sceneCanvas');
+    document.body.appendChild(renderer.domElement);
+
+    var controls = new OrbitControls(camera, renderer.domElement);
+
+    setConstantSize();
+
+   
+
+
 
     //-----------------character-------------------------
-    const character = new TCharacter(scene);
-    const characterOptions = new TCharacterOptions(scene)
+    character.rotateY(degreesToRadians(-90));
+    const characterOptions = new TCharacterOptions()
     scene.add(character, characterOptions);
     //----------------localStorage--------------------------------------
     const localHairColor = localStorage.getItem("haircolor");
     const localEyeColor = localStorage.getItem("eyecolor");
     const localSkinColor = localStorage.getItem("skincolor");
+    const localTopColor = null;
+    const localBottomColor = null;
 
 
     if (localHairColor !== null) {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: `#${localHairColor}` });
+        hairMaterial = new THREE.MeshPhongMaterial({ color: `#${localHairColor}` });
         avatarFeatures.hairColor = localHairColor;
     } else {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        hairMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     }
     if (localEyeColor !== null) {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: `#${localEyeColor}` });
+        eyeMaterial = new THREE.MeshPhongMaterial({ color: `#${localEyeColor}` });
         avatarFeatures.eyeColor = localEyeColor;
     } else {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        eyeMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     }
     if (localSkinColor !== null) {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: `#${localSkinColor}` });
+        skinMaterial = new THREE.MeshPhongMaterial({ color: `#${localSkinColor}` });
         avatarFeatures.skinColor = localSkinColor;
     } else {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
+        skinMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
+    } if (localTopColor !== null) {
+        topMaterial = new THREE.MeshPhongMaterial({ color: `#${localTopColor}` });
+        avatarFeatures.skinColor = localSkinColor;
+    } else {
+        topMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
+    } if (localBottomColor !== null) {
+        bottomMaterial = new THREE.MeshPhongMaterial({ color: `#${localTopColor}` });
+        avatarFeatures.skinColor = localSkinColor;
+    } else {
+        bottomMaterial = new THREE.MeshPhongMaterial({ color: colorOfCube });
     }
 
 
     //-------------functions-------------------------------
-
-
 
     function guiControls() {
         const gui = new dat.GUI();
@@ -132,13 +185,41 @@ export function TinitialiseScene(anAvatar) {
                 modelMaterial.color.set(color);
             }
         });
+
+        const topColorChanger = { color: topMaterial.color.getHex() };
+
+        gui.addColor(topColorChanger, 'color').name('topColor').onChange(function (color) {
+            topMaterial.color.set(color);
+            character.setTopColor(color);
+
+            avatarFeatures.skinColor = topMaterial.color.getHex().toString(16);
+
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
+        });
+
+
+        const bottomColorChanger = { color: bottomMaterial.color.getHex() };
+
+        gui.addColor(topColorChanger, 'color').name('bottomColor').onChange(function (color) {
+            bottomMaterial.color.set(color);
+            character.setBottomColor(color);
+
+            avatarFeatures.skinColor = bottomMaterial.color.getHex().toString(16);
+
+            if (modelMaterial) {
+                modelMaterial.color.set(color);
+            }
+        });
+
     }
 
     guiControls();
 
     function render() {
         requestAnimationFrame(render);
-
+        controls.update();
         renderer.render(scene, camera);
     }
 
@@ -164,14 +245,17 @@ export function TinitialiseScene(anAvatar) {
     function setConstantSize() {
         const canvasWidth = scenePositions.cvsWidth;
         const canvasHeight = scenePositions.cvsHeight;
-        
+
         renderer.setSize(canvasWidth, canvasHeight);
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
-        
+
         document.body.appendChild(renderer.domElement);
         renderer.render(scene, camera);
     }
 
+
+
     render();
+
 }
