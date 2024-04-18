@@ -149,7 +149,7 @@ summary {
 }
 
 #undo:hover, #redo:hover {
-  filter: invert(20%) sepia(20%) saturate(3) hue-rotate(260deg);
+  background-color: var(--purple); /* Set the background color to dark purple */
 }
 
 #inputEmail,
