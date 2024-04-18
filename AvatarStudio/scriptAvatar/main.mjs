@@ -51,41 +51,47 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function setupOptionsMenu(menuOption) {
-    const defaultColor = '#CECECE';
-    const selectedColor = '#9B5EF5';
     const menuOptionValue = menuOption.getAttribute('menuOption');
     const jsonFile = menuOption.getAttribute('jsonFile');
-    const parentAttribute = menuOption.getAttribute('parent');
 
+    const parentTabs = document.querySelectorAll('.tab');
 
-    const allDetails = document.querySelectorAll('details');
-    allDetails.forEach(detail => {
-        detail.removeAttribute('open');
+    parentTabs.forEach(parentTab => {
+        parentTab.addEventListener('click', function () {
+            const parentId = this.id;
+
+            // Remove the 'active' class from all tabs
+            parentTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked tab
+            this.classList.add('active');
+
+            // Hide or show the corresponding hidden tabs
+            const allHiddenTabs = document.querySelectorAll('.hidden-tab');
+            allHiddenTabs.forEach(tab => {
+                if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
+                    tab.style.display = 'none';
+                } else {
+                    tab.style.display = 'block';
+                }
+            });
+        });
     });
 
-    menuOptions.forEach(previous => {
-        previous.style.backgroundColor = defaultColor;
-    });
-
-    menuOption.style.backgroundColor = selectedColor;
-
-
-    const detailsElement = menuOption.querySelector('details');
-
-
-    if (detailsElement) {
-        detailsElement.open = !detailsElement.open;
-    }
-
+    // Remove child elements from colorSelector
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
     }
-    if (jsonFile != null && jsonFile != 'meshCategories' ) {
+
+    // Initialize color or meshes based on JSON file
+    if (jsonFile != null && jsonFile != 'meshCategories') {
         initializeColor(menuOptionValue, jsonFile);
-    } else if (jsonFile == 'meshCategories'){
+    } else if (jsonFile == 'meshCategories') {
         initializeMeshes(menuOptionValue);
-    }
-    else {
+    } else {
         console.log("anError");
     }
 }
+

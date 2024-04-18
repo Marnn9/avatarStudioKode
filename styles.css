@@ -15,6 +15,7 @@
   --blackBackground: #1e1e1e;
   --redButton: #eb628e;
   --redFont: #f5b4c9;
+  --extraTab: #E5D2F3;
 }
 
 /* html {
@@ -94,51 +95,22 @@ body {
   width: 65px; /* Set a fixed width for each div */
 }
 
-#parent {
+.tab {
   position: relative;
+  background-color: var(--lightgrey);
   /* Ensure the parent div serves as the positioning reference */
 }
-
-details {
-  position: absolute;
-  /* Position the details element */
-  top: 0;
-  /* Position it at the top of the parent div */
-  left: 100%;
-  /* Position it to the right of the parent div */
-  z-index: 1;
-  /* Ensure it appears above other content */
-  background-color: white;
-  /* Optionally, add a background color to make it stand out */
-}
-
-details div{
-  height: 35px;
-  width: 65px;
-}
-
-details > summary::-webkit-details-marker {
-  display: none;
-}
-details>summary {
-  width: 1px;
-  height: 1px;
-  background-color: #eb628e;
-  
-}
-summary::-webkit-details-marker {
-  display: none;
-}
-
-summary {
-  list-style-type: none;
-  pointer-events: 'none';
+.tab.active {
+  background-color:var(--acssentColor);
 }
 
 #bootstrapTab {
   background-color: rgb(255, 255, 255);
 }
-
+ .hidden-tab{
+  display: none;
+  background-color: var(--extraTab);
+} 
 .imgIconTab {
   height: 30px;
 }
