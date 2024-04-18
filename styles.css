@@ -155,6 +155,10 @@ summary {
   height: 50px;
   border-radius: 15px;
 }
+#undo,#redo{
+  width: 15%;
+  background-color: var(--lightgrey);
+}
 
 .form-control::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
