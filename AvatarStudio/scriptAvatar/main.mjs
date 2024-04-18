@@ -77,3 +77,13 @@ function setupOptinsMenu(menuOption) {
         console.log("anError");
     }
 }
+
+const undo = document.getElementById("undo");
+const redo = document.getElementById("redo")
+
+undo.addEventListener("click", () => {
+    character.undo();
+});
+redo.addEventListener("click", () => {
+    character.redo();
+})

@@ -13,14 +13,9 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <div class="container-fluid w-75 ms-0">
-
-                <img src="AvatarStudio/mediaAvatar/buttons/icons_undo.png" class="shadow-sm rounded-circle me-2" alt="Undo" id="undo">
-
-
-                <img src="AvatarStudio/mediaAvatar/buttons/icons_redo.png" class="shadow-sm rounded-circle" alt="Redo" id="redo">
-
-        </div>
+            <a class="navbar-brand" href="#">
+                <img src="./AvatarStudio/mediaAvatar/logo_pruple_tst.png" alt="avatarLogo" style="width: 20%;">
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -53,24 +48,6 @@
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
                 </div>
-                <details id="details">
-                    <summary></summary>
-                    <div class="container">
-                        <div class="col-2 tab" menuOption="hair" jsonFile="meshCategories">
-                            <div id="folder-top"
-                                class="border rectangle rounded-top d-flex justify-content-center align-items-center">
-                                <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair"
-                                    class="w-50">
-                            </div>
-                        </div>
-                        <div class="col-2 tab" menuOption="hair" jsonFile="hair">
-                            <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center ">
-                                <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of hair"
-                                    >
-                            </div>
-                        </div>
-                    </div>
-                </details>
             </div>
             <div id="parent" class="col-2 tab" menuOption="eye" jsonFile="iris" parent="true">
                 <div id="folder-top" class="border rectangle rounded-top d-flex justify-content-center">
@@ -146,7 +123,36 @@
         </div>
     </div>
 
-    <button id="checkBtn" class="globalBtn shadow">&#10004;</button>
+    <!-- testing a new tabs bar -->
+   <!--  <ul id="bootstrapTab" class="nav nav-tabs">
+        <li class="nav-item">
+          <a id="link" class="nav-link active" aria-current="page" href="#">
+            <img class="imgIconTab" src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
+          </a> 
+          <li class="nav-item">
+            <a id="link" class="nav-link active" aria-current="page" href="#">
+              <img class="imgIconTab" src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
+            </a> 
+          </li>
+        </li>
+        <li class="nav-item">
+            <a id="link" class="nav-link active" aria-current="page" href="#">
+              <img class="imgIconTab" src="AvatarStudio/mediaAvatar/buttons/icons_skin.png" alt="icon of hair" class="w-50 ">
+            </a> 
+          </li>
+          <li class="nav-item">
+            <a id="link" class="nav-link active" aria-current="page" href="#">
+              <img class="imgIconTab" src="AvatarStudio/mediaAvatar/buttons/icons_eyebrow.png" alt="icon of hair" class="w-50">
+            </a> 
+          </li>
+          <li class="nav-item">
+            <a id="link" class="nav-link active" aria-current="page" href="#">
+              <img class="imgIconTab" src="AvatarStudio/mediaAvatar/buttons/icons_eye.png" alt="icon of hair" class="w-50">
+            </a> 
+          </li>
+      </ul> -->
+
+    <button id="checkBtn" class="globalBtn">&#10004;</button>
 
     <script type="module">
         import * as main from "./AvatarStudio/scriptAvatar/main.mjs";
