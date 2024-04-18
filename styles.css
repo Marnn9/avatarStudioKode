@@ -1,8 +1,21 @@
 :root {
-    --mainBtnColor: #EBAC78;
-    --borderColor: #ddb271;
-    --backgroundcolor: #ffffff;
-    --acssentColor: #9B5EF5;
+  --mainBtnColor: #EBAC78;
+  --borderColor: #ddb271;
+  --backgroundcolor: #ffffff;
+  --acssentColor: #9B5EF5;
+  --mainBtnColor: #ebac78;
+  --borderColor: #ddb271;
+  --backgroundcolor: #ffffff;
+  --purple: #9720f5;
+  --inputBackground: #f4f3ff;
+  --greyFont: #9390b2;
+  --purpleFont: #a24e98;
+  --lightgrey: #d9d9d9;
+  --darkgrey: #656062;
+  --blackBackground: #1e1e1e;
+  --redButton: #eb628e;
+  --redFont: #f5b4c9;
+  --extraTab: #E5D2F3;
 }
 
 /* html {
@@ -104,49 +117,27 @@ body {
   display: flex;
 }
 
-.container>div {
-  flex-shrink: 0;
-  /* Prevents the divs from shrinking */
-  width: 65px;
-  /* Set a fixed width for each div */
-}
-
-#parent {
+.tab {
   position: relative;
-  /* Ensure the parent div serves as the positioning reference */
+  background-color: var(--lightgrey);
+
+}
+.tab.active {
+  background-color:var(--acssentColor);
 }
 
-details {
-  position: absolute;
-  /* Position the details element */
-  top: 0;
-  /* Position it at the top of the parent div */
-  left: 100%;
-  /* Position it to the right of the parent div */
-  z-index: 1;
-  /* Ensure it appears above other content */
-  background-color: white;
-  /* Optionally, add a background color to make it stand out */
+#bootstrapTab {
+  background-color: rgb(255, 255, 255);
 }
-
-details div {
-  height: 35px;
-  width: 65px;
-}
-
-details>summary::-webkit-details-marker {
+ .hidden-tab{
   display: none;
+  background-color: var(--extraTab);
+} 
+.hidden-tab.active {
+  background-color: var(--greyFont);
 }
-
-details>summary {
-  width: 1px;
-  height: 1px;
-  background-color: #eb628e;
-
-}
-
-summary {
-  pointer-events: 'none';
+.imgIconTab {
+  height: 30px;
 }
 
 #bootstrapTab {

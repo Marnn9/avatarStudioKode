@@ -1,6 +1,7 @@
 "use strict";
 import { TinitialiseScene } from './scene.mjs';
 import { initializeColor, initializeMeshes } from './colorOptions.mjs'
+import {character} from './scene.mjs'
 
 
 export function loadScene() {
@@ -40,43 +41,81 @@ const menuOptions = document.querySelectorAll('[menuOption]');
 
 document.addEventListener("DOMContentLoaded", function () {
     if (menuOptions.length > 0) {
-        setupOptinsMenu(menuOptions[0]);
+        setupOptionsMenu(menuOptions[0]);
     }
     menuOptions.forEach(option => {
         option.addEventListener('click', function(event) {
             event.stopPropagation(); // Stop the click event from bubbling up
-            setupOptinsMenu(this);
+            setupOptionsMenu(this);
         });
     });
 });
 
-function setupOptinsMenu(menuOption) {
-    const defaultColor = '#CECECE';
-    const selectedColor = '#9B5EF5';
+
+function setupOptionsMenu(menuOption) {
     const menuOptionValue = menuOption.getAttribute('menuOption');
     const jsonFile = menuOption.getAttribute('jsonFile');
-    const parentAttribute = menuOption.getAttribute('parent');
-    /* console.log(menuOptionValue);
-    console.log(jsonFileFile); */
 
-    menuOptions.forEach(previous => {
-        previous.style.backgroundColor = defaultColor;
-    });
-   
-    menuOption.style.backgroundColor = selectedColor;
-
+    
+    // Remove child elements from colorSelector
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
     }
-    if (jsonFile != null && jsonFile != 'meshCategories' ) {
+
+    // Initialize color or meshes based on JSON file
+    if (jsonFile != null && jsonFile != 'meshCategories') {
         initializeColor(menuOptionValue, jsonFile);
-    } else if (jsonFile == 'meshCategories'){
+    } else if (jsonFile == 'meshCategories') {
         initializeMeshes(menuOptionValue);
-    }
-    else {
+    } else {
         console.log("anError");
     }
 }
+const parentTabs = document.querySelectorAll('.tab');
+
+
+    parentTabs.forEach(parentTab => {
+        let clickCount = 0; // Move clickCount declaration inside the loop
+
+        parentTab.addEventListener('click', function () {
+            const parentId = this.id;
+            // Increment the click count for each click
+            clickCount++;
+           
+            // Remove the 'active' class from all tabs
+            parentTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked tab
+            this.classList.add('active');
+
+            // Toggle the visibility of the corresponding hidden tabs based on the click count
+            const allHiddenTabs = document.querySelectorAll('.hidden-tab');
+            allHiddenTabs.forEach(tab => {
+                if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
+                    tab.style.display = 'none'; 
+                } else {
+                    tab.style.display = clickCount % 2 === 0 ? 'none' : 'block';
+                    ; 
+                }
+            });
+        });
+    });
+    const childrenTabs = document.querySelectorAll('.hidden-tab');
+    childrenTabs.forEach(childrenTab => {
+        childrenTab.addEventListener('click', function () {
+        childrenTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked tab
+            this.classList.add('active');
+        })
+    })
+
+
+
 
 const undo = document.getElementById("undo");
 const redo = document.getElementById("redo")

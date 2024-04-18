@@ -18,5 +18,12 @@
         "option1": "cap",
         "option2": "cap_hair_long",
         "option3": "cap_hair_short"
+    },
+    "earrings": {
+        "option1": "ring_fat",
+        "option2": "ring_plain",
+        "option3": "ring_gem",
+        "option4": "ring_pearl",
+        "option5": "stud_pearl"
     }
 }
