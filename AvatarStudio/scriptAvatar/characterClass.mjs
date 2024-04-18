@@ -8,7 +8,7 @@ import { all } from "three/examples/jsm/nodes/Nodes.js";
 
 const bodyParts = {
     eye: { name: 'eyes', color: "#FFE7C0" },
-    hair: { name: 'hair_short_base', color: "#FFE7C0" },
+    hair: { name: 'hair_midlength', color: "#FFE7C0" },
     eyebrow: { name: "eyebrow_hairier", color: "#23100C" },
     skin: { name: 'skin', color: "#FFE7C0" },
     shirt: { name: 'shirt_base', color: "#FFE7C0" },
@@ -35,8 +35,7 @@ export class TCharacter extends THREE.Object3D {
         super();
 
         const loader = new GLTFLoader();
-        const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress', 'halo', 
-        'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane', 'beard', 'backdrop', 'ring', 'stud'];
+        const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane', 'beard', 'backdrop'];
 
         loader.load("./AvatarStudio/mediaAvatar/character/avatar.gltf", (gltfModel) => {
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
@@ -187,7 +186,6 @@ export class TCharacter extends THREE.Object3D {
 
     }
 }
-
 
 
 

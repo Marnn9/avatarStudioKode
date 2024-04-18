@@ -1,18 +1,28 @@
 :root {
-    --mainBtnColor: #EBAC78;
-    --borderColor: #ddb271;
-    --backgroundcolor: #ffffff;
-    --acssentColor: #9B5EF5;
+  --mainBtnColor: #EBAC78;
+  --borderColor: #ddb271;
+  --backgroundcolor: #ffffff;
+  --acssentColor: #9B5EF5;
+  --mainBtnColor: #ebac78;
+  --borderColor: #ddb271;
+  --backgroundcolor: #ffffff;
+  --purple: #9720f5;
+  --inputBackground: #f4f3ff;
+  --greyFont: #9390b2;
+  --purpleFont: #a24e98;
+  --lightgrey: #d9d9d9;
+  --darkgrey: #656062;
+  --blackBackground: #1e1e1e;
+  --redButton: #eb628e;
+  --redFont: #f5b4c9;
+  --extraTab: #E5D2F3;
 }
 
-/* html {
 /* html {
     background-color: var(--backgroundcolor);
 } */
 
 body {
-  margin: 0;
-  position: relative;
   margin: 0;
   position: relative;
 }
@@ -26,27 +36,13 @@ body {
   font-size: large;
   height: 2.5em;
   margin-top: 3em;
-  border: none;
-  border-radius: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  position: absolute;
-  font-weight: bold;
-  font-size: large;
-  height: 2.5em;
-  margin-top: 3em;
 }
 
 .globalBtn:hover {
   cursor: pointer;
-  cursor: pointer;
 }
 
 #sceneCanvas {
-  position: fixed;
-  top: 35%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -5;
   position: fixed;
   top: 35%;
   left: 50%;
@@ -57,13 +53,9 @@ body {
 #checkBtn:hover {
   background-color: rgb(47, 185, 70);
   color: white;
-  background-color: rgb(47, 185, 70);
-  color: white;
 }
 
 #choiceMenu {
-  background-color: white;
-  height: 30vh;
   background-color: white;
   height: 30vh;
 }
@@ -75,16 +67,10 @@ body {
   right: 2em;
   bottom: 20em;
   width: 2.5em;
-  background-color: white;
-  position: fixed;
-  color: rgb(47, 185, 70);
-  right: 2em;
-  bottom: 20em;
-  width: 2.5em;
 }
 
 #menuOptions {
-  overflow-x: auto;
+  overflow-x:auto;
 }
 
 #colors {
@@ -99,75 +85,47 @@ body {
   border-radius: 10px;
   height: 50px;
 }
-
+#undo:hover, #redo:hover, #redo:active, #undo:active {
+  background-color: var(--purple); /* Set the background color to dark purple */
+}
 .container {
   display: flex;
+ }
+
+.container > div {
+  flex-shrink: 0; /* Prevents the divs from shrinking */
+  width: 65px; /* Set a fixed width for each div */
 }
 
-.container>div {
-  flex-shrink: 0;
-  /* Prevents the divs from shrinking */
-  width: 65px;
-  /* Set a fixed width for each div */
-}
-
-#parent {
+.tab {
   position: relative;
-  /* Ensure the parent div serves as the positioning reference */
-}
-
-details {
-  position: absolute;
-  /* Position the details element */
-  top: 0;
-  /* Position it at the top of the parent div */
-  left: 100%;
-  /* Position it to the right of the parent div */
-  z-index: 1;
-  /* Ensure it appears above other content */
-  background-color: white;
-  /* Optionally, add a background color to make it stand out */
-}
-
-details div {
-  height: 35px;
-  width: 65px;
-}
-
-details>summary::-webkit-details-marker {
-  display: none;
-}
-
-details>summary {
-  width: 1px;
-  height: 1px;
-  background-color: #eb628e;
+  background-color: var(--lightgrey);
 
 }
-
-summary {
-  pointer-events: 'none';
+.tab.active {
+  background-color:var(--acssentColor);
 }
 
 #bootstrapTab {
   background-color: rgb(255, 255, 255);
 }
-
-.imgIconTab {
-  height: 30px;
+ .hidden-tab{
+  display: none;
+  background-color: var(--extraTab);
+} 
+.hidden-tab.active {
+  background-color: var(--greyFont);
 }
 .imgIconTab {
   height: 30px;
 }
 
-#undo,
-#redo {
-  width: 15%;
-  background-color: var(--lightgrey);
-}
+#link {
+  padding-left: 20px;
+  padding-right: 20px;
+  height: 40px;
+  background-color: rgb(164, 131, 131);
 
-#undo:hover, #redo:hover {
-  background-color: var(--purple); /* Set the background color to dark purple */
 }
 
 #inputEmail,
@@ -177,6 +135,10 @@ summary {
   color: var(--purple);
   height: 50px;
   border-radius: 15px;
+}
+#undo,#redo{
+  width: 15%;
+  background-color: var(--lightgrey);
 }
 
 .form-control::placeholder {
