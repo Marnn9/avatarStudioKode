@@ -87,11 +87,13 @@ body {
 
 .container {
   display: flex;
- }
+}
 
-.container > div {
-  flex-shrink: 0; /* Prevents the divs from shrinking */
-  width: 65px; /* Set a fixed width for each div */
+.container>div {
+  flex-shrink: 0;
+  /* Prevents the divs from shrinking */
+  width: 65px;
+  /* Set a fixed width for each div */
 }
 
 #parent {
@@ -112,19 +114,20 @@ details {
   /* Optionally, add a background color to make it stand out */
 }
 
-details div{
+details div {
   height: 35px;
   width: 65px;
 }
 
-details > summary::-webkit-details-marker {
+details>summary::-webkit-details-marker {
   display: none;
 }
+
 details>summary {
   width: 1px;
   height: 1px;
   background-color: #eb628e;
-  
+
 }
 
 summary {
@@ -138,17 +141,15 @@ summary {
 .imgIconTab {
   height: 30px;
 }
-#undo,#redo{
+
+#undo,
+#redo {
   width: 15%;
   background-color: var(--lightgrey);
 }
 
-#link {
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 40px;
-  background-color: rgb(164, 131, 131);
-
+#undo:hover, #redo:hover {
+  filter: invert(20%) sepia(20%) saturate(3) hue-rotate(260deg);
 }
 
 #inputEmail,

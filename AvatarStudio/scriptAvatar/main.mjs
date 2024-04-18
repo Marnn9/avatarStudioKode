@@ -83,8 +83,7 @@ const redo = document.getElementById("redo")
 
 undo.addEventListener("click", () => {
     character.undo();
-    character.setColor()
 });
 redo.addEventListener("click", () => {
-
+    character.redo();
 })
