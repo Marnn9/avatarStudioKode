@@ -52,7 +52,8 @@
     "option2": "pants_loose_long",
     "option3": "pants_loose_shorts",
     "option4": "pants_leggings",
-    "option5": "pants_leggings_loose"
+    "option5": "pants_leggings_loose",
+    "option6": "skirt_short"
   },
   "cap": {
     "option1": "cap",
