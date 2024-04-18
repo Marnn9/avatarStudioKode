@@ -126,8 +126,12 @@ details>summary {
   background-color: #eb628e;
   
 }
+summary::-webkit-details-marker {
+  display: none;
+}
 
 summary {
+  list-style-type: none;
   pointer-events: 'none';
 }
 

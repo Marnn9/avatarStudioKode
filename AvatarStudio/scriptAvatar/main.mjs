@@ -40,30 +40,42 @@ const menuOptions = document.querySelectorAll('[menuOption]');
 
 document.addEventListener("DOMContentLoaded", function () {
     if (menuOptions.length > 0) {
-        setupOptinsMenu(menuOptions[0]);
+        setupOptionsMenu(menuOptions[0]);
     }
     menuOptions.forEach(option => {
         option.addEventListener('click', function(event) {
             event.stopPropagation(); // Stop the click event from bubbling up
-            setupOptinsMenu(this);
+            setupOptionsMenu(this);
         });
     });
 });
 
-function setupOptinsMenu(menuOption) {
+function setupOptionsMenu(menuOption) {
     const defaultColor = '#CECECE';
     const selectedColor = '#9B5EF5';
     const menuOptionValue = menuOption.getAttribute('menuOption');
     const jsonFile = menuOption.getAttribute('jsonFile');
     const parentAttribute = menuOption.getAttribute('parent');
-    /* console.log(menuOptionValue);
-    console.log(jsonFileFile); */
+
+
+    const allDetails = document.querySelectorAll('details');
+    allDetails.forEach(detail => {
+        detail.removeAttribute('open');
+    });
 
     menuOptions.forEach(previous => {
         previous.style.backgroundColor = defaultColor;
     });
-   
+
     menuOption.style.backgroundColor = selectedColor;
+
+
+    const detailsElement = menuOption.querySelector('details');
+
+
+    if (detailsElement) {
+        detailsElement.open = !detailsElement.open;
+    }
 
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
