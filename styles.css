@@ -70,7 +70,7 @@ body {
 }
 
 #menuOptions {
-  overflow-x: auto;
+  overflow-x:auto;
 }
 
 #colors {
@@ -98,7 +98,7 @@ body {
 .tab {
   position: relative;
   background-color: var(--lightgrey);
-  /* Ensure the parent div serves as the positioning reference */
+
 }
 .tab.active {
   background-color:var(--acssentColor);

@@ -54,32 +54,7 @@ function setupOptionsMenu(menuOption) {
     const menuOptionValue = menuOption.getAttribute('menuOption');
     const jsonFile = menuOption.getAttribute('jsonFile');
 
-    const parentTabs = document.querySelectorAll('.tab');
-
-    parentTabs.forEach(parentTab => {
-        parentTab.addEventListener('click', function () {
-            const parentId = this.id;
-
-            // Remove the 'active' class from all tabs
-            parentTabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // Add the 'active' class to the clicked tab
-            this.classList.add('active');
-
-            // Hide or show the corresponding hidden tabs
-            const allHiddenTabs = document.querySelectorAll('.hidden-tab');
-            allHiddenTabs.forEach(tab => {
-                if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
-                    tab.style.display = 'none';
-                } else {
-                    tab.style.display = 'block';
-                }
-            });
-        });
-    });
-
+    
     // Remove child elements from colorSelector
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
@@ -94,4 +69,37 @@ function setupOptionsMenu(menuOption) {
         console.log("anError");
     }
 }
+const parentTabs = document.querySelectorAll('.tab');
+
+    parentTabs.forEach(parentTab => {
+        let clickCount = 0; // Move clickCount declaration inside the loop
+
+        parentTab.addEventListener('click', function () {
+            const parentId = this.id;
+
+            // Increment the click count for each click
+            clickCount++;
+           
+            // Remove the 'active' class from all tabs
+            parentTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked tab
+            this.classList.add('active');
+
+            // Toggle the visibility of the corresponding hidden tabs based on the click count
+            const allHiddenTabs = document.querySelectorAll('.hidden-tab');
+            allHiddenTabs.forEach(tab => {
+                if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
+                    tab.style.display = 'none'; // Toggle display based on click count
+                } else {
+                    tab.style.display = clickCount % 2 === 0 ? 'none' : 'block';
+                    ; // Always show the tab corresponding to the clicked parent
+                }
+            });
+        });
+    });
+
+
 
