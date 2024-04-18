@@ -71,12 +71,12 @@ function setupOptionsMenu(menuOption) {
 }
 const parentTabs = document.querySelectorAll('.tab');
 
+
     parentTabs.forEach(parentTab => {
         let clickCount = 0; // Move clickCount declaration inside the loop
 
         parentTab.addEventListener('click', function () {
             const parentId = this.id;
-
             // Increment the click count for each click
             clickCount++;
            
@@ -92,14 +92,25 @@ const parentTabs = document.querySelectorAll('.tab');
             const allHiddenTabs = document.querySelectorAll('.hidden-tab');
             allHiddenTabs.forEach(tab => {
                 if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
-                    tab.style.display = 'none'; // Toggle display based on click count
+                    tab.style.display = 'none'; 
                 } else {
                     tab.style.display = clickCount % 2 === 0 ? 'none' : 'block';
-                    ; // Always show the tab corresponding to the clicked parent
+                    ; 
                 }
             });
         });
     });
+    const childrenTabs = document.querySelectorAll('.hidden-tab');
+    childrenTabs.forEach(childrenTab => {
+        childrenTab.addEventListener('click', function () {
+        childrenTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked tab
+            this.classList.add('active');
+        })
+    })
 
 
 

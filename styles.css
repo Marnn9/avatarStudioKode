@@ -111,6 +111,9 @@ body {
   display: none;
   background-color: var(--extraTab);
 } 
+.hidden-tab.active {
+  background-color: var(--greyFont);
+}
 .imgIconTab {
   height: 30px;
 }
