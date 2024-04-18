@@ -138,6 +138,10 @@ summary {
 .imgIconTab {
   height: 30px;
 }
+#undo,#redo{
+  width: 15%;
+  background-color: var(--lightgrey);
+}
 
 #link {
   padding-left: 20px;

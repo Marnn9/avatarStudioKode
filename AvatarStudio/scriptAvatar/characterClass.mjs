@@ -3,26 +3,26 @@ import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from 'three';
 import { scenePositions } from "./scene.mjs";
 import fs from 'fs';
+import { all } from "three/examples/jsm/nodes/Nodes.js";
 
 
 const bodyParts = {
     eye: { name: 'eyes', color: "#FFE7C0" },
     hair: { name: 'hair_midlength', color: "#FFE7C0" },
-    eyebrow: { name: "eyebrow_hairier", color: "#8E3312" },
+    eyebrow: { name: "eyebrow_hairier", color: "#23100C"},
     skin: { name: 'skin', color: "#FFE7C0" },
     shirt: { name: 'shirt_base', color: "#FFE7C0" },
     pants: { name: 'pants_jogging', color: "#FFE7C0" },
 }
+
+const allMoves = [];
+let currentIndex = 0;
 
 export class TCharacter extends THREE.Object3D {
     constructor() {
         super();
 
         const loader = new GLTFLoader();
-        const localHairColor = localStorage.getItem("haircolor");
-        const localEyeColor = localStorage.getItem("eyecolor");
-        const localSkinColor = localStorage.getItem("skincolor");
-
 
         const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane', 'beard', 'backdrop'];
 
@@ -70,6 +70,17 @@ export class TCharacter extends THREE.Object3D {
                 } else {
                     locatedMesh.material.color.set(aColor);
                 }
+
+                currentIndex++;
+                allMoves.push(bodyParts);
+                if (currentIndex >10){
+                    allMoves.shift();
+                    currentIndex--;
+                    setMesh(gltfModel.scene);
+                }
+                console.log(currentIndex);
+                console.log(allMoves);
+
             }
 
             function locateAllMeshes(scene) {
@@ -121,6 +132,11 @@ export class TCharacter extends THREE.Object3D {
                 });
             }
 
+            this.undo = function (){
+                setMesh(gltfModel.scene);
+                //add the array of last index and get the values from here
+            }
+
             this.changeMesh = function (category, name) {
 
                 const childWithName = gltfModel.scene.children.find(child => child.name === bodyParts[category].name);
@@ -131,6 +147,13 @@ export class TCharacter extends THREE.Object3D {
                 bodyParts[category].name = name; //set the new name when old is removed
                 setMesh(gltfModel.scene);
                 this.setColor(category, bodyParts[category].color);
+
+                currentIndex++;
+                allMoves.push(bodyParts);
+                if (currentIndex >10){
+                    allMoves.shift();
+                    currentIndex--;
+                }
             };
 
             function saveMeshCategoriesToFile(meshCategories, fileName) {
@@ -152,3 +175,6 @@ export class TCharacter extends THREE.Object3D {
 
     }
 }
+
+
+
