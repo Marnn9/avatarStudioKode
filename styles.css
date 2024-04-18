@@ -85,7 +85,9 @@ body {
   border-radius: 10px;
   height: 50px;
 }
-
+#undo:hover, #redo:hover, #redo:active, #undo:active {
+  background-color: var(--purple); /* Set the background color to dark purple */
+}
 .container {
   display: flex;
  }

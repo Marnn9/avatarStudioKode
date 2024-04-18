@@ -1,5 +1,5 @@
 "use strict";
-import { TinitialiseScene } from './scene.mjs';
+import { TinitialiseScene,character } from './scene.mjs';
 import { initializeColor, initializeMeshes } from './colorOptions.mjs'
 
 
@@ -129,4 +129,12 @@ const parentTabs = document.querySelectorAll('.tab');
     })
 
 
-
+    const undo = document.getElementById("undo");
+    const redo = document.getElementById("redo")
+    
+    undo.addEventListener("click", () => {
+        character.undo();
+    });
+    redo.addEventListener("click", () => {
+        character.redo();
+    })
