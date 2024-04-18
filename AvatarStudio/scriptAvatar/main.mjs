@@ -1,5 +1,5 @@
 "use strict";
-import { TinitialiseScene, character } from './scene.mjs';
+import { TinitialiseScene } from './scene.mjs';
 import { initializeColor, initializeMeshes } from './colorOptions.mjs'
 
 
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
         setupOptinsMenu(menuOptions[0]);
     }
     menuOptions.forEach(option => {
-        option.addEventListener('click', function (event) {
+        option.addEventListener('click', function(event) {
             event.stopPropagation(); // Stop the click event from bubbling up
             setupOptinsMenu(this);
         });
@@ -62,15 +62,15 @@ function setupOptinsMenu(menuOption) {
     menuOptions.forEach(previous => {
         previous.style.backgroundColor = defaultColor;
     });
-
+   
     menuOption.style.backgroundColor = selectedColor;
 
     while (colorSelector.firstChild) {
         colorSelector.removeChild(colorSelector.firstChild);
     }
-    if (jsonFile != null && jsonFile != 'meshCategories') {
+    if (jsonFile != null && jsonFile != 'meshCategories' ) {
         initializeColor(menuOptionValue, jsonFile);
-    } else if (jsonFile == 'meshCategories') {
+    } else if (jsonFile == 'meshCategories'){
         initializeMeshes(menuOptionValue);
     }
     else {

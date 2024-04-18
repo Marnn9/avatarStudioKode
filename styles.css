@@ -1,27 +1,18 @@
 :root {
-  --mainBtnColor: #EBAC78;
-  --borderColor: #ddb271;
-  --backgroundcolor: #ffffff;
-  --acssentColor: #9B5EF5;
-  --mainBtnColor: #ebac78;
-  --borderColor: #ddb271;
-  --backgroundcolor: #ffffff;
-  --purple: #9720f5;
-  --inputBackground: #f4f3ff;
-  --greyFont: #9390b2;
-  --purpleFont: #a24e98;
-  --lightgrey: #d9d9d9;
-  --darkgrey: #656062;
-  --blackBackground: #1e1e1e;
-  --redButton: #eb628e;
-  --redFont: #f5b4c9;
+    --mainBtnColor: #EBAC78;
+    --borderColor: #ddb271;
+    --backgroundcolor: #ffffff;
+    --acssentColor: #9B5EF5;
 }
 
+/* html {
 /* html {
     background-color: var(--backgroundcolor);
 } */
 
 body {
+  margin: 0;
+  position: relative;
   margin: 0;
   position: relative;
 }
@@ -35,13 +26,27 @@ body {
   font-size: large;
   height: 2.5em;
   margin-top: 3em;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: absolute;
+  font-weight: bold;
+  font-size: large;
+  height: 2.5em;
+  margin-top: 3em;
 }
 
 .globalBtn:hover {
   cursor: pointer;
+  cursor: pointer;
 }
 
 #sceneCanvas {
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -5;
   position: fixed;
   top: 35%;
   left: 50%;
@@ -52,14 +57,24 @@ body {
 #checkBtn:hover {
   background-color: rgb(47, 185, 70);
   color: white;
+  background-color: rgb(47, 185, 70);
+  color: white;
 }
 
 #choiceMenu {
   background-color: white;
   height: 30vh;
+  background-color: white;
+  height: 30vh;
 }
 
 #checkBtn {
+  background-color: white;
+  position: fixed;
+  color: rgb(47, 185, 70);
+  right: 2em;
+  bottom: 20em;
+  width: 2.5em;
   background-color: white;
   position: fixed;
   color: rgb(47, 185, 70);
@@ -138,6 +153,9 @@ summary {
   background-color: rgb(255, 255, 255);
 }
 
+.imgIconTab {
+  height: 30px;
+}
 .imgIconTab {
   height: 30px;
 }
