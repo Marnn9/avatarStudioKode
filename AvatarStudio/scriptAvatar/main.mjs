@@ -49,6 +49,22 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+document.addEventListener("DOMContentLoaded", function () {
+    if (menuOptions.length > 0) {
+        setupOptionsMenu(menuOptions[0]);
+    }
+    menuOptions.forEach(option => {
+        option.addEventListener('click', function(event) {
+            event.stopPropagation(); 
+            setupOptionsMenu(this);
+        });
+    });
+
+   
+    const hairParentTab = document.getElementById('hairParent');
+    hairParentTab.click(); 
+});
+
 
 function setupOptionsMenu(menuOption) {
     const menuOptionValue = menuOption.getAttribute('menuOption');
