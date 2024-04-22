@@ -88,7 +88,10 @@ export function TinitialiseScene(anAvatar) {
     directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
 
     var controls = new OrbitControls(camera, renderer.domElement);
-
+    controls.minAzimuthAngle = degreesToRadians(-45) // 45 degrees left
+    controls.maxAzimuthAngle = degreesToRadians(45) // 45 degrees right
+    controls.minPolarAngle = degreesToRadians(90);//no upwards/downwards
+    controls.maxPolarAngle = degreesToRadians(90);
     //-----------------character-------------------------
     character.rotateY(degreesToRadians(-90));
     scene.add(character);
