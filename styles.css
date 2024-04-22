@@ -18,9 +18,13 @@
   --extraTab: #E5D2F3;
 }
 
-/* html {
-    background-color: var(--backgroundcolor);
-} */
+
+#this{
+  border-color: #9720f5!important;
+  background-color: #9720f5!important;
+  color: #9720f5!important;
+
+}
 
 body {
   margin: 0;
