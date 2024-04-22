@@ -19,10 +19,13 @@
 }
 
 /* html {
+/* html {
     background-color: var(--backgroundcolor);
 } */
 
 body {
+  margin: 0;
+  position: relative;
   margin: 0;
   position: relative;
 }
@@ -36,13 +39,27 @@ body {
   font-size: large;
   height: 2.5em;
   margin-top: 3em;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: absolute;
+  font-weight: bold;
+  font-size: large;
+  height: 2.5em;
+  margin-top: 3em;
 }
 
 .globalBtn:hover {
   cursor: pointer;
+  cursor: pointer;
 }
 
 #sceneCanvas {
+  position: fixed;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -5;
   position: fixed;
   top: 35%;
   left: 50%;
@@ -53,9 +70,13 @@ body {
 #checkBtn:hover {
   background-color: rgb(47, 185, 70);
   color: white;
+  background-color: rgb(47, 185, 70);
+  color: white;
 }
 
 #choiceMenu {
+  background-color: white;
+  height: 30vh;
   background-color: white;
   height: 30vh;
 }
@@ -67,10 +88,16 @@ body {
   right: 2em;
   bottom: 20em;
   width: 2.5em;
+  background-color: white;
+  position: fixed;
+  color: rgb(47, 185, 70);
+  right: 2em;
+  bottom: 20em;
+  width: 2.5em;
 }
 
 #menuOptions {
-  overflow-x:auto;
+  overflow-x: auto;
 }
 
 #colors {
@@ -85,16 +112,9 @@ body {
   border-radius: 10px;
   height: 50px;
 }
-#undo:hover, #redo:hover, #redo:active, #undo:active {
-  background-color: var(--purple); /* Set the background color to dark purple */
-}
+
 .container {
   display: flex;
- }
-
-.container > div {
-  flex-shrink: 0; /* Prevents the divs from shrinking */
-  width: 65px; /* Set a fixed width for each div */
 }
 
 .tab {
@@ -120,13 +140,25 @@ body {
   height: 30px;
 }
 
+#bootstrapTab {
+  background-color: rgb(255, 255, 255);
+}
 
-#link {
-  padding-left: 20px;
-  padding-right: 20px;
-  height: 40px;
-  background-color: rgb(164, 131, 131);
+.imgIconTab {
+  height: 30px;
+}
+.imgIconTab {
+  height: 30px;
+}
 
+#undo,
+#redo {
+  width: 15%;
+  background-color: var(--lightgrey);
+}
+
+#undo:hover, #redo:hover {
+  background-color: var(--purple); /* Set the background color to dark purple */
 }
 
 #inputEmail,
@@ -136,10 +168,6 @@ body {
   color: var(--purple);
   height: 50px;
   border-radius: 15px;
-}
-#undo,#redo{
-  width: 15%;
-  background-color: var(--lightgrey);
 }
 
 .form-control::placeholder {

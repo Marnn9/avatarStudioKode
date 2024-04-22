@@ -13,10 +13,16 @@ const bodyParts = {
     skin: { name: 'skin', color: "#FFE7C0" },
     shirt: { name: 'shirt_base', color: "#FFE7C0" },
     pants: { name: 'pants_jogging', color: "#FFE7C0" },
+    glasses: { name: 'null' },
+    earring: { name: 'null', color: "#FFE7C0" },
+    necklace: { name: 'null', color: "#FFE7C0" },
+    misc: { name: 'null', color: "#FFE7C0" },
+    cap: { name: 'null', color: "#FFE7C0" },
+
 }
 
 const allMoves = [];
-let currentIndex = 0;
+let currentIndex = -1; //starts at this so it matches the index in the array
 
 function saveSteps() {
     currentIndex++;
@@ -35,33 +41,33 @@ export class TCharacter extends THREE.Object3D {
         super();
 
         const loader = new GLTFLoader();
-        const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'shoes', 'sunglasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane', 'beard', 'backdrop'];
+        const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'accessories', 'earring', 'shoes', 'glasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane', 'beard', 'backdrop'];
 
         loader.load("./AvatarStudio/mediaAvatar/character/avatar.gltf", (gltfModel) => {
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
             this.add(gltfModel.scene);
 
             function locateMeshToPhong(aBodyPart) {
-                const mesh = gltfModel.scene.children.find(child => child.name === aBodyPart)
-                if (mesh.name !== bodyParts.eye.name) {
+                let mesh = gltfModel.scene.children.find(child => child.name === aBodyPart);
+                const childMesh = mesh.children[0];
 
-                    const phongMaterial = new THREE.MeshPhongMaterial();
-
-                    phongMaterial.color.copy(mesh.material.color);
-                    phongMaterial.map = mesh.material.map;
-                    phongMaterial.normalMap = mesh.material.normalMap;
-                    phongMaterial.normalScale.copy(mesh.material.normalScale);
-                    phongMaterial.receiveShadow = true;
-                    // You would need to do similar for other properties like roughness, emissive, etc.
-                    mesh.material = phongMaterial;
+                if (childMesh) {
+                    mesh = childMesh
                 }
+
+                const phongMaterial = new THREE.MeshPhongMaterial();
+                phongMaterial.color.copy(mesh.material.color);
+                phongMaterial.map = mesh.material.map;
+                phongMaterial.normalMap = mesh.material.normalMap;
+                phongMaterial.normalScale.copy(mesh.material.normalScale);
+                phongMaterial.receiveShadow = true;
+                mesh.material = phongMaterial;
                 return mesh;
             }
 
             console.log(gltfModel.scene);
             console.log(gltfModel.scene.parent.children);
 
-            const eyeMesh = locateMeshToPhong(bodyParts.eye.name);
             const lights = gltfModel.scene.children.filter(child => child.isLight);
 
             lights.forEach(light => {
@@ -71,61 +77,52 @@ export class TCharacter extends THREE.Object3D {
             this.setColor = function (aMeshCategory, aColor) {
                 const locatedMesh = locateMeshToPhong(bodyParts[aMeshCategory].name);
                 bodyParts[aMeshCategory].color = aColor;
-                if (locatedMesh == eyeMesh) {
-                    setChildColor(aColor);
-                } else {
-                    locatedMesh.material.color.set(aColor);
-                }
+                locatedMesh.material.color.set(aColor);
                 saveSteps();
             }
 
             this.undo = function () {
-                if (currentIndex != 0) {
-                    do {
-                        currentIndex--;
-                        if (currentIndex >= 0 && currentIndex < allMoves.length) {
-                            const stepToShow = allMoves[currentIndex];
-                            setMesh(gltfModel.scene, bodyParts, false);
-                            setMesh(gltfModel.scene, stepToShow);
-                        }
-                    } while (currentIndex >= allMoves.length - 1 && currentIndex >= 0);
+                if (currentIndex > 0) {
+                    currentIndex--;
+            
+                    const stepToShow = allMoves[currentIndex];
+                    const stepToDelete = allMoves[currentIndex + 1]; // Corrected the index for stepToDelete
+                
+                    setMesh(gltfModel.scene, stepToDelete, false);
+                    setMesh(gltfModel.scene, stepToShow);
+
+                } else {
+                    console.log('Already at the beginning. Cannot undo any further.');
                 }
-            }
+            };
 
             this.redo = function () {
                 if (currentIndex != allMoves.length - 1 && currentIndex != allMoves.length) {
                     currentIndex++
                     if (currentIndex <= 11) {
                         const stepToShow = allMoves[currentIndex];
-                        setMesh(gltfModel.scene, bodyParts, false)
+                        setMesh(gltfModel.scene, stepToShow - 1, false);
                         setMesh(gltfModel.scene, stepToShow);
                     }
                 }
-
             }
 
             this.changeMesh = function (category, name) {
-
                 const childWithName = gltfModel.scene.children.find(child => child.name === bodyParts[category].name);
                 if (childWithName) {
                     childWithName.visible = false;
                 }
-                delete bodyParts[category].name //remove the old name 
-                bodyParts[category].name = name; //set the new name when old is removed
+                delete bodyParts[category].name;
+                bodyParts[category].name = name;
                 setMesh(gltfModel.scene, bodyParts);
                 this.setColor(category, bodyParts[category].color);
-            };
-
-            function setChildColor(aColor) {
-                eyeMesh.children[1].material.color.set(aColor);
-                eyeMesh.children[1].material.transparent = true
             };
 
             function locateAllMeshes(scene) {
                 const meshCategories = {};
 
                 categoryNames.forEach(categoryName => {
-                    const processedMeshes = new Set(); // Keep track of processed meshes
+                    const processedMeshes = new Set();
 
                     scene.children.forEach(child => {
                         if (child.name.startsWith(categoryName) && !processedMeshes.has(child)) {
@@ -134,16 +131,16 @@ export class TCharacter extends THREE.Object3D {
                             let currentChild = child;
                             do {
                                 options[`option${optionCounter++}`] = currentChild.name;
-                                processedMeshes.add(currentChild); // Mark the mesh as processed
-                                // Hiding the mesh instead of removing it
+                                processedMeshes.add(currentChild); 
                                 currentChild.visible = false;
-                                // Get the next child
                                 currentChild = scene.children.find(nextChild => nextChild !== currentChild && nextChild.name.startsWith(categoryName) && !processedMeshes.has(nextChild));
                             } while (currentChild);
                             meshCategories[categoryName] = options;
                         }
                     });
+
                 });
+                //saveMeshCategoriesToFile(meshCategories, 'meshes');
 
                 setMesh(scene, bodyParts);
             }
@@ -153,15 +150,14 @@ export class TCharacter extends THREE.Object3D {
                     if (anObject.hasOwnProperty(category)) {
                         const childName = anObject[category].name;
 
-                        // Find the child object with the specified name within the scene
                         const child = scene.children.find(child => child.name === childName);
+
+                        //console.log(child);
+
                         if (child) {
-                            // If the child object is found, set its visibility to true
-                            if (childName !== 'eyes') {
-                                child.visible = bool;
+                                child.visible = bool; console.log(bool);
                                 const locatedMesh = locateMeshToPhong(childName);
                                 locatedMesh.material.color.set(anObject[category].color);
-                            }
                         }
                     }
                 }

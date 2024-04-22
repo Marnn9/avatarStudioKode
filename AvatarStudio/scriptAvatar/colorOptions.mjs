@@ -42,10 +42,10 @@ export async function initializeColor(aMenuObject, aColorType) {
     }
 }
 
-export async function initializeMeshes(category) {
+export async function initializeMeshes(jsonfile, category) {
     try {
         // Fetch the JSON file
-        const response = await fetch(`./json/meshCategories.json`);
+        const response = await fetch(`./json/${jsonfile}.json`);
         const data = await response.json();
         const options = data[category];
 
@@ -56,6 +56,7 @@ export async function initializeMeshes(category) {
             meshSelected.style.width = '20%';
 
             // Set background image for the option
+           
             meshSelected.style.backgroundImage = `url('./AvatarStudio/mediaAvatar/thumbnails/${options[option]}.png')`;
             meshSelected.style.backgroundSize = 'cover';
             meshSelected.style.backgroundPosition = 'center';

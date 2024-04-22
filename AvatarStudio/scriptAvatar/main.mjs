@@ -62,10 +62,10 @@ function setupOptionsMenu(menuOption) {
     }
 
     // Initialize color or meshes based on JSON file
-    if (jsonFile != null && jsonFile != 'meshCategories') {
+    if (jsonFile != null && jsonFile != 'meshCategories' && jsonFile != 'accessories') {
         initializeColor(menuOptionValue, jsonFile);
-    } else if (jsonFile == 'meshCategories') {
-        initializeMeshes(menuOptionValue);
+    } else if (jsonFile == 'meshCategories' || jsonFile == 'accessories') {
+        initializeMeshes(jsonFile , menuOptionValue);
     } else {
         console.log("anError");
     }
