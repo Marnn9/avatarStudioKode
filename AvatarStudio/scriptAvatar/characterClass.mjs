@@ -84,10 +84,10 @@ export class TCharacter extends THREE.Object3D {
             this.undo = function () {
                 if (currentIndex > 0) {
                     currentIndex--;
-            
+
                     const stepToShow = allMoves[currentIndex];
-                    const stepToDelete = allMoves[currentIndex + 1]; // Corrected the index for stepToDelete
-                
+                    const stepToDelete = allMoves[currentIndex + 1]; 
+
                     setMesh(gltfModel.scene, stepToDelete, false);
                     setMesh(gltfModel.scene, stepToShow);
 
@@ -97,15 +97,20 @@ export class TCharacter extends THREE.Object3D {
             };
 
             this.redo = function () {
-                if (currentIndex != allMoves.length - 1 && currentIndex != allMoves.length) {
-                    currentIndex++
-                    if (currentIndex <= 11) {
-                        const stepToShow = allMoves[currentIndex];
-                        setMesh(gltfModel.scene, stepToShow - 1, false);
-                        setMesh(gltfModel.scene, stepToShow);
-                    }
+                if (currentIndex < allMoves.length - 1) {
+                    currentIndex++;
+
+                    const stepToShow = allMoves[currentIndex];
+                    const stepToDelete = allMoves[currentIndex - 1];
+
+
+                    setMesh(gltfModel.scene, stepToDelete, false);
+
+                    setMesh(gltfModel.scene, stepToShow);
+                } else {
+                    console.log('Already at the end. Cannot redo any further.');
                 }
-            }
+            };
 
             this.changeMesh = function (category, name) {
                 const childWithName = gltfModel.scene.children.find(child => child.name === bodyParts[category].name);
@@ -131,7 +136,7 @@ export class TCharacter extends THREE.Object3D {
                             let currentChild = child;
                             do {
                                 options[`option${optionCounter++}`] = currentChild.name;
-                                processedMeshes.add(currentChild); 
+                                processedMeshes.add(currentChild);
                                 currentChild.visible = false;
                                 currentChild = scene.children.find(nextChild => nextChild !== currentChild && nextChild.name.startsWith(categoryName) && !processedMeshes.has(nextChild));
                             } while (currentChild);
@@ -155,9 +160,9 @@ export class TCharacter extends THREE.Object3D {
                         //console.log(child);
 
                         if (child) {
-                                child.visible = bool; console.log(bool);
-                                const locatedMesh = locateMeshToPhong(childName);
-                                locatedMesh.material.color.set(anObject[category].color);
+                            child.visible = bool; console.log(bool);
+                            const locatedMesh = locateMeshToPhong(childName);
+                            locatedMesh.material.color.set(anObject[category].color);
                         }
                     }
                 }
