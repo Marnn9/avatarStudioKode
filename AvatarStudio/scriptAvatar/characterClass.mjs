@@ -2,11 +2,9 @@
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import * as THREE from 'three';
 import { scenePositions } from "./scene.mjs";
-import fs from 'fs';
-import { all } from "three/examples/jsm/nodes/Nodes.js";
 
 
-const bodyParts = {
+let bodyParts = {
     eye: { name: 'eyes', color: "#FFE7C0" },
     hair: { name: 'hair_midlength', color: "#FFE7C0" },
     eyebrow: { name: "eyebrow_hairier", color: "#23100C" },
@@ -16,9 +14,8 @@ const bodyParts = {
     glasses: { name: 'null' },
     earring: { name: 'null', color: "#FFE7C0" },
     necklace: { name: 'null', color: "#FFE7C0" },
-    misc: { name: 'null', color: "#FFE7C0" },
-    cap: { name: 'null', color: "#FFE7C0" },
-
+    accessories: { name: 'null', color: "#FFE7C0" },
+    beard: { name: 'null', color: "#FFE7C0" }
 }
 
 const allMoves = [];
@@ -30,10 +27,7 @@ function saveSteps() {
     if (currentIndex > 11) {
         allMoves.shift();
         currentIndex--;
-        //setMesh(gltfModel.scene);
     }
-    console.log(currentIndex);
-    console.log(allMoves);
 }
 
 export class TCharacter extends THREE.Object3D {
@@ -41,7 +35,6 @@ export class TCharacter extends THREE.Object3D {
         super();
 
         const loader = new GLTFLoader();
-        const categoryNames = ['shirt', 'hair', 'eyebrow', 'pants', 'cap', 'necklace', 'accessories', 'earring', 'shoes', 'glasses', 'skirt', 'dress', 'halo', 'body', 'gloves', 'BezierCircle', 'Sphere', 'Plane', 'beard', 'backdrop'];
 
         loader.load("./AvatarStudio/mediaAvatar/character/avatar.gltf", (gltfModel) => {
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
@@ -54,7 +47,6 @@ export class TCharacter extends THREE.Object3D {
                 if (childMesh) {
                     mesh = childMesh
                 }
-
                 const phongMaterial = new THREE.MeshPhongMaterial();
                 phongMaterial.color.copy(mesh.material.color);
                 phongMaterial.map = mesh.material.map;
@@ -86,13 +78,12 @@ export class TCharacter extends THREE.Object3D {
                     currentIndex--;
 
                     const stepToShow = allMoves[currentIndex];
-                    const stepToDelete = allMoves[currentIndex + 1]; 
-
+                    const stepToDelete = allMoves[currentIndex + 1];
                     setMesh(gltfModel.scene, stepToDelete, false);
                     setMesh(gltfModel.scene, stepToShow);
-
+                    bodyParts = stepToShow
                 } else {
-                    console.log('Already at the beginning. Cannot undo any further.');
+                    console.log('Cannot undo any further.');
                 }
             };
 
@@ -102,13 +93,11 @@ export class TCharacter extends THREE.Object3D {
 
                     const stepToShow = allMoves[currentIndex];
                     const stepToDelete = allMoves[currentIndex - 1];
-
-
                     setMesh(gltfModel.scene, stepToDelete, false);
-
                     setMesh(gltfModel.scene, stepToShow);
+                    bodyParts = stepToShow
                 } else {
-                    console.log('Already at the end. Cannot redo any further.');
+                    console.log('Cannot redo any further.');
                 }
             };
 
@@ -117,7 +106,6 @@ export class TCharacter extends THREE.Object3D {
                 if (childWithName) {
                     childWithName.visible = false;
                 }
-                delete bodyParts[category].name;
                 bodyParts[category].name = name;
                 setMesh(gltfModel.scene, bodyParts);
                 this.setColor(category, bodyParts[category].color);
@@ -126,25 +114,25 @@ export class TCharacter extends THREE.Object3D {
             function locateAllMeshes(scene) {
                 const meshCategories = {};
 
-                categoryNames.forEach(categoryName => {
-                    const processedMeshes = new Set();
-
-                    scene.children.forEach(child => {
-                        if (child.name.startsWith(categoryName) && !processedMeshes.has(child)) {
-                            const options = {};
-                            let optionCounter = 1;
-                            let currentChild = child;
-                            do {
-                                options[`option${optionCounter++}`] = currentChild.name;
-                                processedMeshes.add(currentChild);
-                                currentChild.visible = false;
-                                currentChild = scene.children.find(nextChild => nextChild !== currentChild && nextChild.name.startsWith(categoryName) && !processedMeshes.has(nextChild));
-                            } while (currentChild);
-                            meshCategories[categoryName] = options;
-                        }
-                    });
-
-                });
+                for (const categoryName in bodyParts) {
+                    if (bodyParts.hasOwnProperty(categoryName)) {
+                        const processedMeshes = new Set();
+                        scene.children.forEach(child => {
+                            if (child.name.startsWith(categoryName) && !processedMeshes.has(child)) {
+                                const options = {};
+                                let optionCounter = 1;
+                                let currentChild = child;
+                                do {
+                                    options[`option${optionCounter++}`] = currentChild.name;
+                                    processedMeshes.add(currentChild);
+                                    currentChild.visible = false;
+                                    currentChild = scene.children.find(nextChild => nextChild !== currentChild && nextChild.name.startsWith(categoryName) && !processedMeshes.has(nextChild));
+                                } while (currentChild);
+                                meshCategories[categoryName] = options;
+                            }
+                        });
+                    }
+                };
                 //saveMeshCategoriesToFile(meshCategories, 'meshes');
 
                 setMesh(scene, bodyParts);
@@ -156,8 +144,6 @@ export class TCharacter extends THREE.Object3D {
                         const childName = anObject[category].name;
 
                         const child = scene.children.find(child => child.name === childName);
-
-                        //console.log(child);
 
                         if (child) {
                             child.visible = bool; console.log(bool);
@@ -184,7 +170,6 @@ export class TCharacter extends THREE.Object3D {
 
             locateAllMeshes(gltfModel.scene);
         });
-
     }
 }
 
