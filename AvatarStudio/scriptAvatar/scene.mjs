@@ -26,11 +26,13 @@ function degreesToRadians(degrees) {
     const radians = degrees * mathToMultiply;
     return radians;
 }
+export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
+
 
 export function TinitialiseScene(anAvatar) {
 
 
-    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
+    let scene, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
     scene = new THREE.Scene();
 
     const guiWidth = 300;
@@ -45,9 +47,10 @@ export function TinitialiseScene(anAvatar) {
 
     //----------------scene objects----------------------
 
-    camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
+   
     camera.position.z = 5;
-    //camera.position.y = -2
+ 
+    
 
     /*  const planeGeometry = new THREE.PlaneGeometry(20, 20); // Adjust the size as needed
      const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
