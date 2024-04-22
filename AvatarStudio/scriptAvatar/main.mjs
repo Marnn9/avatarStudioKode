@@ -1,5 +1,4 @@
 "use strict";
-import * as THREE from 'three';
 import { TinitialiseScene, character, camera } from "./scene.mjs";
 import { initializeColor, initializeMeshes } from "./colorOptions.mjs";
 
@@ -60,53 +59,59 @@ function setupOptionsMenu(menuOption) {
     colorSelector.removeChild(colorSelector.firstChild);
   }
 
-    // Initialize color or meshes based on JSON file
-    if (jsonFile != null && jsonFile != 'meshCategories' && jsonFile != 'accessories') {
-        initializeColor(menuOptionValue, jsonFile);
-    } else if (jsonFile == 'meshCategories' || jsonFile == 'accessories') {
-        initializeMeshes(jsonFile , menuOptionValue);
-    } else {
-        console.log("anError");
-    }
+  // Initialize color or meshes based on JSON file
+  if (jsonFile != null && jsonFile != 'meshCategories' && jsonFile != 'accessories') {
+    initializeColor(menuOptionValue, jsonFile);
+  } else if (jsonFile == 'meshCategories' || jsonFile == 'accessories') {
+    initializeMeshes(jsonFile , menuOptionValue);
+  } else {
+    console.log("anError");
+  }
 }
+
 const parentTabs = document.querySelectorAll(".tab");
 
 parentTabs.forEach((parentTab) => {
-  let clickCount = 0; 
-
   parentTab.addEventListener("click", function () {
     const parentId = this.id;
+    const childrenTab = document.querySelector(`.${parentId}-hidden-tab`);
 
-    clickCount++;
-    if (this.id==('clothesParent')) {
-        character.position.y = 2.2;
-        camera.position.z = 8
-    } else if (this.id==('hairParent')){
-        character.position.y = 0;
-        camera.position.z = 6
-    }else if (this.id==('eyeParent')){
-        character.position.y = 0;
-        camera.position.z = 5
-    }else if (this.id==('skinParent')){
-        character.position.y = 2.2;
-        camera.position.z = 8
-    }
     parentTabs.forEach((tab) => {
       tab.classList.remove("active");
     });
 
-    this.classList.add("active");
+    switch (parentId) {
+      case 'clothesParent':
+        character.position.y = 2.2;
+        camera.position.z = 8;
+        break;
+      case 'hairParent':
+        character.position.y = 0;
+        camera.position.z = 6;
+        break;
+      case 'eyeParent':
+        character.position.y = 0;
+        camera.position.z = 5;
+        break;
+      case 'skinParent':
+        character.position.y = 2.2;
+        camera.position.z = 8;
+        break;
+    }
+
+    this.classList.toggle("active");
 
     const allHiddenTabs = document.querySelectorAll(".hidden-tab");
     allHiddenTabs.forEach((tab) => {
-      if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
+      if (tab !== childrenTab) {
         tab.style.display = "none";
       } else {
-        tab.style.display = clickCount % 2 === 0 ? "none" : "block";
+        tab.style.display = tab.style.display === "none" ? "block" : "none";
       }
     });
   });
 });
+
 const childrenTabs = document.querySelectorAll(".hidden-tab");
 childrenTabs.forEach((childrenTab) => {
   childrenTab.addEventListener("click", function () {
