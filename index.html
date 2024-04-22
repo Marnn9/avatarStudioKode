@@ -51,16 +51,12 @@
 
     <div class="container-fluid fixed-bottom">
         <div id="menuOptions" class=" row g-0 d-flex flex-nowrap">
-            <div id="hairParent" class="col-3 tab " menuOption="hair" jsonFile="hair" parent="true">
+            <div id="hairParent" class="col-3 tab " menuOption="hair" jsonFile="meshCategories" parent="true">
                 <div class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div class="col-3 hidden-tab hairParent-hidden-tab" menuOption="hair" jsonFile="meshCategories">
-                <div class="border rectangle rounded-top d-flex justify-content-center align-items-center">
-                    <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
-                </div>
-            </div>
+         
             <div class="col-3 hidden-tab hairParent-hidden-tab" menuOption="hair" jsonFile="hair">
                 <div class="border rectangle rounded-top d-flex justify-content-center ">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of hair" class="w-50">
@@ -77,27 +73,28 @@
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_eyebrow.png" alt="icon of eyebrow" class="w-50">
                 </div>
             </div>
-            <div class="col-3 hidden-tab eyeParent-hidden-tab" menuOption="eyebrow" jsonFile="hair">
+      <div class="col-3 hidden-tab eyeParent-hidden-tab" menuOption="eyebrow" jsonFile="hair">
                 <div class="border rectangle rounded-top d-flex justify-content-center align-items-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of eyebrow" class="w-50">
                 </div>
-            </div>
+            </div> 
 
-            <div class="col-3 tab" menuOption="skin" jsonFile="skin">
+            <div class="col-3 tab" id ="skinParent" menuOption="skin" jsonFile="skin">
                 <div class="border rectangle rounded-top d-flex justify-content-center ">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_skin.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div id="clothesParent" class="col-3 tab" menuOption="clothesMenu" jsonFile="clothing" parent="true">
+
+            <div id="clothesParent" class="col-3 tab"  menuOption="shirt" jsonFile="meshCategories" parent="true">
                 <div class="border rectangle rounded-top d-flex justify-content-center">
-                    <img src="AvatarStudio/mediaAvatar/buttons/icons_clothes.png" alt="icon of coathanger" class="w-50">
+                    <img src="AvatarStudio/mediaAvatar/buttons/icons_top.png" alt="icon of hair" class="w-50">
                 </div>
             </div>
-            <div class="col-3 hidden-tab clothesParent-hidden-tab" menuOption="shirt" jsonFile="meshCategories">
+        <!--     <div class="col-3 hidden-tab clothesParent-hidden-tab" menuOption="shirt" jsonFile="meshCategories">
                 <div class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_top.png" alt="icon of sweater" class="w-50">
                 </div>
-            </div>
+            </div> -->
             <div class="col-3 hidden-tab clothesParent-hidden-tab" menuOption="shirt" jsonFile="clothing">
                 <div class="border rectangle rounded-top d-flex justify-content-center">
                     <img src="AvatarStudio/mediaAvatar/buttons/icons_shirtRecolor.png" alt="icon of sweater recolor"

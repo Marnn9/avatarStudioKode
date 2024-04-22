@@ -26,11 +26,13 @@ function degreesToRadians(degrees) {
     const radians = degrees * mathToMultiply;
     return radians;
 }
+export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
+
 
 export function TinitialiseScene(anAvatar) {
 
 
-    let scene, camera, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
+    let scene, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
     scene = new THREE.Scene();
 
     const guiWidth = 300;
@@ -45,9 +47,10 @@ export function TinitialiseScene(anAvatar) {
 
     //----------------scene objects----------------------
 
-    camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
+   
     camera.position.z = 5;
-    //camera.position.y = -2
+ 
+    
 
     /*  const planeGeometry = new THREE.PlaneGeometry(20, 20); // Adjust the size as needed
      const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
@@ -85,7 +88,10 @@ export function TinitialiseScene(anAvatar) {
     directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
 
     var controls = new OrbitControls(camera, renderer.domElement);
-
+    controls.minAzimuthAngle = degreesToRadians(-45) // 45 degrees left
+    controls.maxAzimuthAngle = degreesToRadians(45) // 45 degrees right
+    controls.minPolarAngle = degreesToRadians(90);//no upwards/downwards
+    controls.maxPolarAngle = degreesToRadians(90);
     //-----------------character-------------------------
     character.rotateY(degreesToRadians(-90));
     scene.add(character);
