@@ -38,17 +38,7 @@ checkBtn.addEventListener("click", saveImage);
 
 const menuOptions = document.querySelectorAll('[menuOption]');
 
-document.addEventListener("DOMContentLoaded", function () {
-    if (menuOptions.length > 0) {
-        setupOptionsMenu(menuOptions[0]);
-    }
-    menuOptions.forEach(option => {
-        option.addEventListener('click', function(event) {
-            event.stopPropagation(); // Stop the click event from bubbling up
-            setupOptionsMenu(this);
-        });
-    });
-});
+
 document.addEventListener("DOMContentLoaded", function () {
     if (menuOptions.length > 0) {
         setupOptionsMenu(menuOptions[0]);
