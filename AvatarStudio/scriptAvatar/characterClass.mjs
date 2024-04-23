@@ -18,9 +18,9 @@ export class TCharacter extends THREE.Object3D {
             shirt: { name: 'shirt_base', color: "#FFE7C0" },
             pants: { name: 'pants_jogging', color: "#FFE7C0" },
             glasses: { name: 'null' },
-            earring: { name: 'null', color: "#FFE7C0" },
-            necklace: { name: 'null', color: "#FFE7C0" },
-            accessories: { name: 'null', color: "#FFE7C0" },
+            earring: { name: 'null', color: "#FFD700" },
+            necklace: { name: 'null', color: "#FFD700" },
+            accessories: { name: 'null', color: "#FFD700" },
             beard: { name: 'null', color: "#FFE7C0" }
         }
         

@@ -29,8 +29,7 @@ function degreesToRadians(degrees) {
 export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
 
 
-export function TinitialiseScene(anAvatar) {
-
+export function TinitialiseScene(cvsId) {
 
     let scene, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
     scene = new THREE.Scene();
@@ -46,21 +45,7 @@ export function TinitialiseScene(anAvatar) {
     scene.background = new THREE.Color(white);
 
     //----------------scene objects----------------------
-
-   
     camera.position.z = 5;
- 
-    
-
-    /*  const planeGeometry = new THREE.PlaneGeometry(20, 20); // Adjust the size as needed
-     const planeMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 });
-     const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-     const planeFloor = new THREE.Mesh(planeGeometry, planeMaterial);
-     planeFloor.rotateX(degreesToRadians(90));
-     planeFloor.position.y = -5;
-     planeMesh.receiveShadow = true;
-     planeMesh.position.z = -8;
-     scene.add(planeMesh, planeFloor); */
     //-----------------lights------------------
 
     const ambientLight = new THREE.AmbientLight(0xffffff, 3);
@@ -71,8 +56,8 @@ export function TinitialiseScene(anAvatar) {
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     //renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.domElement.id = "sceneCanvas";
-    renderer.domElement.setAttribute('alt', 'sceneCanvas');
+    renderer.domElement.id = cvsId;
+    renderer.domElement.setAttribute('alt', cvsId);
     document.body.appendChild(renderer.domElement);
     setConstantAspectRatio();
 
