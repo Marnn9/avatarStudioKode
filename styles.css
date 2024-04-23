@@ -101,8 +101,8 @@ body {
   background-color: white;
   margin-bottom: 0em;
   overflow: auto;
-  max-height: 300px;
-  min-height: 300px;
+  max-height: 30vh;
+  min-height: 30vh;
 }
 
 #allColors {

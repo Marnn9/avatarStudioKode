@@ -69,15 +69,10 @@ function setupOptionsMenu(menuOption) {
     }
 }
 const parentTabs = document.querySelectorAll(".tab");
-
+const allHiddenTabs = document.querySelectorAll(".hidden-tab");
 parentTabs.forEach((parentTab) => {
   parentTab.addEventListener("click", function () {
     const parentId = this.id;
-    const childrenTab = document.querySelector(`.${parentId}-hidden-tab`);
-
-    parentTabs.forEach((tab) => {
-      tab.classList.remove("active");
-    });
 
     switch (parentId) {
       case 'clothesParent':
@@ -97,15 +92,17 @@ parentTabs.forEach((parentTab) => {
         camera.position.z = 8;
         break;
     }
-
+    parentTabs.forEach((tab) => {
+        tab.classList.remove("active");
+      });
     this.classList.toggle("active");
 
-    const allHiddenTabs = document.querySelectorAll(".hidden-tab");
     allHiddenTabs.forEach((tab) => {
-      if (tab !== childrenTab) {
-        tab.style.display = "none";
+        if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
+            tab.style.display = "none";
       } else {
-        tab.style.display = tab.style.display === "none" ? "block" : "none";
+        
+        tab.style.display = tab.style.display != "block" ? "block": "none" //tab.style.display = empty string on first click
       }
     });
   });
