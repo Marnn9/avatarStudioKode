@@ -1,4 +1,5 @@
 "use strict";
+import * as THREE from 'three';
 import { TinitialiseScene, character, camera } from "./scene.mjs";
 import { initializeColor, initializeMeshes } from "./colorOptions.mjs";
 
@@ -59,16 +60,15 @@ function setupOptionsMenu(menuOption) {
     colorSelector.removeChild(colorSelector.firstChild);
   }
 
-  // Initialize color or meshes based on JSON file
-  if (jsonFile != null && jsonFile != 'meshCategories' && jsonFile != 'accessories') {
-    initializeColor(menuOptionValue, jsonFile);
-  } else if (jsonFile == 'meshCategories' || jsonFile == 'accessories') {
-    initializeMeshes(jsonFile , menuOptionValue);
-  } else {
-    console.log("anError");
-  }
+    // Initialize color or meshes based on JSON file
+    if (jsonFile != null && jsonFile != 'meshCategories' && jsonFile != 'accessories') {
+        initializeColor(menuOptionValue, jsonFile);
+    } else if (jsonFile == 'meshCategories' || jsonFile == 'accessories') {
+        initializeMeshes(jsonFile , menuOptionValue);
+    } else {
+        console.log("anError");
+    }
 }
-
 const parentTabs = document.querySelectorAll(".tab");
 
 parentTabs.forEach((parentTab) => {
