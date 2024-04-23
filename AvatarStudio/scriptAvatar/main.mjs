@@ -4,7 +4,7 @@ import { TinitialiseScene, character, camera } from "./scene.mjs";
 import { initializeColor, initializeMeshes } from "./colorOptions.mjs";
 
 export function loadScene() {
-  TinitialiseScene();
+  TinitialiseScene('sceneCanvas');
 }
 
 function saveImage(userId) {
@@ -12,7 +12,9 @@ function saveImage(userId) {
 
   if (saveConfirm) {
     requestAnimationFrame(() => {
+      
       const canvas = document.getElementById("sceneCanvas");
+      //TinitialiseScene(canvas); //for when the canvas is imgCanvas
 
       if (!canvas) {
         console.error("Canvas not found");
