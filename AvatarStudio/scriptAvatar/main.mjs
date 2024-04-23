@@ -102,7 +102,7 @@ parentTabs.forEach((parentTab) => {
             tab.style.display = "none";
       } else {
         
-        tab.style.display = tab.style.display != "block" ? "block": "none" //tab.style.display = empty string on first click
+        tab.style.display = tab.style.display != "block" ? "block": "none" //tab.style.display is empty string on first click
       }
     });
   });
