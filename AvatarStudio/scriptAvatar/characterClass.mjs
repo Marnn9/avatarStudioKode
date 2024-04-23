@@ -4,37 +4,37 @@ import * as THREE from 'three';
 import { scenePositions } from "./scene.mjs";
 
 
-let bodyParts = {
-    eye: { name: 'eyes', color: "#FFE7C0" },
-    hair: { name: 'hair_midlength', color: "#FFE7C0" },
-    eyebrow: { name: "eyebrow_hairier", color: "#23100C" },
-    skin: { name: 'skin', color: "#FFE7C0" },
-    shirt: { name: 'shirt_base', color: "#FFE7C0" },
-    pants: { name: 'pants_jogging', color: "#FFE7C0" },
-    glasses: { name: 'null' },
-    earring: { name: 'null', color: "#FFE7C0" },
-    necklace: { name: 'null', color: "#FFE7C0" },
-    accessories: { name: 'null', color: "#FFE7C0" },
-    beard: { name: 'null', color: "#FFE7C0" }
-}
-
-const allMoves = [];
-let currentIndex = -1; //starts at this so it matches the index in the array
-
-function saveSteps() {
-    currentIndex++;
-    allMoves.push(JSON.parse(JSON.stringify(bodyParts)));
-    if (currentIndex > 11) {
-        allMoves.shift();
-        currentIndex--;
-    }
-}
-
 export class TCharacter extends THREE.Object3D {
     constructor() {
         super();
 
         const loader = new GLTFLoader();
+
+        let bodyParts = {
+            eye: { name: 'eyes', color: "#FFE7C0" },
+            hair: { name: 'hair_midlength', color: "#FFE7C0" },
+            eyebrow: { name: "eyebrow_hairier", color: "#23100C" },
+            skin: { name: 'skin', color: "#FFE7C0" },
+            shirt: { name: 'shirt_base', color: "#FFE7C0" },
+            pants: { name: 'pants_jogging', color: "#FFE7C0" },
+            glasses: { name: 'null' },
+            earring: { name: 'null', color: "#FFE7C0" },
+            necklace: { name: 'null', color: "#FFE7C0" },
+            accessories: { name: 'null', color: "#FFE7C0" },
+            beard: { name: 'null', color: "#FFE7C0" }
+        }
+        
+        const allMoves = [];
+        let currentIndex = -1; //starts at this so it matches the index in the array
+        
+        function saveSteps() {
+            currentIndex++;
+            allMoves.push(JSON.parse(JSON.stringify(bodyParts)));
+            if (currentIndex > 11) {
+                allMoves.shift();
+                currentIndex--;
+            }
+        }
 
         loader.load("./AvatarStudio/mediaAvatar/character/avatar.gltf", (gltfModel) => {
             gltfModel.scene.position.set(scenePositions.x, scenePositions.y, scenePositions.z);
@@ -138,17 +138,17 @@ export class TCharacter extends THREE.Object3D {
                 setMesh(scene, bodyParts);
             }
 
-            function setMesh(scene, anObject, bool = true) {
-                for (const category in anObject) {
-                    if (anObject.hasOwnProperty(category)) {
-                        const childName = anObject[category].name;
+            function setMesh(scene, aMeshObject, boolVisability = true) {
+                for (const category in aMeshObject) {
+                    if (aMeshObject.hasOwnProperty(category)) {
+                        const childName = aMeshObject[category].name;
 
                         const child = scene.children.find(child => child.name === childName);
 
                         if (child) {
-                            child.visible = bool; console.log(bool);
+                            child.visible = boolVisability;
                             const locatedMesh = locateMeshToPhong(childName);
-                            locatedMesh.material.color.set(anObject[category].color);
+                            locatedMesh.material.color.set(aMeshObject[category].color);
                         }
                     }
                 }
