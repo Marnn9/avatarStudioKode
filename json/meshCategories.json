@@ -41,7 +41,8 @@
     "option19": "hair_long_stylised_wavy",
     "option20": "hair_mid_stylised",
     "option21": "hair_long_cap",
-    "option22": "hair_short_cap"
+    "option22": "hair_short_cap",
+    "option23": "empty"
   },
   "eyebrow": {
     "option1": "eyebrow",
@@ -63,18 +64,21 @@
     "option1": "necklace_thick",
     "option2": "necklace_thin",
     "option3": "necklace_thin_short",
-    "option4": "necklace_thin_pendant"
+    "option4": "necklace_thin_pendant",
+    "option5": "empty"
   },
   "accessories": {
     "option1": "accessories_halo",
-    "option2": "accessories_gloves"
+    "option2": "accessories_gloves",
+    "option3": "empty"
   },
   "earring": {
     "option1": "earring_gem",
     "option2": "earring_plain",
     "option3": "earring_pearl",
     "option4": "earring_stud_pearl",
-    "option5": "earring_fat"
+    "option5": "earring_fat",
+    "option6": "empty"
   },
   "shoes": {
     "option1": "shoes_sneakers"
@@ -82,12 +86,14 @@
   "glasses": {
     "option1": "glasses_square_sun",
     "option2": "glasses_round_sun",
-    "option3": "glasses_oval_sun"
+    "option3": "glasses_oval_sun",
+    "option4": "empty"
   },
   "beard": {
     "option1": "beard_long",
     "option2": "beard_mid",
     "option3": "beard_short",
-    "option4": "beard_stache"
+    "option4": "beard_stache",
+    "option5": "empty"
   }
 }
