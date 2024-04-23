@@ -47,8 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
       setupOptionsMenu(this);
     });
   });
-  const hairParentTab = document.getElementById("hairParent");
-  hairParentTab.click(); //clicking on first tab to open it at page startup
+  
 });
 
 function setupOptionsMenu(menuOption) {
@@ -110,6 +109,7 @@ parentTabs.forEach((parentTab) => {
       }
     });
   });
+  
 });
 
 const childrenTabs = document.querySelectorAll(".hidden-tab");
