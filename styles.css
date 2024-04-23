@@ -94,7 +94,9 @@ body {
 }
 
 #menuOptions {
-  overflow-x: auto;
+  overflow-x: scroll;
+  scroll-snap-type: x mandatory;
+  white-space: nowrap; 
 }
 
 #colors {
@@ -118,11 +120,13 @@ body {
 .tab {
   position: relative;
   background-color: var(--lightgrey);
+  scroll-snap-align: center;
 
 }
 .tab.active {
   background-color:var(--acssentColor);
 }
+
 
 #bootstrapTab {
   background-color: rgb(255, 255, 255);

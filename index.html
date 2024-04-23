@@ -154,7 +154,11 @@
         import * as main from "./AvatarStudio/scriptAvatar/main.mjs";
         main.loadScene();
 
-    
+        const clothesParent = document.getElementById('clothesParent');
+
+clothesParent.addEventListener('click', () => {
+    clothesParent.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
 
     </script>
 
