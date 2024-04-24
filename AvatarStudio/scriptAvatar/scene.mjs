@@ -20,27 +20,23 @@ export const scenePositions = {
 }
 
 export const character = new TCharacter();
+export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
+
 
 function degreesToRadians(degrees) {
     const mathToMultiply = Math.PI / 180;
     const radians = degrees * mathToMultiply;
     return radians;
 }
-export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
-
 
 export function TinitialiseScene(cvsId) {
 
-    let scene, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
-    scene = new THREE.Scene();
+    let renderer;
+    const scene = new THREE.Scene();
 
-    const guiWidth = 300;
-    let centerX = window.innerWidth / 2 - (guiWidth / 2);
-    
+    const initialCvsId = 'sceneCanvas'
+
     //---------------gradient Background & color -----------------------
-
-    let hexValue = "ffffff";
-    const colorOfCube = "#" + hexValue;
     const white = 0xffffff;
     scene.background = new THREE.Color(white);
 
@@ -48,78 +44,31 @@ export function TinitialiseScene(cvsId) {
     camera.position.z = 5;
     //-----------------lights------------------
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-    //scene.add(ambientLight);
+    addLights();
 
-
+    //--------------- renderer --------------------------
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    //renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.domElement.id = cvsId;
-    renderer.domElement.setAttribute('alt', cvsId);
+    renderer.domElement.id = initialCvsId;
+    renderer.domElement.setAttribute('alt', initialCvsId);
     document.body.appendChild(renderer.domElement);
     setConstantAspectRatio();
 
-    const directionalLight = new THREE.DirectionalLight(white, 1);
-    directionalLight.position.set(10, 10, 10);
-    directionalLight.castShadow = true; // Enable shadow casting
-    scene.add(directionalLight);
-
-    // Configure shadow properties
-    directionalLight.shadow.mapSize.width = 1024; // Shadow map width
-    directionalLight.shadow.mapSize.height = 1024; // Shadow map height
-    directionalLight.shadow.camera.near = 0.5; // Near plane of the shadow camera
-    directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
-
-    var controls = new OrbitControls(camera, renderer.domElement);
+    // ------------------ move character -------------------------
+    const controls = new OrbitControls(camera, renderer.domElement);
     controls.minAzimuthAngle = degreesToRadians(-45) // 45 degrees left
     controls.maxAzimuthAngle = degreesToRadians(45) // 45 degrees right
     controls.minPolarAngle = degreesToRadians(90);//no upwards/downwards
     controls.maxPolarAngle = degreesToRadians(90);
+
     //-----------------character-------------------------
     character.rotateY(degreesToRadians(-90));
     scene.add(character);
+
     //----------------localStorage--------------------------------------
-    const localHairColor = localStorage.getItem("haircolor");
-    const localEyeColor = localStorage.getItem("eyecolor");
-    const localSkinColor = localStorage.getItem("skincolor");
-    const localTopColor = null;
-    const localBottomColor = null;
-
-
-    if (localHairColor !== null) {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: `#${localHairColor}` });
-        avatarFeatures.hairColor = localHairColor;
-    } else {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    }
-    if (localEyeColor !== null) {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: `#${localEyeColor}` });
-        avatarFeatures.eyeColor = localEyeColor;
-    } else {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    }
-    if (localSkinColor !== null) {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: `#${localSkinColor}` });
-        avatarFeatures.skinColor = localSkinColor;
-    } else {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    } if (localTopColor !== null) {
-        topMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
-        avatarFeatures.skinColor = localSkinColor;
-    } else {
-        topMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    } if (localBottomColor !== null) {
-        bottomMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
-        avatarFeatures.skinColor = localSkinColor;
-    } else {
-        bottomMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    }
-
 
     //-------------functions-------------------------------
-
     function render() {
         requestAnimationFrame(render);
         controls.update();
@@ -133,6 +82,19 @@ export function TinitialiseScene(cvsId) {
         renderer.setSize(canvasWidth, canvasHeight);
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
+    }
+
+    function addLights() {
+        const directionalLight = new THREE.DirectionalLight(white, 1);
+        directionalLight.position.set(10, 10, 10);
+        directionalLight.castShadow = true; // Enable shadow casting
+        scene.add(directionalLight);
+
+        // Configure shadow properties
+        directionalLight.shadow.mapSize.width = 1024;
+        directionalLight.shadow.mapSize.height = 1024;
+        directionalLight.shadow.camera.near = 0.5;
+        directionalLight.shadow.camera.far = 50;
     }
 
     render();
