@@ -210,7 +210,6 @@ body {
 
 #menuOptions {
   overflow-x: scroll;
-  scroll-snap-type: x mandatory;
   white-space: nowrap; 
 }
 
