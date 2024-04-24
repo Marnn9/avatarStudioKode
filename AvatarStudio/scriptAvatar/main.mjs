@@ -56,12 +56,9 @@ function setupOptionsMenu(menuOption) {
   const menuOptionValue = menuOption.getAttribute("menuOption");
   const jsonFile = menuOption.getAttribute("jsonFile");
 
-  // Remove child elements from colorSelector
   while (colorSelector.firstChild) {
     colorSelector.removeChild(colorSelector.firstChild);
   }
-
-    // Initialize color or meshes based on JSON file
     if (jsonFile != null && jsonFile != 'meshCategories') {
         initializeColor(menuOptionValue, jsonFile);
     } else if (jsonFile == 'meshCategories') {
