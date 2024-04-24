@@ -13,10 +13,11 @@ export class TCharacter extends THREE.Object3D {
         let bodyParts = {
             eye: { name: 'eyes', color: "#FFE7C0" },
             hair: { name: 'hair_midlength', color: "#FFE7C0" },
-            eyebrow: { name: "eyebrow_hairier", color: "#23100C" },
+            eyebrow: { name: "eyebrow_hairier", color: "#6B4F39" },
             skin: { name: 'skin', color: "#FFE7C0" },
             shirt: { name: 'shirt_base', color: "#FFE7C0" },
             pants: { name: 'pants_jogging', color: "#FFE7C0" },
+            shoes: { name: 'pants_jogging', color: "#FFE7C0" },
             glasses: { name: 'null' },
             earring: { name: 'null', color: "#FFD700" },
             necklace: { name: 'null', color: "#FFD700" },
