@@ -76,6 +76,8 @@ export function TinitialiseScene() {
     //-------------functions-------------------------------
 
     this.saveImg = function(cvsId) {
+        const initialCharacterPos = character.position.y;
+        character.position.y = 0;
         const canvas = document.getElementById(cvsId);
     
         if (!canvas) {
@@ -101,6 +103,7 @@ export function TinitialiseScene() {
         downloadLink.href = imageDataUrl;
         downloadLink.download = 'rendered_image.png';
         downloadLink.click();
+        character.position.y = initialCharacterPos;
     };
     
     this.render = function () {
