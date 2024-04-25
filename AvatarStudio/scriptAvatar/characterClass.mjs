@@ -76,7 +76,6 @@ export class TCharacter extends THREE.Object3D {
             this.undo = function () {
                 if (currentIndex > 0) {
                     currentIndex--;
-
                     const stepToShow = allMoves[currentIndex];
                     const stepToDelete = allMoves[currentIndex + 1];
                     setMesh(gltfModel.scene, stepToDelete, false);
@@ -90,7 +89,6 @@ export class TCharacter extends THREE.Object3D {
             this.redo = function () {
                 if (currentIndex < allMoves.length - 1) {
                     currentIndex++;
-
                     const stepToShow = allMoves[currentIndex];
                     const stepToDelete = allMoves[currentIndex - 1];
                     setMesh(gltfModel.scene, stepToDelete, false);
@@ -100,6 +98,10 @@ export class TCharacter extends THREE.Object3D {
                     console.log('Cannot redo any further.');
                 }
             };
+
+            this.save = function (){
+                return bodyParts;
+            }
 
             this.changeMesh = function (category, name) {
                 const childWithName = gltfModel.scene.children.find(child => child.name === bodyParts[category].name);
@@ -170,6 +172,7 @@ export class TCharacter extends THREE.Object3D {
 
             locateAllMeshes(gltfModel.scene);
         });
+
     }
 }
 

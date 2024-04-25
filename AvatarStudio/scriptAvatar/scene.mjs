@@ -2,6 +2,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { TCharacter } from "./characterClass.mjs";
+import { toneMapping } from 'three/examples/jsm/nodes/Nodes.js';
 
 export const avatarFeatures = {
     skinColor: null,
@@ -29,35 +30,24 @@ function degreesToRadians(degrees) {
 export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
 
 
-export function TinitialiseScene(cvsId) {
+export function TinitialiseScene() {
 
-    let scene, renderer, modelMaterial, eyeMaterial, hairMaterial, skinMaterial, topMaterial, bottomMaterial;
-    scene = new THREE.Scene();
-
-    const guiWidth = 300;
-    let centerX = window.innerWidth / 2 - (guiWidth / 2);
-    
+    let renderer;
+    const scene = new THREE.Scene();
     //---------------gradient Background & color -----------------------
 
-    let hexValue = "ffffff";
-    const colorOfCube = "#" + hexValue;
     const white = 0xffffff;
     scene.background = new THREE.Color(white);
 
     //----------------scene objects----------------------
     camera.position.z = 5;
     //-----------------lights------------------
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 3);
-    //scene.add(ambientLight);
-
-
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     //renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.domElement.id = cvsId;
-    renderer.domElement.setAttribute('alt', cvsId);
+    renderer.domElement.id = 'sceneCanvas';
+    renderer.domElement.setAttribute('alt', 'sceneCanvas');
     document.body.appendChild(renderer.domElement);
     setConstantAspectRatio();
 
@@ -81,50 +71,43 @@ export function TinitialiseScene(cvsId) {
     character.rotateY(degreesToRadians(-90));
     scene.add(character);
     //----------------localStorage--------------------------------------
-    const localHairColor = localStorage.getItem("haircolor");
-    const localEyeColor = localStorage.getItem("eyecolor");
-    const localSkinColor = localStorage.getItem("skincolor");
-    const localTopColor = null;
-    const localBottomColor = null;
-
-
-    if (localHairColor !== null) {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: `#${localHairColor}` });
-        avatarFeatures.hairColor = localHairColor;
-    } else {
-        hairMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    }
-    if (localEyeColor !== null) {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: `#${localEyeColor}` });
-        avatarFeatures.eyeColor = localEyeColor;
-    } else {
-        eyeMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    }
-    if (localSkinColor !== null) {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: `#${localSkinColor}` });
-        avatarFeatures.skinColor = localSkinColor;
-    } else {
-        skinMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    } if (localTopColor !== null) {
-        topMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
-        avatarFeatures.skinColor = localSkinColor;
-    } else {
-        topMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    } if (localBottomColor !== null) {
-        bottomMaterial = new THREE.MeshBasicMaterial({ color: `#${localTopColor}` });
-        avatarFeatures.skinColor = localSkinColor;
-    } else {
-        bottomMaterial = new THREE.MeshBasicMaterial({ color: colorOfCube });
-    }
 
 
     //-------------functions-------------------------------
 
-    function render() {
-        requestAnimationFrame(render);
+    this.saveImg = function(cvsId) {
+        const canvas = document.getElementById(cvsId);
+    
+        if (!canvas) {
+            console.error(`Canvas with ID ${cvsId} not found.`);
+            return;
+        }
+        const imgRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        imgRenderer.shadowMap.enabled = true;
+        imgRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    
+        const width = canvas.width;
+        const height = canvas.height;
+        imgRenderer.setSize(width, height);
+        imgRenderer.setViewport(0, 0, width, height);
+        
+        const tempCamera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
+        tempCamera.position.z = 5;
+        tempCamera.position.y = -0.5;
+        imgRenderer.render(scene, tempCamera);
+
+        const imageDataUrl = canvas.toDataURL('image/png'); //add this to the server 
+        const downloadLink = document.createElement('a');
+        downloadLink.href = imageDataUrl;
+        downloadLink.download = 'rendered_image.png';
+        downloadLink.click();
+    };
+    
+    this.render = function () {
+        requestAnimationFrame(this.render.bind(this));
         controls.update();
         renderer.render(scene, camera);
-    }
+    };
 
     function setConstantAspectRatio() {
         const canvasWidth = scenePositions.cvsWidth;
@@ -135,6 +118,6 @@ export function TinitialiseScene(cvsId) {
         camera.updateProjectionMatrix();
     }
 
-    render();
+    //this.render();
 
 }
