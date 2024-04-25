@@ -93,6 +93,10 @@ parentTabs.forEach((parentTab) => {
         character.position.y = 2.2;
         camera.position.z = 8;
         break;
+      case 'accessoriesParent':
+        character.position.y = 0;
+        camera.position.z = 8;
+        break;
     }
     parentTabs.forEach((tab) => {
         tab.classList.remove("active");
