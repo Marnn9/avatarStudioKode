@@ -18,10 +18,7 @@
   --extraTab: #E5D2F3;
 }
 
-/* html {
-/* html {
-    background-color: var(--backgroundcolor);
-} */
+
 
 /* loadingscreen */
 
@@ -210,15 +207,16 @@ body {
 }
 
 #menuOptions {
-  overflow-x: auto;
+  overflow-x: scroll;
+  white-space: nowrap; 
 }
 
 #colors {
   background-color: white;
   margin-bottom: 0em;
   overflow: auto;
-  max-height: 300px;
-  min-height: 300px;
+  max-height: 30vh;
+  min-height: 30vh;
 }
 
 #allColors {
@@ -234,11 +232,13 @@ body {
 .tab {
   position: relative;
   background-color: var(--lightgrey);
+  scroll-snap-align: center;
 
 }
 .tab.active {
   background-color:var(--acssentColor);
 }
+
 
 #bootstrapTab {
   background-color: rgb(255, 255, 255);

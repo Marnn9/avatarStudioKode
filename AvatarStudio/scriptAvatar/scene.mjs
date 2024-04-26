@@ -21,27 +21,30 @@ export const scenePositions = {
 }
 
 export const character = new TCharacter();
+export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
+
 
 function degreesToRadians(degrees) {
     const mathToMultiply = Math.PI / 180;
     const radians = degrees * mathToMultiply;
     return radians;
 }
-export const camera = new THREE.PerspectiveCamera(80, 1, 0.1, 100);
-
 
 export function TinitialiseScene() {
 
     let renderer;
     const scene = new THREE.Scene();
     //---------------gradient Background & color -----------------------
-
     const white = 0xffffff;
     scene.background = new THREE.Color(white);
 
     //----------------scene objects----------------------
     camera.position.z = 5;
     //-----------------lights------------------
+
+    addLights();
+
+    //--------------- renderer --------------------------
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
@@ -51,25 +54,17 @@ export function TinitialiseScene() {
     document.body.appendChild(renderer.domElement);
     setConstantAspectRatio();
 
-    const directionalLight = new THREE.DirectionalLight(white, 1);
-    directionalLight.position.set(10, 10, 10);
-    directionalLight.castShadow = true; // Enable shadow casting
-    scene.add(directionalLight);
-
-    // Configure shadow properties
-    directionalLight.shadow.mapSize.width = 1024; // Shadow map width
-    directionalLight.shadow.mapSize.height = 1024; // Shadow map height
-    directionalLight.shadow.camera.near = 0.5; // Near plane of the shadow camera
-    directionalLight.shadow.camera.far = 50; // Far plane of the shadow camera
-
-    var controls = new OrbitControls(camera, renderer.domElement);
+    // ------------------ move character -------------------------
+    const controls = new OrbitControls(camera, renderer.domElement);
     controls.minAzimuthAngle = degreesToRadians(-45) // 45 degrees left
     controls.maxAzimuthAngle = degreesToRadians(45) // 45 degrees right
     controls.minPolarAngle = degreesToRadians(90);//no upwards/downwards
     controls.maxPolarAngle = degreesToRadians(90);
+
     //-----------------character-------------------------
     character.rotateY(degreesToRadians(-90));
     scene.add(character);
+
     //----------------localStorage--------------------------------------
 
 
@@ -119,6 +114,18 @@ export function TinitialiseScene() {
         renderer.setSize(canvasWidth, canvasHeight);
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
+    }
+    function addLights() {
+        const directionalLight = new THREE.DirectionalLight(white, 1);
+        directionalLight.position.set(10, 10, 10);
+        directionalLight.castShadow = true; // Enable shadow casting
+        scene.add(directionalLight);
+
+        // Configure shadow properties
+        directionalLight.shadow.mapSize.width = 1024;
+        directionalLight.shadow.mapSize.height = 1024;
+        directionalLight.shadow.camera.near = 0.5;
+        directionalLight.shadow.camera.far = 50;
     }
 
 }

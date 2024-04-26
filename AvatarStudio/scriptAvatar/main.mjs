@@ -26,15 +26,13 @@ document.addEventListener("DOMContentLoaded", function () {
       setupOptionsMenu(this);
     });
   });
-  const hairParentTab = document.getElementById("hairParent");
-  hairParentTab.click(); //clicking on first tab to open it at page startup
+  
 });
 
 function setupOptionsMenu(menuOption) {
   const menuOptionValue = menuOption.getAttribute("menuOption");
   const jsonFile = menuOption.getAttribute("jsonFile");
 
-  // Remove child elements from colorSelector
   while (colorSelector.firstChild) {
     colorSelector.removeChild(colorSelector.firstChild);
   }
@@ -49,43 +47,46 @@ function setupOptionsMenu(menuOption) {
   }
 }
 const parentTabs = document.querySelectorAll(".tab");
-
+const allHiddenTabs = document.querySelectorAll(".hidden-tab");
 parentTabs.forEach((parentTab) => {
-  let clickCount = 0;
-
   parentTab.addEventListener("click", function () {
     const parentId = this.id;
 
-    clickCount++;
-    if (this.id == ('clothesParent')) {
-      character.position.y = 2.2;
-      camera.position.z = 8
-    } else if (this.id == ('hairParent')) {
-      character.position.y = 0;
-      camera.position.z = 6
-    } else if (this.id == ('eyeParent')) {
-      character.position.y = 0;
-      camera.position.z = 5
-    } else if (this.id == ('skinParent')) {
-      character.position.y = 2.2; //this makes the character hop when savng images ... ,aby only move the camera NOT the character?
-      camera.position.z = 8
+    switch (parentId) {
+      case 'clothesParent':
+        character.position.y = 2.2;
+        camera.position.z = 8;
+        break;
+      case 'hairParent':
+        character.position.y = 0;
+        camera.position.z = 6;
+        break;
+      case 'eyeParent':
+        character.position.y = 0;
+        camera.position.z = 5;
+        break;
+      case 'skinParent':
+        character.position.y = 2.2;
+        camera.position.z = 8;
+        break;
     }
     parentTabs.forEach((tab) => {
-      tab.classList.remove("active");
-    });
+        tab.classList.remove("active");
+      });
+    this.classList.toggle("active");
 
-    this.classList.add("active");
-
-    const allHiddenTabs = document.querySelectorAll(".hidden-tab");
     allHiddenTabs.forEach((tab) => {
-      if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
-        tab.style.display = "none";
+        if (!tab.classList.contains(`${parentId}-hidden-tab`)) {
+            tab.style.display = "none";
       } else {
-        tab.style.display = clickCount % 2 === 0 ? "none" : "block";
+        
+        tab.style.display = tab.style.display != "block" ? "block": "none" //tab.style.display is empty string on first click
       }
     });
   });
+  
 });
+
 const childrenTabs = document.querySelectorAll(".hidden-tab");
 childrenTabs.forEach((childrenTab) => {
   childrenTab.addEventListener("click", function () {

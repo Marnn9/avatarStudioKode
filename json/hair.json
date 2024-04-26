@@ -31,7 +31,11 @@
         "option29": {"hex": "#FFF2D1", "special": false},
         "option30": {"hex": "#DBFFD6", "special": false},
         "option31": {"hex": "#FFA7B7", "special": false},
-        "option32": {"hex": "#FFE3FE", "special": false}
+        "option32": {"hex": "#FFE3FE", "special": false},
+        "option33": {"hex": "#F5F2F2", "special": false},
+        "option34": {"hex": "#BCBCBC", "special": false},
+        "option35": {"hex": "#747474", "special": false},
+        "option36": {"hex": "#202020", "special": false}
         
     }
 }

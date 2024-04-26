@@ -50,13 +50,15 @@
     <div id="tabsMenu" style="display: none;">
         <div class="container-fluid fixed-bottom">
             <div id="menuOptions" class=" row g-0 d-flex flex-nowrap">
-                <div id="hairParent" class="col-3 tab " menuOption="hair" jsonFile="meshCategories" parent="true">
+                <div id="hairParent" class="col-3 tab active " menuOption="hair" jsonFile="meshCategories"
+                    parent="true">
                     <div class="border rectangle rounded-top d-flex justify-content-center">
                         <img src="AvatarStudio/mediaAvatar/buttons/icons_hair.png" alt="icon of hair" class="w-50">
                     </div>
                 </div>
 
-                <div class="col-3 hidden-tab hairParent-hidden-tab" menuOption="hair" jsonFile="hair">
+                <div class="col-3 hidden-tab hairParent-hidden-tab" menuOption="hair" jsonFile="hair"
+                    style="display: block;">
                     <div class="border rectangle rounded-top d-flex justify-content-center ">
                         <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of hair" class="w-50">
                     </div>
@@ -116,33 +118,37 @@
                 <div id="accessoriesParent" class="col-3 tab" menuOption="accessories" jsonFile="meshCategories"
                     parent="true">
                     <div class="border rectangle rounded-top d-flex justify-content-center">
-                        <img src="AvatarStudio/mediaAvatar/buttons/icons_accessories.png" alt="icon of accessories"
+                        <img src="AvatarStudio/mediaAvatar/buttons/icons_pluss.png" alt="icon of accessories"
                             class="w-50">
                     </div>
                 </div>
                 <div class="col-3 hidden-tab accessoriesParent-hidden-tab" menuOption="glasses"
                     jsonFile="meshCategories">
                     <div class="border rectangle rounded-top d-flex justify-content-center">
-                        <img src="AvatarStudio/mediaAvatar/buttons/icons_top.png" alt="icon of sunglasses" class="w-50">
+                        <img src="AvatarStudio/mediaAvatar/buttons/icons_glasses.png" alt="icon of sunglasses" class="w-50">
                     </div>
                 </div>
                 <div class="col-3 hidden-tab accessoriesParent-hidden-tab" menuOption="necklace"
                     jsonFile="meshCategories">
                     <div class="border rectangle rounded-top d-flex justify-content-center">
-                        <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of necklace"
+                        <img src="AvatarStudio/mediaAvatar/buttons/icons_necklace.png" alt="icon of necklace"
                             class="w-50">
                     </div>
                 </div>
                 <div class="col-3 hidden-tab accessoriesParent-hidden-tab" menuOption="earring"
                     jsonFile="meshCategories">
                     <div class="border rectangle rounded-top d-flex justify-content-center ">
-                        <img src="AvatarStudio/mediaAvatar/buttons/icons_pants.png" alt="icon of pants" class="w-50">
+                        <img src="AvatarStudio/mediaAvatar/buttons/icons_earring.png" alt="icon of earrings" class="w-50">
                     </div>
                 </div>
                 <div class="col-3 hidden-tab accessoriesParent-hidden-tab" menuOption="beard" jsonFile="meshCategories">
                     <div class="border rectangle rounded-top d-flex justify-content-center">
-                        <img src="AvatarStudio/mediaAvatar/buttons/icons_recolor.png" alt="icon of pants recolor"
-                            class="w-50">
+                        <img src="AvatarStudio/mediaAvatar/buttons/icons_beard.png" alt="icon of a beard" class="w-50">
+                    </div>
+                </div>
+                <div class="col-3 hidden-tab accessoriesParent-hidden-tab" menuOption="beard" jsonFile="hair">
+                    <div class="border rectangle rounded-top d-flex justify-content-center">
+                        <img src="AvatarStudio/mediaAvatar/buttons/icons_beard_color.png" alt="icon of a beard" class="w-50">
                     </div>
                 </div>
             </div>
@@ -174,6 +180,9 @@
             tabs.style.display = "block";
             loadingPage.style.display = "none";
         }, 2000)
+
+
+
 
     </script>
 
