@@ -5,7 +5,7 @@ import { showColors, showMeshes } from "./tabOptions.mjs";
 
 const scene = new TinitialiseScene();
 export function loadScene() {
-  scene.render();
+  scene.load();
   const exportedAvatarData = character;
 }
 

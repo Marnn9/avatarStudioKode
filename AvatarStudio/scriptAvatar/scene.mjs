@@ -106,8 +106,8 @@ export function TinitialiseScene() {
         character.position.y = initialCharacterPos;
     };
     
-    this.render = function () {
-        requestAnimationFrame(this.render.bind(this));
+    this.load = function () {
+        requestAnimationFrame(this.load.bind(this));
         controls.update();
         renderer.render(scene, camera);
     };
@@ -120,7 +120,5 @@ export function TinitialiseScene() {
         camera.aspect = canvasWidth / canvasHeight;
         camera.updateProjectionMatrix();
     }
-
-    //this.render();
 
 }
