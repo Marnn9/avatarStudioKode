@@ -1,41 +1,18 @@
 "use strict";
 import * as THREE from 'three';
 import { TinitialiseScene, character, camera } from "./scene.mjs";
-import { initializeColor, initializeMeshes } from "./colorOptions.mjs";
+import { showColors, showMeshes } from "./tabOptions.mjs";
 
+const scene = new TinitialiseScene();
 export function loadScene() {
-  TinitialiseScene('sceneCanvas');
-}
-
-function saveImage(userId) {
-  const saveConfirm = confirm("An image of the avatar will now be downloaded");
-
-  if (saveConfirm) {
-    requestAnimationFrame(() => {
-      
-      const canvas = document.getElementById("sceneCanvas");
-      //TinitialiseScene(canvas); //for when the canvas is imgCanvas
-
-      if (!canvas) {
-        console.error("Canvas not found");
-        return;
-      }
-
-      const fileType = canvas.toDataURL("image/webp");
-
-      const downloadLink = document.createElement("a");
-      downloadLink.href = fileType;
-      downloadLink.download = `avatar_test.webp`;
-
-      downloadLink.click();
-    });
-  } else {
-    return;
-  }
+  scene.load();
+  const exportedAvatarData = character;
 }
 
 const checkBtn = document.getElementById("checkBtn");
-checkBtn.addEventListener("click", saveImage);
+checkBtn.addEventListener("click", () => {
+  scene.saveImg('imgCanvas');
+});
 
 const menuOptions = document.querySelectorAll("[menuOption]");
 
@@ -59,13 +36,15 @@ function setupOptionsMenu(menuOption) {
   while (colorSelector.firstChild) {
     colorSelector.removeChild(colorSelector.firstChild);
   }
-    if (jsonFile != null && jsonFile != 'meshCategories') {
-        initializeColor(menuOptionValue, jsonFile);
-    } else if (jsonFile == 'meshCategories') {
-        initializeMeshes(jsonFile , menuOptionValue);
-    } else {
-        console.log("anError");
-    }
+
+  // Initialize color or meshes based on JSON file
+  if (jsonFile != null && jsonFile != 'meshCategories') {
+    showColors(menuOptionValue, jsonFile);
+  } else if (jsonFile == 'meshCategories') {
+    showMeshes(jsonFile, menuOptionValue);
+  } else {
+    console.log("anError");
+  }
 }
 const parentTabs = document.querySelectorAll(".tab");
 const allHiddenTabs = document.querySelectorAll(".hidden-tab");
