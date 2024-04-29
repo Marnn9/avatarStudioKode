@@ -99,7 +99,7 @@ class SuperLogger {
         const path = req.originalUrl;
         const when = new Date().toLocaleTimeString();
 
-        if (!path.startsWith('/avatarStudio')) {
+        if (!path.startsWith('/mediaAvatar')) {
            
             type = colorize(type);
             this.#writeToLog([when, type, path].join(" "));
