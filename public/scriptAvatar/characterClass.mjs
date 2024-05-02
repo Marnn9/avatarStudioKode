@@ -74,6 +74,10 @@ export class TCharacter extends THREE.Object3D {
                 saveSteps();
             }
 
+            this.returnLastColor = function (aMeshCategory) {
+                return bodyParts[aMeshCategory].color;
+            }
+
             this.undo = function () {
                 if (currentIndex > 0) {
                     currentIndex--;
