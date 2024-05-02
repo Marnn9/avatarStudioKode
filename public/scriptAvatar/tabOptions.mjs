@@ -3,8 +3,12 @@ import { character } from "./scene.mjs";
 const tabMenuOption = document.getElementById("colorSelector");
 
 export async function showColors(aMenuObject, aColorType) {
-    try {
 
+    while (tabMenuOption.firstChild) {
+        tabMenuOption.removeChild(tabMenuOption.firstChild);
+    }
+
+    try {
         const response = await fetch(`./json/${aColorType}.json`);
         const data = await response.json();
         const options = data.options || {};
@@ -28,6 +32,25 @@ export async function showColors(aMenuObject, aColorType) {
                 character.setColor(aMenuObject, color);
             });
         }
+
+        const colorPicker = document.createElement('input');
+        colorPicker.type = 'color';
+        colorPicker.id = 'colorPicker'; // Ensure the ID matches the CSS selector
+        colorPicker.name = 'colorPicker';
+        colorPicker.value = '#e66465'; // Set an initial color value (optional)
+
+        
+        const colorPickerWrapper = document.createElement('div');
+        colorPickerWrapper.className = 'color-picker-wrapper'; // Ensure the class name matches the CSS selector
+
+        
+        colorPickerWrapper.appendChild(colorPicker);
+        tabMenuOption.appendChild(colorPickerWrapper);
+
+        colorPicker.addEventListener('input', function (event) {
+            const hexColor = event.target.value;
+            character.setColor(aMenuObject, hexColor);
+        });
 
     } catch (error) {
         console.error('Error initializing color selectors:', error);

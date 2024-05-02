@@ -91,15 +91,13 @@ class SuperLogger {
 
     }
 
-
-
     #LogHTTPRequest(req, res, next) {
      
         let type = req.method;
         const path = req.originalUrl;
         const when = new Date().toLocaleTimeString();
 
-        if (!path.startsWith('/avatarStudio')) {
+        if (!path.startsWith('/mediaAvatar')) {
            
             type = colorize(type);
             this.#writeToLog([when, type, path].join(" "));
@@ -109,7 +107,6 @@ class SuperLogger {
         next();
     }
     
-
     #writeToLog(msg) {
 
         msg += "\n";
@@ -125,6 +122,5 @@ class SuperLogger {
         });
 }
 }
-
 
 export default SuperLogger
